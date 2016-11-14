@@ -18,10 +18,9 @@ const Routes = (props) => (
         <Route path='kids' component={Kids} />
         <Route path='account' component={Account} />
       </Route>
-  
   </Router>
 
-)
+);
 
 export default Routes;
 

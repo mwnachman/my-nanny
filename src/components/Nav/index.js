@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 
 export const Nav = () => (
   <div className='nav'>
+    <h1>myNanny</h1>
     <ul>
       <li><Link to='/'>LANDING</Link></li>
-      <li><Link to='/app'>app</Link></li>
       <li><Link to='/app/home'>Home</Link></li>
       <li><Link to='/app/account'>account</Link></li>
       <li><Link to='/app/kids'>kids</Link></li>
