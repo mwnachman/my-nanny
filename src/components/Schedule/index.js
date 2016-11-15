@@ -33,25 +33,27 @@ class Schedule extends React.Component {
     } else {
       return (
         <div>
-          <table border='1'>
-            <tr>
-              <th>Sunday</th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-            </tr>
-            <tr>
-              <td>{this.props.schedule.defaultCurfews[0]}</td>
-              <td>{this.props.schedule.defaultCurfews[1]}</td>
-              <td>{this.props.schedule.defaultCurfews[2]}</td>
-              <td>{this.props.schedule.defaultCurfews[3]}</td>
-              <td>{this.props.schedule.defaultCurfews[4]}</td>
-              <td>{this.props.schedule.defaultCurfews[5]}</td>
-              <td>{this.props.schedule.defaultCurfews[6]}</td>
-            </tr>
+          <table>
+            <tbody>
+              <tr>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+              </tr>
+              <tr>
+                <td>{this.props.schedule.defaultCurfews[0]}</td>
+                <td>{this.props.schedule.defaultCurfews[1]}</td>
+                <td>{this.props.schedule.defaultCurfews[2]}</td>
+                <td>{this.props.schedule.defaultCurfews[3]}</td>
+                <td>{this.props.schedule.defaultCurfews[4]}</td>
+                <td>{this.props.schedule.defaultCurfews[5]}</td>
+                <td>{this.props.schedule.defaultCurfews[6]}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       );

@@ -11,6 +11,7 @@ class IndividualKid extends React.Component {
     this.state = {
       name: '',
       phone: '',
+      id: '',
       username: '999888777666',
       urlPrefix: 'http://localhost:1337',
       chores: [],
@@ -35,7 +36,7 @@ class IndividualKid extends React.Component {
         'amazonId': this.state.username
       },
       'child': {
-        'name': this.props.child.name
+        'name': this.props.child.name,
       },
       'chores': [{
         'title': 'Clean room',
@@ -51,7 +52,6 @@ class IndividualKid extends React.Component {
       data: chore,
       complete: function (data) {
         console.log('Added chore:' + JSON.stringify(data));
-        // this.setState('adding', false);
       }
     });
   }
@@ -68,7 +68,7 @@ class IndividualKid extends React.Component {
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores chore={chore} index={index}/>
+              <Chores chore={chore} index={index} key={chore.id}/>
             ))
           }
           {(this.props.child.chores === undefined &&

@@ -17,17 +17,20 @@ class Kids extends React.Component {
       children: [
         {
           name: 'Winston',
+          id: '123',
           chores: [
             {
               title: 'Clean your room',
               details: 'Please clean your room nice and neat. Vaccuum it too!',
               date: '2016-12-24',
+              id: '127',
               completed: false
             },
             {
               title: 'Wash the dishes',
               details: 'Use the blue sponge under the sink.',
               date: '2016-12-24',
+              id: '122',
               completed: true
             }
           ],
@@ -39,17 +42,20 @@ class Kids extends React.Component {
         },
         {
           name: 'Wendy',
+          id: '125',
           chores: [
             {
               title: 'Clean your room',
               details: 'Please clean your room nice and neat. Vaccuum it too!',
               date: '2016-12-24',
+              id: '128',
               completed: true
             },
             {
               title: 'Wash the dishes',
               details: 'Use the blue sponge under the sink.',
               date: '2016-12-24',
+              id: '129',
               completed: false
             }
           ],
@@ -129,7 +135,7 @@ class Kids extends React.Component {
           <div> 
           {
             this.state.children.map((child, index) =>
-              <IndividualKid child={child} index={index}/>
+              <IndividualKid child={child} index={index} key={child.id}/>
             )
           }
           </div>
