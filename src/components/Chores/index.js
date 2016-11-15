@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Chore extends React.Component {
+class Chores extends React.Component {
 
   constructor(props) {
     super(props);
@@ -8,20 +8,25 @@ class Chore extends React.Component {
     this.state = {
       title: '',
       details: '',
-      date: '';
+      date: '',
       username: '999888777666',
       completed: false,
     };
   }
 
-  handleInputChange(e) {
-    console.log(e.target);
-    const inputChange = {};
-    inputChange[e.target.name] = e.target.value;
-    this.setState(inputChange);
-  }
+  // handleInputChange(e) {
+  //   console.log(e.target);
+  //   const inputChange = {};
+  //   inputChange[e.target.name] = e.target.value;
+  //   this.setState(inputChange);
+  // }
 
   render() {
+    return (
+      <div>
+        <p>trying</p>
+      </div>
+    );
     // if (true) {
     //   return (
     //     <div>
@@ -37,7 +42,8 @@ class Chore extends React.Component {
     //           <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
     //           </input>
     //           {' '}
-    //           <input type='text' name='phone' placeholder='Phone Number' onChange={this.handleInputChange.bind(this)}>
+    //           <input type='text' name='phone' placeholder='Phone Number' 
+    //            onChange={this.handleInputChange.bind(this)}>
     //           </input>
     //           {' '}
     //           <button className='btn btn-default' onClick={this.addChild.bind(this)}>
@@ -51,7 +57,7 @@ class Chore extends React.Component {
 }
 
 
-export default Chore;
+export default Chores;
 
 
 // {

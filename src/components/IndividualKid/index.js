@@ -1,4 +1,6 @@
 import React from 'react';
+import Schedule from '../Schedule/index';
+import Chores from '../Chores/index';
 
 class IndividualKid extends React.Component {
 
@@ -28,9 +30,17 @@ class IndividualKid extends React.Component {
     if (this.state.chores.length === 0) {
       return (
         <div>
-          <h1>{this.state.name}</h1>
-          <h2>Time to Arrive Home</h2>
-          
+          <h1>{this.props.child.name}</h1>
+          <div> 
+            <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
+          </div>
+          <div> 
+          {
+            this.props.child.chores.map((chore, index) =>
+              <Chores chore={chore} index={index}/>
+            )
+          }
+          </div>
         </div>
       );
     } else {
@@ -58,27 +68,6 @@ class IndividualKid extends React.Component {
 
 export default IndividualKid;
 
-
-// {
-//     "account": {
-//         "amazonId": "999888777666"
-//     },
-//     "child": {
-//         "name": "Winston"
-//     },
-//     "chores": [
-//         {
-//             "title": "Clean your room",
-//             "details": "Please clean your room nice and neat. Vaccuum it too!",
-//             "date": "2016-12-24"
-//         },
-//         {
-//             "title": "Wash the dishes",
-//             "details": "Use the blue sponge under the sink.",
-//             "date": "2016-12-24"
-//         }
-//     ]
-// }
 
 
 
