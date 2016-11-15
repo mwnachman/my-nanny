@@ -54,26 +54,26 @@ class Chore extends React.Component {
 export default Chore;
 
 
-{
-    "account": {
-        "amazonId": "999888777666"
-    },
-    "child": {
-        "name": "Winston"
-    },
-    "chores": [
-        {
-            "title": "Clean your room",
-            "details": "Please clean your room nice and neat. Vaccuum it too!",
-            "date": "2016-12-24"
-        },
-        {
-            "title": "Wash the dishes",
-            "details": "Use the blue sponge under the sink.",
-            "date": "2016-12-24"
-        }
-    ]
-}
+// {
+//     "account": {
+//         "amazonId": "999888777666"
+//     },
+//     "child": {
+//         "name": "Winston"
+//     },
+//     "chores": [
+//         {
+//             "title": "Clean your room",
+//             "details": "Please clean your room nice and neat. Vaccuum it too!",
+//             "date": "2016-12-24"
+//         },
+//         {
+//             "title": "Wash the dishes",
+//             "details": "Use the blue sponge under the sink.",
+//             "date": "2016-12-24"
+//         }
+//     ]
+// }
 
 
 

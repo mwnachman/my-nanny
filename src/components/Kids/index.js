@@ -1,6 +1,7 @@
 import React from 'react';
 // import { IndexLink, Link } from 'react-router';
 import $ from 'jquery';
+import IndividualKid from '../IndividualKid/index';
 
 
 class Kids extends React.Component {
@@ -13,7 +14,52 @@ class Kids extends React.Component {
       phone: '',
       username: '999888777666',
       urlPrefix: 'http://localhost:1337',
-      children: [],
+      children: [
+        {
+          name: "Winston",
+          chores: [
+            {
+              title: "Clean your room",
+              details: "Please clean your room nice and neat. Vaccuum it too!",
+              date: "2016-12-24",
+              completed: false
+            },
+            {
+              title: "Wash the dishes",
+              details: "Use the blue sponge under the sink.",
+              date: "2016-12-24",
+              completed: true
+            }
+          ],
+          checkedIn: false,
+          schedule: {
+            defaultCurfews: [null, "18:30", "14:30", "17:00", "22:00", "17:00", null],
+            dateOfLastCurfew: "2016-11-14"
+          }
+        },
+        {
+          name: "Wendy",
+          chores: [
+            {
+              title: "Clean your room",
+              details: "Please clean your room nice and neat. Vaccuum it too!",
+              date: "2016-12-24",
+              completed: true
+            },
+            {
+              title: "Wash the dishes",
+              details: "Use the blue sponge under the sink.",
+              date: "2016-12-24",
+              completed: false
+            }
+          ],
+          checkedIn: true,
+          schedule: {
+            defaultCurfews: [null, "18:30", "14:30", "17:00", "22:00", "17:00", null],
+            dateOfLastCurfew: "2016-11-13"
+          }
+        }],
+      adding: false,
     };
   }
 
@@ -35,6 +81,7 @@ class Kids extends React.Component {
       data: child,
       complete: function (data) {
         console.log('Added child:' + JSON.stringify(data));
+        // this.setState('adding', false);
       }
     });
   }
@@ -46,40 +93,51 @@ class Kids extends React.Component {
     this.setState(inputChange);
   }
 
-  render() {
-    if (this.state.children.length > 0) {
-      return (
-        <div>
-          <h1>there are kids!</h1>
-          <h3>We need a component to render them!</h3>
+  addChildView(e) {
+    e.preventDefault();
+    console.log('e.target', e.target);
+    const inputChange = {};
+    inputChange[e.target.name] = true;
+    this.setState(inputChange);
+    console.log('state', this.state);
+  }
 
-          <div style={styles.IndividualKid}> 
-          {
-            this.state.children.map((child, index) =>
-              <IndividualKid key={index} child={child}/>
-            )
-          }
-          </div>
+  render() {
+    // if (!this.state.children.length === 0 || this.state.adding === true) {
+    //   return (
+    //     <div style={{ margin: '0 auto' }} >
+    //       <h2>Add a Child</h2>
+    //         <form>
+    //           <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
+    //           </input>
+    //           {' '}
+    //           <input type='text' name='phone' placeholder='Phone Number' 
+    //            onChange={this.handleInputChange.bind(this)}>
+    //           </input>
+    //           {' '}
+    //           <button className='btn btn-default' onClick={this.addChild.bind(this)}>
+    //             Add Child
+    //           </button>
+    //         </form>
+    //     </div>
+    //   );
+    // } else {
+    return (
+      <div>
+        <h1>There are kids!</h1>
+        <h3>We need a component to render them!</h3>
+
+        <div> 
+        {
+          this.state.children.map((child, index) =>
+            <IndividualKid key={index} child={child}/>
+          )
+        }
         </div>
-      );
-    } else {
-      return (
-        <div style={{ margin: '0 auto' }} >
-          <h2>Add a Child</h2>
-            <form>
-              <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <input type='text' name='phone' placeholder='Phone Number' onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <button className='btn btn-default' onClick={this.addChild.bind(this)}>
-                Add Child
-              </button>
-            </form>
-        </div>
-      );
-    }
+        <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
+      </div>
+    );
+    // } 
   } 
 }
 
