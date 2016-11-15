@@ -7,12 +7,19 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      
+    };
   }
-  
+
+  addNewChild(name, phone) {
+    console.log('in addChild CoreLayout');
+  }
+
   render() {
     return (
-      <div className="App">
-        <h1>App Page</h1>
+      <div className='App'>
         <Nav />
         { this.props.children }
       </div>
