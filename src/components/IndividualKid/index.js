@@ -39,9 +39,9 @@ class IndividualKid extends React.Component {
         'name': this.props.child.name,
       },
       'chores': [{
-        'title': 'Clean room',
-        'details': 'Do a good job',
-        'date': '2016-09-07'
+        'title': this.state.chore,
+        'details': this.state.details,
+        'date': this.state.date
       }]
     };
     console.log('chore', JSON.stringify(chore));
@@ -81,19 +81,19 @@ class IndividualKid extends React.Component {
             <h3>New Chore</h3>
               <form>
                 <input type='text' name='chore' placeholder='Chore' 
-                onChange={this.handleInputChange.bind(this)}>
+                  onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
                 <input type='text' name='details' placeholder='Explanation' 
-                onChange={this.handleInputChange.bind(this)}>
+                  onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
                 <input type='text' name='date' placeholder='Date' 
-                onChange={this.handleInputChange.bind(this)}>
+                  onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
                 <button className='btn btn-default' 
-                onClick={this.addChore.bind(this)}>
+                  onClick={this.addChore.bind(this)}>
                   Add Chore
                 </button>
               </form>

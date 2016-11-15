@@ -7,9 +7,9 @@ class Chores extends React.Component {
     super(props);
 
     this.state = {
-      title: '',
-      details: '',
-      date: '',
+      title: this.props.chore.title,
+      details: this.props.chore.details,
+      date: this.props.chore.date,
       username: '999888777666',
       urlPrefix: 'http://localhost:1337',
       completed: false,
@@ -27,6 +27,7 @@ class Chores extends React.Component {
   makeEditable(e) {
     console.log('in make editable');
     this.setState( { 'editable': true } );
+    console.log('state in updateChore', this.state);
   }
 
   updateChore(e) {
@@ -49,6 +50,8 @@ class Chores extends React.Component {
         console.log('Updated child:' + JSON.stringify(data));
       }
     });
+    this.setState( { 'editable': false } );
+    console.log('state in updateChore', this.state);
   }
 
 
@@ -57,18 +60,21 @@ class Chores extends React.Component {
       <div>
         {(this.state.editable === false &&
           <div>
-            {this.props.chore.title}
-            {this.props.chore.details}
-            {this.props.chore.date}
+            {this.state.title}
+            {this.state.details}
+            {this.state.date}
             <button onClick={this.makeEditable.bind(this)}>Edit</button> 
           </div> 
         )}
 
         {(this.state.editable === true && 
           <div>
-            <input name='title' defaultValue={this.props.chore.title} onChange={this.handleInputChange.bind(this)}/>
-            <input name='details' defaultValue={this.props.chore.details} onChange={this.handleInputChange.bind(this)}/>
-            <input name='date' defaultValue={this.props.chore.date} onChange={this.handleInputChange.bind(this)}/>
+            <input name='title' value={this.state.title} 
+              onChange={this.handleInputChange.bind(this)}/>
+            <input name='details' value={this.state.details}
+              onChange={this.handleInputChange.bind(this)}/>
+            <input type='date' name='date' value={this.state.date}
+              onChange={this.handleInputChange.bind(this)}/>
             <button onClick={this.updateChore.bind(this)}>Update</button> 
           </div>
         )}
