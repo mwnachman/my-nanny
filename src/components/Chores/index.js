@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class Chores extends React.Component {
 
@@ -6,80 +7,85 @@ class Chores extends React.Component {
     super(props);
 
     this.state = {
-      title: '',
-      details: '',
-      date: '',
+      title: this.props.chore.title,
+      details: this.props.chore.details,
+      date: this.props.chore.date,
       username: '999888777666',
+      urlPrefix: 'http://localhost:1337',
       completed: false,
+      editable: false,
     };
   }
 
-  // handleInputChange(e) {
-  //   console.log(e.target);
-  //   const inputChange = {};
-  //   inputChange[e.target.name] = e.target.value;
-  //   this.setState(inputChange);
-  // }
+  handleInputChange(e) {
+    console.log(e.target);
+    const inputChange = {};
+    inputChange[e.target.name] = e.target.value;
+    this.setState(inputChange);
+  }
+
+  makeEditable(e) {
+    console.log('in make editable');
+    this.setState( { 'editable': true } );
+    console.log('state in updateChore', this.state);
+  }
+
+  updateChore(e) {
+    console.log('in update chore');
+    const chore = {
+      'account': {
+        'amazonId': this.state.username
+      },
+      'child': {
+        'name': this.state.name,
+        'phone': this.state.phone
+      }
+    };
+    $.ajax({
+      url: this.state.urlPrefix + '/api/chores',
+      type: 'PUT',
+      dataType: 'application/json',
+      data: chore,
+      complete: function (data) {
+        console.log('Updated child:' + JSON.stringify(data));
+      }
+    });
+    this.setState( { 'editable': false } );
+    console.log('state in updateChore', this.state);
+  }
+
 
   render() {
     return (
       <div>
-        <p>trying</p>
+        {(this.state.editable === false &&
+          <div>
+            {this.state.title}
+            {this.state.details}
+            {this.state.date}
+            <button onClick={this.makeEditable.bind(this)}>Edit</button> 
+          </div> 
+        )}
+
+        {(this.state.editable === true && 
+          <div>
+            <input name='title' value={this.state.title} 
+              onChange={this.handleInputChange.bind(this)}/>
+            <input name='details' value={this.state.details}
+              onChange={this.handleInputChange.bind(this)}/>
+            <input type='date' name='date' value={this.state.date}
+              onChange={this.handleInputChange.bind(this)}/>
+            <button onClick={this.updateChore.bind(this)}>Update</button> 
+          </div>
+        )}
       </div>
-    );
-    // if (true) {
-    //   return (
-    //     <div>
-    //       <h1>there are kids!</h1>
-    //       <h3>We need a component to render them!</h3>
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div style={{ margin: '0 auto' }} >
-    //       <h2>Add a Child</h2>
-    //         <form>
-    //           <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
-    //           </input>
-    //           {' '}
-    //           <input type='text' name='phone' placeholder='Phone Number' 
-    //            onChange={this.handleInputChange.bind(this)}>
-    //           </input>
-    //           {' '}
-    //           <button className='btn btn-default' onClick={this.addChild.bind(this)}>
-    //             Add Child
-    //           </button>
-    //         </form>
-    //     </div>
-    //   );
-    // }
+    );  
   } 
 }
 
 
 export default Chores;
 
-
-// {
-//     "account": {
-//         "amazonId": "999888777666"
-//     },
-//     "child": {
-//         "name": "Winston"
-//     },
-//     "chores": [
-//         {
-//             "title": "Clean your room",
-//             "details": "Please clean your room nice and neat. Vaccuum it too!",
-//             "date": "2016-12-24"
-//         },
-//         {
-//             "title": "Wash the dishes",
-//             "details": "Use the blue sponge under the sink.",
-//             "date": "2016-12-24"
-//         }
-//     ]
-// }
 
 
 
