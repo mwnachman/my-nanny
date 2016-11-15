@@ -1,6 +1,7 @@
 import React from 'react';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
+import $ from 'jquery';
 
 class IndividualKid extends React.Component {
 
@@ -11,10 +12,12 @@ class IndividualKid extends React.Component {
       name: '',
       phone: '',
       username: '999888777666',
+      urlPrefix: 'http://localhost:1337',
       chores: [],
       schedule: [],
-      newChore: '',
-      newDate: '',
+      chore: '',
+      details: '',
+      date: '',
 
     };
   }
@@ -26,50 +29,83 @@ class IndividualKid extends React.Component {
     this.setState(inputChange);
   }
 
+  addChore(e) {
+    const chore = {
+      'account': {
+        'amazonId': this.state.username
+      },
+      'child': {
+        'name': this.props.child.name
+      },
+      'chores': [{
+        'title': 'Clean room',
+        'details': 'Do a good job',
+        'date': '2016-09-07'
+      }]
+    };
+    console.log('chore', JSON.stringify(chore));
+    $.ajax({
+      url: this.state.urlPrefix + '/api/chores',
+      type: 'POST',
+      dataType: 'application/json',
+      data: chore,
+      complete: function (data) {
+        console.log('Added chore:' + JSON.stringify(data));
+        // this.setState('adding', false);
+      }
+    });
+  }
+
   render() {
-    if (this.state.chores.length === 0) {
-      return (
-        <div>
-          <h1>{this.props.child.name}</h1>
-          <div> 
-            <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
-          </div>
-          <div> 
-          {
+    return (
+      <div>
+        <h1>{this.props.child.name}</h1>
+        <div> 
+          <p>Schedule</p>
+          <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
+        </div>
+        <div> 
+          <h3>Chores</h3>
+          {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
               <Chores chore={chore} index={index}/>
-            )
+            ))
           }
+          {(this.props.child.chores === undefined &&
+            <div>
+              <p>{this.props.name} does not currently have any chores assigned. 
+              Add a chore below.</p>          
+            </div>
+          )}
+          <div> 
+            <h3>New Chore</h3>
+              <form>
+                <input type='text' name='chore' placeholder='Chore' 
+                onChange={this.handleInputChange.bind(this)}>
+                </input>
+                {' '}
+                <input type='text' name='details' placeholder='Explanation' 
+                onChange={this.handleInputChange.bind(this)}>
+                </input>
+                {' '}
+                <input type='text' name='date' placeholder='Date' 
+                onChange={this.handleInputChange.bind(this)}>
+                </input>
+                {' '}
+                <button className='btn btn-default' 
+                onClick={this.addChore.bind(this)}>
+                  Add Chore
+                </button>
+              </form>
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div style={{ margin: '0 auto' }} >
-          <h2>Chores</h2>
-          <h3>Add a Chore</h3>
-            <form>
-              <input type='' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <input type='text' name='phone' placeholder='Phone Number' onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <button className='btn btn-default' onClick={this.addChild.bind(this)}>
-                Add Child
-              </button>
-            </form>
-        </div>
-      );
-    }
+      </div>
+    );
   } 
 }
 
 
 export default IndividualKid;
-
-
-
 
 
 

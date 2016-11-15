@@ -103,40 +103,41 @@ class Kids extends React.Component {
   }
 
   render() {
-    // if (!this.state.children.length === 0 || this.state.adding === true) {
-    //   return (
-    //     <div style={{ margin: '0 auto' }} >
-    //       <h2>Add a Child</h2>
-    //         <form>
-    //           <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
-    //           </input>
-    //           {' '}
-    //           <input type='text' name='phone' placeholder='Phone Number' 
-    //            onChange={this.handleInputChange.bind(this)}>
-    //           </input>
-    //           {' '}
-    //           <button className='btn btn-default' onClick={this.addChild.bind(this)}>
-    //             Add Child
-    //           </button>
-    //         </form>
-    //     </div>
-    //   );
-    // } else {
-    return (
-      <div>
-        <h3>My Children</h3>
-
-        <div> 
-        {
-          this.state.children.map((child, index) =>
-            <IndividualKid child={child} index={index}/>
-          )
-        }
+    if (this.state.children === undefined || this.state.adding === true) {
+      return (
+        <div style={{ margin: '0 auto' }} >
+          <h2>Add a Child</h2>
+            <form>
+              <input type='text' name='name' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
+              </input>
+              {' '}
+              <input type='text' name='phone' placeholder='Phone Number' 
+               onChange={this.handleInputChange.bind(this)}>
+              </input>
+              {' '}
+              <button className='btn btn-default' onClick={this.addChild.bind(this)}>
+                Add Child
+              </button>
+            </form>
         </div>
-        <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
-      </div>
-    );
-    // } 
+      );
+    } else {
+      return (
+        <div>
+          <h3>My Children</h3>
+
+          <div> 
+          {
+            this.state.children.map((child, index) =>
+              <IndividualKid child={child} index={index}/>
+            )
+          }
+          </div>
+          <br />
+          <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
+        </div>
+      );
+    } 
   } 
 }
 
