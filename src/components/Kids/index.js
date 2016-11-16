@@ -81,12 +81,13 @@ class Kids extends React.Component {
   }
 
   render() {
-    if (this.state.children === undefined || this.state.adding === true) {
+    if (this.state.children.length === 0 || this.state.adding === true) {
       return (
         <div style={{ margin: '0 auto' }} >
           <h2>Add a Child</h2>
             <form>
-              <input type='text' name='newChildName' placeholder='Name' onChange={this.handleInputChange.bind(this)}>
+              <input type='text' name='newChildName' placeholder='Name' 
+                onChange={this.handleInputChange.bind(this)}>
               </input>
               {' '}
               <input type='text' name='newChildPhone' placeholder='Phone Number' 

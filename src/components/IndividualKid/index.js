@@ -2,7 +2,7 @@ import React from 'react';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
-
+ 
 class IndividualKid extends React.Component {
 
   constructor(props) {
@@ -15,8 +15,8 @@ class IndividualKid extends React.Component {
       username: '',
       amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
-      chores: [],
-      schedule: [],
+      // chores: [],
+      // schedule: [],
       chore: '',
       details: '',
       date: '',
@@ -63,7 +63,7 @@ class IndividualKid extends React.Component {
         <h1>{this.props.child.name}</h1>
         <div> 
           <h2>Schedule</h2>
-          <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
+          <Schedule child={this.props.child} schedule={this.props.child.schedule} name={this.props.child.name}/>
         </div>
         <div> 
           <h3>Chores</h3>
