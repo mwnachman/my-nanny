@@ -8,12 +8,14 @@ class Chores extends React.Component {
 
     this.state = {
       title: this.props.chore.title,
+      name: this.props.child.name,
       details: this.props.chore.details,
       date: this.props.chore.date,
       amazonId: '999888777666',
       id: this.props.child.id,
+      choreId: this.props.chore.id,
       urlPrefix: 'http://localhost:1337',
-      completed: false,
+      // completed: false,
       editable: false,
     };
   }
@@ -32,27 +34,34 @@ class Chores extends React.Component {
   }
 
   updateChore(e) {
-    console.log('in update chore');
+    // console.log('in update chore', e);
     const chore = {
       'account': {
         'amazonId': this.state.amazonId
       },
       'child': {
-        'name': this.state.name,
         'id': this.state.id
-      }
+      },
+      'chores': [{
+        'id': this.state.choreId,
+        'title': this.state.title,
+        'details': this.state.details,
+        'date': this.state.date
+      }]
     };
+    console.log('state in updateChore', this.state);
+    console.log('chore', chore);
     $.ajax({
       url: this.state.urlPrefix + '/api/chores',
       type: 'PUT',
       dataType: 'application/json',
       data: chore,
       complete: function (data) {
-        console.log('Updated child:' + JSON.stringify(data));
+        console.log('Updated chore:' + JSON.stringify(data));
       }
     });
     this.setState( { 'editable': false } );
-    console.log('state in updateChore', this.state);
+    // console.log('state in updateChore', this.state);
   }
 
 

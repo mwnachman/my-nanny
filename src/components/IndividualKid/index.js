@@ -111,7 +111,7 @@ class IndividualKid extends React.Component {
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores child={this.props.child.id} chore={chore} index={index} key={chore.id}/>
+              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}/>
             ))
           }
           {(this.props.child.chores === undefined &&
