@@ -18,7 +18,8 @@ class Schedule extends React.Component {
       thursday: (this.props.schedule.defaultCurfews[4] || ''),
       friday: (this.props.schedule.defaultCurfews[5] || ''),
       saturday: (this.props.schedule.defaultCurfews[6] || ''),
-      defaultCurfews: this.props.schedule.defaultCurfews,
+      defaultCurfews: [this.sunday, this.monday, this.tuesday, 
+        this.wednesday, this.thursday, this.friday, this.saturday],
       editable: false
     };
   }
@@ -47,15 +48,7 @@ class Schedule extends React.Component {
         'name': this.state.name
       },
       'schedule': {
-        'defaultCurfews': [
-          this.state.sunday,
-          this.state.monday,
-          this.state.tuesday,
-          this.state.wednesday,
-          this.state.thursday,
-          this.state.friday,
-          this.state.saturday
-        ]
+        'defaultCurfews': this.defaultCurfews
       }
     };
     $.ajax({
@@ -70,17 +63,17 @@ class Schedule extends React.Component {
   }
 
   render() {
-    if (this.state.defaultCurfews === null || this.state.defaultCurfews.length === 0) {
-      return (
-        <div>
-          <h1>Schedule</h1>
-          <p>{this.state.name} does not currently have a Schedule. 
-          Enter the times {this.state.name} is expected to arrive home in the afternoons, 
-          and we will send you notifications when {this.state.name} checks in.</p>          
-        </div>
-      );
-    } else {
-      return (
+    return (
+      <div>
+
+        {((this.state.defaultCurfews === null || this.props.schedule.defaultCurfews.length === 0) && 
+          <div>
+            <p>{this.state.name} does not currently have a Schedule. 
+            Enter the times {this.state.name} is expected to arrive home in the afternoons, 
+            and we will send you notifications when {this.state.name} checks in.</p>          
+          </div>
+        )}
+
         <div>
           <table>
             <tbody>
@@ -93,44 +86,47 @@ class Schedule extends React.Component {
                 <th>Friday</th>
                 <th>Saturday</th>
               </tr>
-              {(this.state.editable === false &&
-                <tr>
-                  <td>{this.state.sunday}</td>
-                  <td>{this.state.monday}</td>
-                  <td>{this.state.tuesday}</td>
-                  <td>{this.state.wednesday}</td>
-                  <td>{this.state.thursday}</td>
-                  <td>{this.state.friday}</td>
-                  <td>{this.state.saturday}</td>
+            {(this.state.editable === false && 
+              <tr>
+                <td>{this.state.sunday}</td>
+                <td>{this.state.monday}</td>
+                <td>{this.state.tuesday}</td>
+                <td>{this.state.wednesday}</td>
+                <td>{this.state.thursday}</td>
+                <td>{this.state.friday}</td>
+                <td>{this.state.saturday}</td>
+                {(this.props.schedule.defaultCurfews.length !== 0 &&
                   <td><button onClick={this.editSchedule.bind(this)}>Edit</button></td>
-                </tr>
-              )}
+                )}
+              </tr>
+            )}
 
-              {(this.state.editable === true && 
-                <tr>
-                  <td><input name='sunday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
-                  <td><input name='monday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.monday} /></td>
-                  <td><input name='tuesday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.tuesday} /></td>
-                  <td><input name='wednesday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.wednesday} /></td>
-                  <td><input name='thursday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.thursday} /></td>
-                  <td><input name='friday' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.friday} /></td>
-                  <td><input name='saturd' type='time' 
-                    onChange={this.handleInputChange.bind(this)} value={this.state.saturday} /></td>
-                  <td><button onClick={this.updateSchedule.bind(this)}>Update</button></td>
-                </tr>
-              )}
+            {((this.state.defaultCurfews === null || this.state.editable === true || 
+              this.props.schedule.defaultCurfews.length === 0) &&
+              <tr>
+                <td><input name='sunday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
+                <td><input name='monday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.monday} /></td>
+                <td><input name='tuesday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.tuesday} /></td>
+                <td><input name='wednesday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.wednesday} /></td>
+                <td><input name='thursday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.thursday} /></td>
+                <td><input name='friday' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.friday} /></td>
+                <td><input name='saturd' type='time' 
+                  onChange={this.handleInputChange.bind(this)} value={this.state.saturday} /></td>
+                <td><button onClick={this.updateSchedule.bind(this)}>Confirm</button></td>
+              </tr>
+            )}
             </tbody>
           </table>
         </div>
-      );
-    }
-  } 
+      </div>
+    );
+  }
 }
 
 

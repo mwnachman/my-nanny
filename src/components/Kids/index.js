@@ -36,7 +36,7 @@ class Kids extends React.Component {
           ],
           checkedIn: false,
           schedule: {
-            defaultCurfews: [null, '18:30', '14:30', '17:00', '22:00', '17:00', null],
+            defaultCurfews: [],
             dateOfLastCurfew: '2016-11-14'
           }
         },

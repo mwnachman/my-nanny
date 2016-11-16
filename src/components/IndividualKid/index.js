@@ -61,7 +61,7 @@ class IndividualKid extends React.Component {
       <div>
         <h1>{this.props.child.name}</h1>
         <div> 
-          <p>Schedule</p>
+          <h2>Schedule</h2>
           <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
         </div>
         <div> 
@@ -88,7 +88,7 @@ class IndividualKid extends React.Component {
                   onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
-                <input type='text' name='date' placeholder='Date' 
+                <input type='date' name='date' 
                   onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
