@@ -9,40 +9,46 @@ class Schedule extends React.Component {
    
     this.state = {
       name: this.props.name, 
-      username: '999888777666',
+      username: '',
+      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
-      sunday: (this.props.schedule.defaultCurfews[0] || ''),
-      monday: (this.props.schedule.defaultCurfews[1] || ''),
-      tuesday: (this.props.schedule.defaultCurfews[2] || ''),
-      wednesday: (this.props.schedule.defaultCurfews[3] || ''),
-      thursday: (this.props.schedule.defaultCurfews[4] || ''),
-      friday: (this.props.schedule.defaultCurfews[5] || ''),
-      saturday: (this.props.schedule.defaultCurfews[6] || ''),
-      defaultCurfews: [this.sunday, this.monday, this.tuesday, 
+      sunday: (this.props.schedule[0] || ''),
+      monday: (this.props.schedule[1] || ''),
+      tuesday: (this.props.schedule[2] || ''),
+      wednesday: (this.props.schedule[3] || ''),
+      thursday: (this.props.schedule[4] || ''),
+      friday: (this.props.schedule[5] || ''),
+      saturday: (this.props.schedule[6] || ''),
+      schedule: [this.sunday, this.monday, this.tuesday, 
         this.wednesday, this.thursday, this.friday, this.saturday],
       editable: false
     };
   }
 
+  componentDidMount() {
+    console.log('default prop curfew', this.props.schedule);
+    console.log('default prop curfew', (typeof this.props.schedule));
+  }
+
   handleInputChange(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
-    console.log('state', JSON.stringify(this.state));
+    // console.log('state', JSON.stringify(this.state));
   }
 
   editSchedule(e) {
-    console.log('in edit schedule');
+    // console.log('in edit schedule');
     this.setState( { 'editable': true } );
-    console.log('state in updateChore', this.state);
+    // console.log('state in updateChore', this.state);
   }
 
   updateSchedule(e) {
     console.log('in update schedule');
     const schedule = {
       'account': {
-        'amazonId': this.state.username
+        'amazonId': this.state.amazonId
       },
       'child': {
         'name': this.state.name

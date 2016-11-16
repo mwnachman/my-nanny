@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import $ from 'jquery';
 
 
-
 class Login extends React.Component {
 
   constructor(props) {
@@ -12,7 +11,8 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      username: '999888777666',
+      username: '',
+      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337'
     };
   }
@@ -27,7 +27,7 @@ class Login extends React.Component {
   submitLoginForm(e) {
     const authInfo = {
       'account': {
-        'amazonId': this.state.username
+        'amazonId': this.state.amazonId
       }
     };
     console.log('authInfo', JSON.stringify(authInfo));

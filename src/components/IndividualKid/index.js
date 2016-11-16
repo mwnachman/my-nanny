@@ -12,7 +12,8 @@ class IndividualKid extends React.Component {
       name: '',
       phone: '',
       id: '',
-      username: '999888777666',
+      username: '',
+      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
       chores: [],
       schedule: [],
@@ -33,7 +34,7 @@ class IndividualKid extends React.Component {
   addChore(e) {
     const chore = {
       'account': {
-        'amazonId': this.state.username
+        'amazonId': this.state.amazonId
       },
       'child': {
         'name': this.props.child.name,

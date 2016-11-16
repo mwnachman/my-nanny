@@ -10,7 +10,7 @@ class Chores extends React.Component {
       title: this.props.chore.title,
       details: this.props.chore.details,
       date: this.props.chore.date,
-      username: '999888777666',
+      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
       completed: false,
       editable: false,
@@ -34,7 +34,7 @@ class Chores extends React.Component {
     console.log('in update chore');
     const chore = {
       'account': {
-        'amazonId': this.state.username
+        'amazonId': this.state.amazonId
       },
       'child': {
         'name': this.state.name,
