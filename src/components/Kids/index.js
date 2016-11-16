@@ -112,7 +112,6 @@ class Kids extends React.Component {
             )
           }
           </div>
-          <p>{this.state.username}blah</p>
           <br />
           <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
         </div>

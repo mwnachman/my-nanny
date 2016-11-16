@@ -20,8 +20,6 @@ class Schedule extends React.Component {
       thursday: '',
       friday: '',
       saturday: '',
-      // schedule: [this.sunday, this.monday, this.tuesday, 
-      //   this.wednesday, this.thursday, this.friday, this.saturday],
       originalSchedule: this.props.schedule,
       editable: false
     };
@@ -49,21 +47,12 @@ class Schedule extends React.Component {
   }
 
   editSchedule(e) {
-    // console.log('in edit schedule');
     this.setState({ editable: true });
     this.setState({ originalSchedule: [] });
-    // console.log('state in updateChore', this.state);
   }
 
-  // This function needs an API endpoint 
-  // If we need to send child's Id, need to keep
-  // it in state/props to send
-  updateSchedule(e) {
-    console.log('in update schedule');
-    console.log('id', this.state.id);
-    console.log('schedule', this.state.schedule);
-    console.log('monday', this.state.monday);
-    const schedule = {
+  makeSchedule() {
+    return {
       'account': {
         'amazonId': this.state.amazonId
       },
@@ -81,6 +70,23 @@ class Schedule extends React.Component {
         saturday: this.state.saturday
       }
     };
+  }
+
+  updateSchedule(e) {
+    const schedule = this.makeSchedule();
+    $.ajax({
+      url: this.state.urlPrefix + '/api/schedule',
+      type: 'PUT',
+      dataType: 'application/json',
+      data: schedule,
+      complete: function (data) {
+        console.log('Updated schedule:' + JSON.stringify(data));
+      }
+    });
+  }
+
+  createSchedule(e) {
+    const schedule = this.makeSchedule();
     $.ajax({
       url: this.state.urlPrefix + '/api/schedule',
       type: 'POST',
@@ -116,7 +122,7 @@ class Schedule extends React.Component {
                 <th>Friday</th>
                 <th>Saturday</th>
               </tr>
-            {(this.state.editable === false && 
+            {((this.state.editable === false && this.state.originalSchedule !== null) && 
               <tr>
                 <td>{this.state.sunday}</td>
                 <td>{this.state.monday}</td>
@@ -131,7 +137,26 @@ class Schedule extends React.Component {
               </tr>
             )}
 
-            {((this.state.originalSchedule === null || this.state.editable === true) &&
+            {((this.state.originalSchedule === null && this.state.editable !== true) &&
+              <tr>
+                <td><input name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
+                <td><input name='monday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.monday} /></td>
+                <td><input name='tuesday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.tuesday} /></td>
+                <td><input name='wednesday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.wednesday} /></td>
+                <td><input name='thursday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.thursday} /></td>
+                <td><input name='friday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.friday} /></td>
+                <td><input name='saturday' type='time' onClick={this.handleInputChange.bind(this)}
+                  onChange={this.handleInputChange.bind(this)} value={this.state.saturday} /></td>
+                <td><button onClick={this.createSchedule.bind(this)}>Create</button></td>
+              </tr>
+            )}
+            {((this.state.editable === true && this.state.originalSchedule !== null) &&
               <tr>
                 <td><input name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
@@ -158,6 +183,4 @@ class Schedule extends React.Component {
   }
 }
 
-
 export default Schedule;
-

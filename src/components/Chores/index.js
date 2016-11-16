@@ -11,6 +11,7 @@ class Chores extends React.Component {
       details: this.props.chore.details,
       date: this.props.chore.date,
       amazonId: '999888777666',
+      id: this.props.child.id,
       urlPrefix: 'http://localhost:1337',
       completed: false,
       editable: false,
@@ -38,7 +39,7 @@ class Chores extends React.Component {
       },
       'child': {
         'name': this.state.name,
-        'phone': this.state.phone
+        'id': this.state.id
       }
     };
     $.ajax({
