@@ -10,6 +10,7 @@ class Schedule extends React.Component {
     this.state = {
       name: this.props.name, 
       username: '',
+      // id: this.props.key,
       amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
       sunday: (this.props.schedule[0] || ''),
@@ -44,6 +45,9 @@ class Schedule extends React.Component {
     // console.log('state in updateChore', this.state);
   }
 
+  // This function needs an API endpoint 
+  // If we need to send child's Id, need to keep
+  // it in state/props to send
   updateSchedule(e) {
     console.log('in update schedule');
     const schedule = {
@@ -51,11 +55,10 @@ class Schedule extends React.Component {
         'amazonId': this.state.amazonId
       },
       'child': {
-        'name': this.state.name
+        'name': this.state.name,
+        'id': this.state.id
       },
-      'schedule': {
-        'defaultCurfews': this.defaultCurfews
-      }
+      'schedule': this.state.schedule
     };
     $.ajax({
       url: this.state.urlPrefix + '/api/schedule',
