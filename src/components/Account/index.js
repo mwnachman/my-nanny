@@ -1,4 +1,5 @@
 import React from 'react';
+// import IndividualKidBrief from '../IndividualKidBrief/index';
 import $ from 'jquery';
 
 class Account extends React.Component {
@@ -142,3 +143,14 @@ class Account extends React.Component {
 
 
 export default Account;
+
+// {(this.state.children.length !== 0 &&
+//               <div>
+//                 <h3>Children</h3>
+//                 {
+//                 this.state.children.map((child, index) =>
+//                 <IndividualKidBrief child={child} index={index} key={child.id}/>
+//                 )
+//                 }
+//               </div>
+//             )}
