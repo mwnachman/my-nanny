@@ -15,7 +15,7 @@ class Chores extends React.Component {
       id: this.props.child.id,
       choreId: this.props.chore.id,
       urlPrefix: 'http://localhost:1337',
-      // completed: false,
+      completed: false,
       editable: false,
     };
   }
@@ -33,9 +33,8 @@ class Chores extends React.Component {
     console.log('state in updateChore', this.state);
   }
 
-  updateChore(e) {
-    // console.log('in update chore', e);
-    const chore = {
+  createChore() {
+    return {
       'account': {
         'amazonId': this.state.amazonId
       },
@@ -46,11 +45,17 @@ class Chores extends React.Component {
         'id': this.state.choreId,
         'title': this.state.title,
         'details': this.state.details,
-        'date': this.state.date
+        'date': this.state.date,
+        'completed': this.state.completed
       }]
     };
-    console.log('state in updateChore', this.state);
-    console.log('chore', chore);
+  }
+
+  updateChore(e) {
+    // console.log('in update chore', e);
+    const chore = createChore();
+    // console.log('state in updateChore', this.state);
+    // console.log('chore', chore);
     $.ajax({
       url: this.state.urlPrefix + '/api/chores',
       type: 'PUT',
@@ -64,6 +69,26 @@ class Chores extends React.Component {
     // console.log('state in updateChore', this.state);
   }
 
+  deleteChore(e) {
+    console.log('in delete chore');
+    const chore = this.createChore();
+    $.ajax({
+      url: this.state.urlPrefix + '/api/chores',
+      type: 'DELETE',
+      dataType: 'application/json',
+      data: chore,
+      complete: function (data) {
+        console.log('Deleted chore:' + JSON.stringify(data));
+      }
+    });
+  }
+
+  markCompleted(e) {
+    console.log('in mark completed');
+    this.setState({ completed: true });
+    this.updateChore();
+  }
+
 
   render() {
     return (
@@ -74,6 +99,8 @@ class Chores extends React.Component {
             {this.state.details}
             {this.state.date}
             <button onClick={this.makeEditable.bind(this)}>Edit</button> 
+            <button onClick={this.deleteChore.bind(this)}>Delete</button> 
+            <button onClick={this.markCompleted.bind(this)}>Mark Completed</button> 
           </div> 
         )}
 
