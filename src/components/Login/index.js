@@ -9,7 +9,7 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      urlPrefix: 'http://localhost:1337'
+      urlPrefix: 'https://localhost:1337'
     };
   }
 
@@ -34,7 +34,7 @@ class Login extends React.Component {
   checkAuth(e) {
     console.log('in check auth');
     $.ajax({
-      url: this.state.urlPrefis + '/test',
+      url: this.state.urlPrefix + '/test',
       type: 'GET',
       complete: function(data) {
         console.log('Status is:', JSON.stringify(data));
