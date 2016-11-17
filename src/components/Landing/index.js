@@ -9,7 +9,7 @@ export const Landing = () => (
   <div className='landing'>
     <Nav />
     <h1>Landing Page!</h1>
-    <Link to='/login'>Log In</Link>
+    <a href='http://localhost:1337/login'>Log In</a>
   </div>
 ); 
 
