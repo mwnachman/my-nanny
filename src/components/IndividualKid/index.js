@@ -2,24 +2,22 @@ import React from 'react';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
-
+ 
 class IndividualKid extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      name: '',
-      phone: '',
-      id: '',
-      username: '999888777666',
+      name: this.props.child.name,
+      phone: this.props.child.phone,
+      id: this.props.child.id,
+      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
-      chores: [],
-      schedule: [],
       chore: '',
       details: '',
       date: '',
-
+      editable: false,
     };
   }
 
@@ -33,10 +31,11 @@ class IndividualKid extends React.Component {
   addChore(e) {
     const chore = {
       'account': {
-        'amazonId': this.state.username
+        'amazonId': this.state.amazonId
       },
       'child': {
-        'name': this.props.child.name,
+        'name': this.state.name,
+        'id': this.state.id,
       },
       'chores': [{
         'title': this.state.chore,
@@ -44,7 +43,7 @@ class IndividualKid extends React.Component {
         'date': this.state.date
       }]
     };
-    console.log('chore', JSON.stringify(chore));
+    // console.log('chore', JSON.stringify(chore));
     $.ajax({
       url: this.state.urlPrefix + '/api/chores',
       type: 'POST',
@@ -56,19 +55,63 @@ class IndividualKid extends React.Component {
     });
   }
 
+  editChild(e) {
+    console.log('in edit child');
+    this.setState({ editable: true });
+  }
+
+  confirmChanges(e) {
+    console.log('in confirm changes');
+    const child = {
+      'account': {
+        'amazonId': this.state.amazonId
+      },
+      'child': {
+        'id': this.state.id,
+        'name': this.state.name,
+        'phone': this.state.phone
+      }
+    };
+    $.ajax({
+      url: this.state.urlPrefix + '/api/children',
+      type: 'PUT',
+      dataType: 'application/json',
+      data: child,
+      complete: function (data) {
+        console.log('Updated chore:' + JSON.stringify(data));
+      }
+    });
+    this.setState({ editable: false });
+  }
+
   render() {
     return (
       <div>
         <h1>{this.props.child.name}</h1>
+        <button onClick={this.editChild.bind(this)}>Edit</button>
+        {(this.state.editable === true && 
+          <form>
+            <input type='text' name='name' value={this.state.name}
+              onChange={this.handleInputChange.bind(this)}>
+            </input>
+            <input type='text' name='phone' value={this.state.phone}
+              onChange={this.handleInputChange.bind(this)}>
+            </input>
+            <button className='btn btn-default' 
+              onClick={this.confirmChanges.bind(this)}>
+              Confirm
+            </button>
+          </form>
+        )}
         <div> 
-          <p>Schedule</p>
-          <Schedule schedule={this.props.child.schedule} name={this.props.child.name}/>
+          <h2>Schedule</h2>
+          <Schedule child={this.props.child} schedule={this.props.child.schedule} name={this.props.child.name}/>
         </div>
         <div> 
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores chore={chore} index={index} key={chore.id}/>
+              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}/>
             ))
           }
           {(this.props.child.chores === undefined &&
@@ -88,7 +131,7 @@ class IndividualKid extends React.Component {
                   onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
-                <input type='text' name='date' placeholder='Date' 
+                <input type='date' name='date' 
                   onChange={this.handleInputChange.bind(this)}>
                 </input>
                 {' '}
