@@ -32,10 +32,6 @@ class Kids extends React.Component {
       type: 'GET',
     }).done(dataRes => {
       const data = JSON.parse(dataRes);
-      console.log('children', data.children);
-      console.log('username', data.username);
-      console.log('phone', data.phone);
-      console.log('email', data.email);
       this.setState({ username: data.username }); 
       this.setState({ phone: data.phone });
       this.setState({ email: data.email });

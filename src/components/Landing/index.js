@@ -9,10 +9,9 @@ export const Landing = () => (
   <div className='landing'>
     <Nav />
     <h1>Landing Page!</h1>
-    <p>Have an account?</p>
     <Link to='/login'>Log In</Link>
-    <p>Need an account?</p>
-    <Link to='/signup'>Sign Up</Link>
+    <br />
+    <Link to='/login'>Sign Up</Link>
   </div>
 ); 
 

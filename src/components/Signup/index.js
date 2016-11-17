@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+
 
 
 
@@ -10,7 +10,7 @@ class Signup extends React.Component {
 
     this.state = {
       amazonId: '999888777666',
-      firstname: '',
+      username: '',
       email: '',
       phone: '',
       password: '',
@@ -32,7 +32,7 @@ class Signup extends React.Component {
         'amazonId': this.state.amazonId
       },
       'account': {
-        'username': this.state.firstname,
+        'username': this.state.username,
         'phone': this.state.phone,
         'email': this.state.email
       }
@@ -57,7 +57,7 @@ class Signup extends React.Component {
             <tbody>
               <tr>
                 <td>First Name</td>
-                <td><input type='text' name='firstname'
+                <td><input type='text' name='username'
                   onChange={this.handleInputChange.bind(this)}/>
                 </td>
               </tr>
@@ -72,6 +72,18 @@ class Signup extends React.Component {
                 <td><input type='text' name='phone'
                   onChange={this.handleInputChange.bind(this)}/>
                 </td>
+              </tr>
+              <tr>
+                <div class='dropdown'>
+                  <button class='dropbtn'>Time Zone</button>
+                  <div class='dropdown-content'>
+                    <a href='#'>US/Eastern</a>
+                    <a href='#'>US/Central</a>
+                    <a href='#'>US/Mountain</a>
+                    <a href='#'>US/Pacific</a>
+                    <a href='#'>US/Hawaii</a>
+                  </div>
+                </div>
               </tr>
               <tr>
                 <td>Password</td>
@@ -91,8 +103,6 @@ class Signup extends React.Component {
           </table>
           <button onClick={this.submitSignupForm.bind(this)}>Sign Up</button>
         </form>
-        <span>Have an account? </span>
-        <Link to='/login'>Log In</Link>
       </div>
     );
   }

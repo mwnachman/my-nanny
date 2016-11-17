@@ -43,7 +43,6 @@ class IndividualKid extends React.Component {
         'date': this.state.date
       }]
     };
-    // console.log('chore', JSON.stringify(chore));
     $.ajax({
       url: this.state.urlPrefix + '/api/chores',
       type: 'POST',
@@ -56,7 +55,6 @@ class IndividualKid extends React.Component {
   }
 
   editChild(e) {
-    console.log('in edit child');
     this.setState({ editable: true });
   }
 
