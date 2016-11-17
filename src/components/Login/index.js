@@ -9,35 +9,35 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      email: '',
-      password: '',
-      username: '',
-      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337'
     };
   }
 
-  handleInputChange(e) {
-    console.log(e.target);
-    const inputChange = {};
-    inputChange[e.target.name] = e.target.value;
-    this.setState(inputChange);
-  }
+  // handleInputChange(e) {
+  //   console.log(e.target);
+  //   const inputChange = {};
+  //   inputChange[e.target.name] = e.target.value;
+  //   this.setState(inputChange);
+  // }
 
-  submitLoginForm(e) {
-    const authInfo = {
-      'account': {
-        'amazonId': this.state.amazonId
-      }
-    };
-    console.log('authInfo', JSON.stringify(authInfo));
+  loginRedirect() {
+    console.log('in login redirect');
     $.ajax({
       url: this.state.urlPrefix + '/login',
-      type: 'POST',
-      dataType: 'application/json',
-      data: authInfo,
+      type: 'GET',
       complete: function (data) {
         console.log('Logged in:' + JSON.stringify(data));
+      }
+    });
+  }
+
+  checkAuth(e) {
+    console.log('in check auth');
+    $.ajax({
+      url: this.state.urlPrefis + '/test',
+      type: 'GET',
+      complete: function(data) {
+        console.log('Status is:', JSON.stringify(data));
       }
     });
   }
@@ -46,9 +46,8 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log In</h2>
-        <button onClick={this.submitLoginForm.bind(this)}>Login</button>
-        <span>Need an account? </span>
-        <Link to='/signup'>Sign up</Link>
+        <button onClick={this.loginRedirect.bind(this)}>Login</button>
+        <button onClick={this.checkAuth.bind(this)}>Check Auth</button>
       </div>
     );
   } 
