@@ -13,7 +13,7 @@ class IndividualKid extends React.Component {
       phone: this.props.child.phone,
       id: this.props.child.id,
       amazonToken: this.props.amazonToken,
-      urlPrefix: 'http://localhost:1337',
+      urlPrefix: 'https://localhost:1337',
       chore: '',
       details: '',
       date: '',

@@ -12,7 +12,7 @@ class Schedule extends React.Component {
       username: '',
       id: this.props.child.id,
       amazonToken: this.props.amazonToken,
-      urlPrefix: 'http://localhost:1337',
+      urlPrefix: 'https://localhost:1337',
       sunday: '',
       monday: '',
       tuesday: '',

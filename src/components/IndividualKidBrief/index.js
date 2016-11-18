@@ -9,8 +9,8 @@ class IndividualKidBrief extends React.Component {
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
-      amazonId: '999888777666',
-      urlPrefix: 'http://localhost:1337',
+      amazonToken: this.props.amazonToken,
+      urlPrefix: 'https://localhost:1337',
       editable: false,
     };
   }

@@ -15,7 +15,7 @@ class Kids extends React.Component {
       phone: '',
       username: '',
       email: '', 
-      urlPrefix: 'http://localhost:1337',
+      urlPrefix: 'https://localhost:1337',
       children: [],
       adding: false,
       amazonToken: '',
