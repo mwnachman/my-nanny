@@ -2,7 +2,7 @@ import React from 'react';
 // import { IndexLink, Link } from 'react-router';
 import $ from 'jquery';
 import IndividualKid from '../IndividualKid/index';
-
+import config from '../../config';
 
 class Kids extends React.Component {
 
@@ -15,7 +15,7 @@ class Kids extends React.Component {
       phone: '',
       username: '',
       email: '', 
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       children: [],
       adding: false,
       amazonToken: '',

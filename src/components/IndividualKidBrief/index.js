@@ -1,4 +1,6 @@
 import React from 'react';
+import config from '../../config';
+
  
 class IndividualKidBrief extends React.Component {
 
@@ -10,7 +12,7 @@ class IndividualKidBrief extends React.Component {
       phone: this.props.child.phone,
       id: this.props.child.id,
       amazonToken: this.props.amazonToken,
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       editable: false,
     };
   }

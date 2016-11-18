@@ -1,6 +1,8 @@
 import React from 'react';
 // import IndividualKidBrief from '../IndividualKidBrief/index';
 import $ from 'jquery';
+import config from '../../config';
+
 
 class Account extends React.Component {
 
@@ -13,7 +15,7 @@ class Account extends React.Component {
       phone: 'Not Yet Entered', 
       username: 'Not Yet Entered',
       timezone: 'Not Yet Entered',
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       children: [],
       editable: false,
     };

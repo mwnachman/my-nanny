@@ -1,5 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
+import config from '../../config';
+
 
 class Chores extends React.Component {
 
@@ -7,6 +9,7 @@ class Chores extends React.Component {
     super(props);
 
     this.state = {
+      show: true,
       title: this.props.chore.title,
       name: this.props.child.name,
       details: this.props.chore.details,
@@ -14,23 +17,23 @@ class Chores extends React.Component {
       amazonToken: this.props.amazonToken,
       id: this.props.child.id,
       choreId: this.props.chore.id,
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       completed: false,
       editable: false,
     };
   }
 
   handleInputChange(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
   }
 
   makeEditable(e) {
-    console.log('in make editable');
+    // console.log('in make editable');
     this.setState( { 'editable': true } );
-    console.log('state in updateChore', this.state);
+    // console.log('state in updateChore', this.state);
   }
 
   createChore() {
@@ -78,6 +81,7 @@ class Chores extends React.Component {
         console.log('Deleted chore:' + JSON.stringify(data));
       }
     });
+    this.setState({ show: false });
   }
 
   markCompleted(e) {
@@ -90,28 +94,32 @@ class Chores extends React.Component {
   render() {
     return (
       <div>
-        {(this.state.editable === false &&
-          <div>
-            {this.state.title}
-            {this.state.details}
-            {this.state.date}
-            <button onClick={this.makeEditable.bind(this)}>Edit</button> 
-            <button onClick={this.deleteChore.bind(this)}>Delete</button> 
-            <button onClick={this.markCompleted.bind(this)}>Mark Completed</button> 
-          </div> 
-        )}
+      {(this.state.show === true &&
+        <div>
+          {(this.state.editable === false &&
+            <div>
+              {this.state.title}
+              {this.state.details}
+              {this.state.date}
+              <button onClick={this.makeEditable.bind(this)}>Edit</button> 
+              <button onClick={this.deleteChore.bind(this)}>Delete</button> 
+              <button onClick={this.markCompleted.bind(this)}>Mark Completed</button> 
+            </div> 
+          )}
 
-        {(this.state.editable === true && 
-          <div>
-            <input name='title' value={this.state.title} 
-              onChange={this.handleInputChange.bind(this)}/>
-            <input name='details' value={this.state.details}
-              onChange={this.handleInputChange.bind(this)}/>
-            <input type='date' name='date' value={this.state.date}
-              onChange={this.handleInputChange.bind(this)}/>
-            <button onClick={this.updateChore.bind(this)}>Update</button> 
-          </div>
-        )}
+          {(this.state.editable === true && 
+            <div>
+              <input name='title' value={this.state.title} 
+                onChange={this.handleInputChange.bind(this)}/>
+              <input name='details' value={this.state.details}
+                onChange={this.handleInputChange.bind(this)}/>
+              <input type='date' name='date' value={this.state.date}
+                onChange={this.handleInputChange.bind(this)}/>
+              <button onClick={this.updateChore.bind(this)}>Update</button> 
+            </div>
+          )}
+        </div>
+      )}
       </div>
     );  
   } 
