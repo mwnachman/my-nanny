@@ -1,5 +1,5 @@
 import React from 'react';
-// import IndividualKidBrief from '../IndividualKidBrief/index';
+import IndividualKidBrief from '../IndividualKidBrief/index';
 import $ from 'jquery';
 import config from '../../config';
 
@@ -22,6 +22,7 @@ class Account extends React.Component {
   }
 
   componentWillMount() {
+    
     this.setState({ amazonToken: localStorage.getItem('amazon-token') });
   }
 
@@ -141,6 +142,19 @@ class Account extends React.Component {
           <button onClick={this.updateAccount.bind(this)}>Update Account</button>
         </form>
         )}
+        <div>
+          {(this.state.children.length !== 0 &&
+          <div>
+            <h3>Children</h3>
+            {
+            this.state.children.map((child, index) =>
+            <IndividualKidBrief amazonToken={this.state.amazonToken} 
+             child={child} index={index} key={child.id}/>
+            )
+            }
+          </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -150,14 +164,3 @@ class Account extends React.Component {
 
 export default Account;
 
-// {(this.state.children.length !== 0 &&
-//               <div>
-//                 <h3>Children</h3>
-//                 {
-//                 this.state.children.map((child, index) =>
-//                 <IndividualKidBrief amazonToken={this.state.amazonToken} 
-//                  child={child} index={index} key={child.id}/>
-//                 )
-//                 }
-//               </div>
-//             )}

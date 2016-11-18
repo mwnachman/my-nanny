@@ -1,20 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { Grid, Navbar, Jumbotron, Button, Row } from 'react-bootstrap';
+
 // import './User.css';
 
 export const Nav = () => (
-  <div className='nav'>
-    <h1>myNanny</h1>
-    <ul>
-      <li><Link to='/'>LANDING</Link></li>
-      <li><Link to='/app/home'>Home</Link></li>
-      <li><Link to='/app/account'>account</Link></li>
-      <li><Link to='/app/kids'>kids</Link></li>
-      <li><Link to='/app/logout'>logout</Link></li>
-    </ul>
+  <div className='container'>
+    <Navbar inverse fixedTop>
+      <Grid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to='/app/home'>myNanny</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+      </Grid>
+    </Navbar>
   </div>
 ); 
 
 
 
 export default Nav;
+
+      
