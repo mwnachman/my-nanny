@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './assets/logo.svg';
 import Nav from '../Nav';
+import { Grid, Navbar, Jumbotron, Button, Row } from 'react-bootstrap';
 import './app.css';
 
 class App extends Component {
@@ -16,9 +17,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
-        <Nav />
-        { this.props.children }
+      <div className='App container'>
+        <Row>
+          <Nav />
+        </Row>
+        <Row>
+          { this.props.children }
+        </Row>
       </div>
     );
   }

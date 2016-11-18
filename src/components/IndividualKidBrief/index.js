@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import config from '../../config';
 
  
@@ -8,6 +9,7 @@ class IndividualKidBrief extends React.Component {
     super(props);
 
     this.state = {
+      show: true,
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
@@ -18,7 +20,7 @@ class IndividualKidBrief extends React.Component {
   }
 
   handleInputChange(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
@@ -31,9 +33,6 @@ class IndividualKidBrief extends React.Component {
   confirmChanges(e) {
     console.log('in confirm changes');
     const child = {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
         'id': this.state.id,
         'name': this.state.name,
@@ -41,12 +40,12 @@ class IndividualKidBrief extends React.Component {
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children',
+      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: child,
       complete: function (data) {
-        console.log('Updated chore:' + JSON.stringify(data));
+        console.log('Updated child:' + JSON.stringify(data));
       }
     });
     this.setState({ editable: false });
@@ -63,7 +62,7 @@ class IndividualKidBrief extends React.Component {
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children',
+      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
       type: 'DELETE',
       dataType: 'application/json',
       data: child,
@@ -71,30 +70,35 @@ class IndividualKidBrief extends React.Component {
         console.log('Deleted Child:' + JSON.stringify(data));
       }
     });
-    // will this child then disappear from the account without
-    // needing to do anything else?
+    this.setState({ show: false });
   }
 
   render() {
     return (
       <div>
-        <h1>{this.props.child.name}</h1>
-        <button onClick={this.editChild.bind(this)}>Edit</button>
-        {(this.state.editable === true && 
-          <form>
-            <input type='text' name='name' value={this.state.name}
-              onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <input type='text' name='phone' value={this.state.phone}
-              onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <button className='btn btn-default' 
-              onClick={this.confirmChanges.bind(this)}>
-              Confirm
-            </button>
-          </form>
+        {(this.state.show === true && 
+          <div>
+          <h1>{this.props.child.name}</h1>
+          <button className='btn btn-default'
+            onClick={this.editChild.bind(this)}>Edit</button>
+          <button className='btn btn-default'
+            onClick={this.deleteChild.bind(this)}>Delete</button>
+          {(this.state.editable === true && 
+            <form>
+              <input type='text' name='name' value={this.state.name}
+                onChange={this.handleInputChange.bind(this)}>
+              </input>
+              <input type='text' name='phone' value={this.state.phone}
+                onChange={this.handleInputChange.bind(this)}>
+              </input>
+              <button className='btn btn-default' 
+                onClick={this.confirmChanges.bind(this)}>
+                Confirm
+              </button>
+            </form>
+          )}
+          </div>
         )}
-        <button onClick={this.deleteChild.bind(this)}>Delete</button>
       </div>
     );
   } 

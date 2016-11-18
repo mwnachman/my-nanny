@@ -13,7 +13,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const amzToken = ((((window.location.href).split('='))[1]).split('&'))[0];
+    const amzToken = localStorage.getItem('amazon-token') ? localStorage.getItem('amazon-token') : 
+      ((((window.location.href).split('='))[1]).split('&'))[0];
     this.setState({ amazonToken: amzToken });
     localStorage.setItem('amazon-token', amzToken);
     // console.log('local storage', localStorage.getItem('amazon-token'));

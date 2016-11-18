@@ -44,8 +44,8 @@ class Kids extends React.Component {
   addChild(e) {
     const child = {
       'child': {
-        'name': this.state.name,
-        'phone': this.state.phone
+        'name': this.state.newChildName,
+        'phone': this.state.newChildPhone
       }
     };
     $.ajax({
