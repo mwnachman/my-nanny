@@ -4,15 +4,23 @@ import Login from '../Login';
 import Signup from '../Signup';
 import { Link } from 'react-router';
 
+const amazonLogin = () => {
+  const options = { scope: 'profile' };
+  amazon.Login.authorize(options, '/app/home');
+  return false;
+};
+
+const amazonLogout = () => {
+  amazon.Login.logout();
+};
 
 export const Landing = () => (
   <div className='landing'>
-    <Nav />
-    <h1>Landing Page!</h1>
-    <a href='http://localhost:1337/login'>Log In</a>
+    <a href='#' id='LoginWithAmazon' onClick={amazonLogin.bind(this)} >
+      <img alt='Login with Amazon'
+        src='https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png'
+        width='156' height='32' />
+    </a>
   </div>
 ); 
-
-
-
 export default Landing;

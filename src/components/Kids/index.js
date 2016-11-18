@@ -19,24 +19,28 @@ class Kids extends React.Component {
       urlPrefix: 'http://localhost:1337',
       children: [],
       adding: false,
+      amazonToken: '',
     };
   }
 
   componentWillMount() {
-    console.log('we need to check for a token here');
+    // console.log('we need to check for a token here');
+    this.setState({ amazonToken: localStorage.getItem('amazon-token') });
   }
 
   componentDidMount() {
-    $.ajax({
-      url: this.state.urlPrefix + '/api/account?amazonId=' + this.state.amazonId,
-      type: 'GET',
-    }).done(dataRes => {
-      const data = JSON.parse(dataRes);
-      this.setState({ username: data.username }); 
-      this.setState({ phone: data.phone });
-      this.setState({ email: data.email });
-      this.setState({ children: data.children });
-    });
+    console.log('amazonToken', this.state.amazonToken);
+    console.log('incomponent did mount');
+    // $.ajax({
+    //   url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+    //   type: 'GET',
+    // }).done(dataRes => {
+    //   const data = JSON.parse(dataRes);
+    //   this.setState({ username: data.username }); 
+    //   this.setState({ phone: data.phone });
+    //   this.setState({ email: data.email });
+    //   this.setState({ children: data.children });
+    // });
   }
 
   addChild(e) {
