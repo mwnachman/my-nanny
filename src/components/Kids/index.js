@@ -15,7 +15,6 @@ class Kids extends React.Component {
       phone: '',
       username: '',
       email: '', 
-      amazonId: '999888777666',
       urlPrefix: 'http://localhost:1337',
       children: [],
       adding: false,
@@ -24,37 +23,33 @@ class Kids extends React.Component {
   }
 
   componentWillMount() {
-    // console.log('we need to check for a token here');
     this.setState({ amazonToken: localStorage.getItem('amazon-token') });
   }
 
   componentDidMount() {
-    console.log('amazonToken', this.state.amazonToken);
+    // console.log('amazonToken', this.state.amazonToken);
     console.log('incomponent did mount');
-    // $.ajax({
-    //   url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
-    //   type: 'GET',
-    // }).done(dataRes => {
-    //   const data = JSON.parse(dataRes);
-    //   this.setState({ username: data.username }); 
-    //   this.setState({ phone: data.phone });
-    //   this.setState({ email: data.email });
-    //   this.setState({ children: data.children });
-    // });
+    $.ajax({
+      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+      type: 'GET',
+    }).done(dataRes => {
+      const data = JSON.parse(dataRes);
+      this.setState({ username: data.username }); 
+      this.setState({ phone: data.phone });
+      this.setState({ email: data.email });
+      this.setState({ children: data.children });
+    });
   }
 
   addChild(e) {
     const child = {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
         'name': this.state.name,
         'phone': this.state.phone
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children',
+      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
       type: 'POST',
       dataType: 'application/json',
       data: child,
@@ -108,7 +103,7 @@ class Kids extends React.Component {
           <div> 
           {
             this.state.children.map((child, index) =>
-              <IndividualKid child={child} index={index} key={child.id}/>
+              <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
             )
           }
           </div>

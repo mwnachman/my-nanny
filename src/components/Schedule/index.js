@@ -11,7 +11,7 @@ class Schedule extends React.Component {
       name: this.props.name, 
       username: '',
       id: this.props.child.id,
-      amazonId: '999888777666',
+      amazonToken: this.props.amazonToken,
       urlPrefix: 'http://localhost:1337',
       sunday: '',
       monday: '',
@@ -53,11 +53,7 @@ class Schedule extends React.Component {
 
   makeSchedule() {
     return {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
-        'name': this.state.name,
         'id': this.state.id
       },
       'schedule': {
@@ -75,7 +71,7 @@ class Schedule extends React.Component {
   updateSchedule(e) {
     const schedule = this.makeSchedule();
     $.ajax({
-      url: this.state.urlPrefix + '/api/schedule',
+      url: this.state.urlPrefix + '/api/schedule?access_token=' + this.state.amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: schedule,
@@ -88,7 +84,7 @@ class Schedule extends React.Component {
   createSchedule(e) {
     const schedule = this.makeSchedule();
     $.ajax({
-      url: this.state.urlPrefix + '/api/schedule',
+      url: this.state.urlPrefix + '/api/schedule?access_token=' + this.state.amazonToken,
       type: 'POST',
       dataType: 'application/json',
       data: schedule,

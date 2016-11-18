@@ -12,7 +12,7 @@ class IndividualKid extends React.Component {
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
-      amazonId: '999888777666',
+      amazonToken: this.props.amazonToken,
       urlPrefix: 'http://localhost:1337',
       chore: '',
       details: '',
@@ -30,11 +30,7 @@ class IndividualKid extends React.Component {
 
   addChore(e) {
     const chore = {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
-        'name': this.state.name,
         'id': this.state.id,
       },
       'chores': [{
@@ -44,7 +40,7 @@ class IndividualKid extends React.Component {
       }]
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/chores',
+      url: this.state.urlPrefix + '/api/chores?access_token=' + this.state.amazonToken,
       type: 'POST',
       dataType: 'application/json',
       data: chore,
@@ -61,9 +57,6 @@ class IndividualKid extends React.Component {
   confirmChanges(e) {
     console.log('in confirm changes');
     const child = {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
         'id': this.state.id,
         'name': this.state.name,
@@ -71,7 +64,7 @@ class IndividualKid extends React.Component {
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children',
+      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: child,
@@ -103,13 +96,15 @@ class IndividualKid extends React.Component {
         )}
         <div> 
           <h2>Schedule</h2>
-          <Schedule child={this.props.child} schedule={this.props.child.schedule} name={this.props.child.name}/>
+          <Schedule child={this.props.child} schedule={this.props.child.schedule} 
+            name={this.props.child.name} amazonToken={this.state.amazonToken}/>
         </div>
         <div> 
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}/>
+              <Chores child={this.props.child} chore={chore} index={index} key={chore.id} 
+                amazonToken={this.props.amazonToken}/>
             ))
           }
           {(this.props.child.chores === undefined &&
