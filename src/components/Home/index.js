@@ -1,15 +1,33 @@
 import React from 'react';
-// import { IndexLink, Link } from 'react-router';
-// import './User.css';
+import $ from 'jquery';
 
-export const Home = () => (
-  <div className='home'>
 
-    <h1>Home Page!</h1>
+class Home extends React.Component {
 
-  </div>
-); 
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      amazonToken: ''
+    };
+  }
+
+  componentDidMount() {
+    const amzToken = ((((window.location.href).split('='))[1]).split('&'))[0];
+    this.setState({ amazonToken: amzToken });
+    localStorage.setItem('amazon-token', amzToken);
+    console.log('local storage', localStorage.getItem('amazon-token'));
+  }
+
+  render() {
+    return (
+    <div className='home'>
+      <h1>Home Page!</h1>
+    </div>
+    );
+  }
+
+}
 
 
 export default Home;

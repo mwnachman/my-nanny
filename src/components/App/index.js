@@ -13,9 +13,9 @@ class App extends Component {
     };
   }
 
-  addNewChild(name, phone) {
-    console.log('in addChild CoreLayout');
-  }
+  // addNewChild(name, phone) {
+  //   console.log('in addChild CoreLayout');
+  // }
 
   render() {
     return (
