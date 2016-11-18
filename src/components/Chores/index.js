@@ -11,7 +11,7 @@ class Chores extends React.Component {
       name: this.props.child.name,
       details: this.props.chore.details,
       date: this.props.chore.date,
-      amazonId: '999888777666',
+      amazonToken: this.props.amazonToken,
       id: this.props.child.id,
       choreId: this.props.chore.id,
       urlPrefix: 'http://localhost:1337',
@@ -35,9 +35,6 @@ class Chores extends React.Component {
 
   createChore() {
     return {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
         'id': this.state.id
       },
@@ -57,7 +54,7 @@ class Chores extends React.Component {
     // console.log('state in updateChore', this.state);
     // console.log('chore', chore);
     $.ajax({
-      url: this.state.urlPrefix + '/api/chores',
+      url: this.state.urlPrefix + '/api/chores?access_token=' + this.state.amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: chore,
@@ -70,10 +67,10 @@ class Chores extends React.Component {
   }
 
   deleteChore(e) {
-    console.log('in delete chore');
+    // console.log('in delete chore');
     const chore = this.createChore();
     $.ajax({
-      url: this.state.urlPrefix + '/api/chores',
+      url: this.state.urlPrefix + '/api/chores?access_token=' + this.state.amazonToken,
       type: 'DELETE',
       dataType: 'application/json',
       data: chore,
