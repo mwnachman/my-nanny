@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
+import config from '../../config';
+
 
 
 class Login extends React.Component {
@@ -9,7 +11,7 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      urlPrefix: 'https://localhost:1337'
+      urlPrefix: config.baseUrl,
     };
   }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
+import config from '../../config';
+
 
 
 class Schedule extends React.Component {
@@ -12,7 +14,7 @@ class Schedule extends React.Component {
       username: '',
       id: this.props.child.id,
       amazonToken: this.props.amazonToken,
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       sunday: '',
       monday: '',
       tuesday: '',

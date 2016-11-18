@@ -2,6 +2,7 @@ import React from 'react';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
+import config from '../../config';
  
 class IndividualKid extends React.Component {
 
@@ -13,7 +14,7 @@ class IndividualKid extends React.Component {
       phone: this.props.child.phone,
       id: this.props.child.id,
       amazonToken: this.props.amazonToken,
-      urlPrefix: 'https://localhost:1337',
+      urlPrefix: config.baseUrl,
       chore: '',
       details: '',
       date: '',
