@@ -16,7 +16,7 @@ class Home extends React.Component {
     const amzToken = ((((window.location.href).split('='))[1]).split('&'))[0];
     this.setState({ amazonToken: amzToken });
     localStorage.setItem('amazon-token', amzToken);
-    console.log('local storage', localStorage.getItem('amazon-token'));
+    // console.log('local storage', localStorage.getItem('amazon-token'));
   }
 
   render() {

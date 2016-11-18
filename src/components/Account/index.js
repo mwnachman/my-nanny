@@ -8,20 +8,24 @@ class Account extends React.Component {
     super(props);
 
     this.state = {
-      amazonId: '999888777666',
+      amazonToken: '',
       email: 'Not Yet Entered',
       phone: 'Not Yet Entered', 
       username: 'Not Yet Entered',
       timezone: 'Not Yet Entered',
-      urlPrefix: 'http://localhost:1337',
+      urlPrefix: 'https://localhost:1337',
       children: [],
       editable: false,
     };
   }
 
+  componentWillMount() {
+    this.setState({ amazonToken: localStorage.getItem('amazon-token') });
+  }
+
   componentDidMount() {
     $.ajax({
-      url: this.state.urlPrefix + '/api/account?amazonId=' + this.state.amazonId,
+      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
       type: 'GET',
     }).done(dataRes => {
       const data = JSON.parse(dataRes);
@@ -40,8 +44,8 @@ class Account extends React.Component {
   }
 
   updateAccount(e) {
-    console.log('in update Account');
-    console.log('this.state at start of update account', this.state);
+    // console.log('in update Account');
+    // console.log('this.state at start of update account', this.state);
     const signupData = {
       'account': {
         'amazonId': this.state.amazonId,
@@ -52,7 +56,7 @@ class Account extends React.Component {
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/account',
+      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -149,7 +153,8 @@ export default Account;
 //                 <h3>Children</h3>
 //                 {
 //                 this.state.children.map((child, index) =>
-//                 <IndividualKidBrief child={child} index={index} key={child.id}/>
+//                 <IndividualKidBrief amazonToken={this.state.amazonToken} 
+//                  child={child} index={index} key={child.id}/>
 //                 )
 //                 }
 //               </div>

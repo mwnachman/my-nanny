@@ -31,23 +31,22 @@ class Login extends React.Component {
     });
   }
 
-  checkAuth(e) {
-    console.log('in check auth');
-    $.ajax({
-      url: this.state.urlPrefix + '/test',
-      type: 'GET',
-      complete: function(data) {
-        console.log('Status is:', JSON.stringify(data));
-      }
-    });
-  }
+  // checkAuth(e) {
+  //   console.log('in check auth');
+  //   $.ajax({
+  //     url: this.state.urlPrefix + '/test',
+  //     type: 'GET',
+  //     complete: function(data) {
+  //       console.log('Status is:', JSON.stringify(data));
+  //     }
+  //   });
+  // }
 
   render() {
     return (
       <div>
         <h2>Log In</h2>
         <button onClick={this.loginRedirect.bind(this)}>Login</button>
-        <button onClick={this.checkAuth.bind(this)}>Check Auth</button>
       </div>
     );
   } 

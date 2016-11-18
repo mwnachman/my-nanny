@@ -14,7 +14,7 @@ class Chores extends React.Component {
       amazonToken: this.props.amazonToken,
       id: this.props.child.id,
       choreId: this.props.chore.id,
-      urlPrefix: 'http://localhost:1337',
+      urlPrefix: 'https://localhost:1337',
       completed: false,
       editable: false,
     };
