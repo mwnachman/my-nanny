@@ -60,19 +60,22 @@ class Kids extends React.Component {
   }
 
   handleInputChange(e) {
-    // console.log(e.target);
+    console.log('in handle input');
+    console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
+    console.log('newchildname', this.state.newChildName);
+    console.log('newchildphone', this.state.newChildPhone);
   }
 
   addChildView(e) {
     e.preventDefault();
-    // console.log('e.target', e.target);
+    console.log('e.target', e.target);
     const inputChange = {};
     inputChange[e.target.name] = true;
     this.setState(inputChange);
-    // console.log('state', this.state);
+    console.log('state', this.state);
   }
 
   render() {
