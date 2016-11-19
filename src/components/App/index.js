@@ -21,7 +21,7 @@ class App extends Component {
         <Row>
           <Nav />
         </Row>
-        <Row>
+        <Row className='childRow'>
           { this.props.children }
         </Row>
       </div>

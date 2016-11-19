@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import config from '../../config';
+import { Button } from 'react-bootstrap';
 
 
 class Chores extends React.Component {
@@ -101,9 +102,9 @@ class Chores extends React.Component {
               {this.state.title}
               {this.state.details}
               {this.state.date}
-              <button onClick={this.makeEditable.bind(this)}>Edit</button> 
-              <button onClick={this.deleteChore.bind(this)}>Delete</button> 
-              <button onClick={this.markCompleted.bind(this)}>Mark Completed</button> 
+              <Button onClick={this.makeEditable.bind(this)}>Edit</Button> 
+              <Button onClick={this.deleteChore.bind(this)}>Delete</Button> 
+              <Button onClick={this.markCompleted.bind(this)}>Mark Completed</Button> 
             </div> 
           )}
 
@@ -115,7 +116,7 @@ class Chores extends React.Component {
                 onChange={this.handleInputChange.bind(this)}/>
               <input type='date' name='date' value={this.state.date}
                 onChange={this.handleInputChange.bind(this)}/>
-              <button onClick={this.updateChore.bind(this)}>Update</button> 
+              <Button onClick={this.updateChore.bind(this)}>Update</Button> 
             </div>
           )}
         </div>

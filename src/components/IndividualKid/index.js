@@ -3,7 +3,9 @@ import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
 import config from '../../config';
- 
+import { Row, Col, Grid, Button, FormControl, FormGroup } from 'react-bootstrap';
+
+
 class IndividualKid extends React.Component {
 
   constructor(props) {
@@ -76,20 +78,29 @@ class IndividualKid extends React.Component {
     this.setState({ editable: false });
   }
 
+
   render() {
     return (
       <div>
-        <h1>{this.props.child.name}</h1>
-        <button onClick={this.editChild.bind(this)}>Edit</button>
-        {(this.state.editable === true && 
+        <Grid>
+          <Row>
+            <Col xs={4} md={3}>
+              <h1>{this.props.child.name}</h1>
+            </Col>
+            <Col>
+              <Button xs={3} md={1} className='editButton' onClick={this.editChild.bind(this)}>Edit</Button>
+            </Col>
+          </Row>
+        </Grid>
+        {(this.state.editable === true &&
           <form>
-            <input type='text' name='name' value={this.state.name}
+            <FormControl type='text' name='name' value={this.state.name}
               onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <input type='text' name='phone' value={this.state.phone}
+            </FormControl>
+            <FormControl type='text' name='phone' value={this.state.phone}
               onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <button className='btn btn-default' 
+            </FormControl>
+            <button className='btn btn-default'
               onClick={this.confirmChanges.bind(this)}>
               Confirm
             </button>
@@ -97,52 +108,59 @@ class IndividualKid extends React.Component {
         )}
         <div> 
           <h2>Schedule</h2>
-          <Schedule child={this.props.child} schedule={this.props.child.schedule} 
+          <Schedule child={this.props.child} schedule={this.props.child.schedule}
             name={this.props.child.name} amazonToken={this.state.amazonToken}/>
         </div>
         <div> 
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores child={this.props.child} chore={chore} index={index} key={chore.id} 
+              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
                 amazonToken={this.props.amazonToken}/>
             ))
           }
           {(this.props.child.chores === undefined &&
             <div>
-              <p>{this.props.name} does not currently have any chores assigned. 
-              Add a chore below.</p>          
+              <p>{this.props.name} does not currently have any chores assigned.
+              Add a chore below.</p>        
             </div>
           )}
-          <div> 
+          <div>
             <h3>New Chore</h3>
-              <form>
-                <input type='text' name='chore' placeholder='Chore' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <input type='text' name='details' placeholder='Explanation' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <input type='date' name='date' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <button className='btn btn-default' 
-                  onClick={this.addChore.bind(this)}>
-                  Add Chore
-                </button>
-              </form>
+              <Row>
+                <Col md={6}>
+                  <form>
+                    <FormGroup>
+                      <FormControl type='text' name='chore' placeholder='Chore'
+                        onChange={this.handleInputChange.bind(this)}>
+                      </FormControl>
+                      {' '}
+                      <FormControl type='text' name='details' placeholder='Details'
+                        onChange={this.handleInputChange.bind(this)}>
+                      </FormControl>
+                      {' '}
+                      <Row>
+                        <Col md={6}>
+                          <FormControl type='date' name='date' 
+                            onChange={this.handleInputChange.bind(this)}>
+                          </FormControl>
+                        </Col>
+                      </Row>
+                      {' '}
+                      <button className='btn btn-default' 
+                        onClick={this.addChore.bind(this)}>
+                        Add Chore
+                      </button>
+                    </FormGroup>
+                  </form>
+                </Col>
+              </Row>
           </div>
         </div>
       </div>
     );
-  } 
+  }
 }
 
 
 export default IndividualKid;
-
-
-

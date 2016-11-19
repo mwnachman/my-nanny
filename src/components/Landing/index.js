@@ -14,10 +14,6 @@ const amazonLogin = () => {
   return false;
 };
 
-const amazonLogout = () => {
-  amazon.Login.logout();
-};
-
 export const Landing = () => (
   <div className='landing'>
     <div className='siteHeader'>

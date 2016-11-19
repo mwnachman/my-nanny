@@ -1,0 +1,21 @@
+.editButton {
+  margin-top: 1.5em;
+  margin-left: 2em;
+}
+
+.gridRow {
+  margin-top: 1em;
+}
+
+.childrenHeader {
+  margin-top: 1em;
+}
+
+.well {
+  width: 35em !important;
+  float: left !important;
+}
+
+.childrenBlock {
+  float: left !important;
+}

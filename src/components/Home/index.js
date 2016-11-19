@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import './home.css';
 
 
 class Home extends React.Component {

@@ -2,6 +2,8 @@ import React from 'react';
 import IndividualKidBrief from '../IndividualKidBrief/index';
 import $ from 'jquery';
 import config from '../../config';
+import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
+import './account.css';
 
 
 class Account extends React.Component {
@@ -11,10 +13,10 @@ class Account extends React.Component {
 
     this.state = {
       amazonToken: '',
-      email: 'Not Yet Entered',
-      phone: 'Not Yet Entered', 
-      username: 'Not Yet Entered',
-      timezone: 'Not Yet Entered',
+      email: '',
+      phone: '', 
+      username: '',
+      timezone: '',
       urlPrefix: config.baseUrl,
       children: [],
       editable: false,
@@ -76,85 +78,87 @@ class Account extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Account Page!</h1>
+      <div className='account'>
+        <h1>Your Account</h1>
+        <h2>Account Details</h2>
         {(this.state.editable === false && 
         <div>
-          <button onClick={this.makeEditable.bind(this)}>Edit Account</button>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Name</td>
-                  <td>{this.state.username}</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>{this.state.email}</td>
-                </tr>
-                <tr>
-                  <td>Phone Number</td>
-                  <td>{this.state.phone}</td>
-                </tr>
-                <tr>
-                  <td>Time Zone</td>
-                  <td>{this.state.timezone}</td>
-                </tr>
-              </tbody>
-            </table>
+          <Grid className='well'>
+            <Row>
+              <Col xs={4} md={2}>Name</Col>
+              <Col xs={6} md={4}>{this.state.username}</Col>
+            </Row>
+            <Row className='gridRow'>
+              <Col xs={4} md={2}>Email</Col>
+              <Col xs={6} md={4}>{this.state.email}</Col>
+            </Row>
+            <Row className='gridRow'>
+              <Col xs={4} md={2}>Phone Number</Col>
+              <Col xs={6} md={4}>{this.state.phone}</Col>
+            </Row>
+            <Row className='gridRow'>
+              <Col xs={4} md={2}>Time Zone</Col>
+              <Col xs={6} md={4}>{this.state.timezone}</Col>
+            </Row>
+            <Row>
+              <Button className='editButton' 
+                onClick={this.makeEditable.bind(this)}>Edit Account</Button>
+            </Row>
+          </Grid>
           </div>
         )}
         {(this.state.editable === true && 
-        <form>
-          <table>
-            <tbody>
-              <tr>
-                <td>Name</td>
-                <td><input type='text' name='username' defaultValue={this.state.username}
-                  onChange={this.handleInputChange.bind(this)}/>
-                </td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td><input type='text' name='email' defaultValue={this.state.email}
-                  onChange={this.handleInputChange.bind(this)}/>
-                </td>
-              </tr>
-              <tr>
-                <td>Phone Number</td>
-                <td><input type='text' name='phone' defaultValue={this.state.phone}
-                  onChange={this.handleInputChange.bind(this)}/>
-                </td>
-              </tr>
-              <tr>
-                <td>Time Zone</td>
-                <td>
-                  <select name='timezone' onChange={this.handleInputChange.bind(this)}>
-                    <option value='EST'>EST / Eastern / UTC-5</option>
-                    <option value='CST'>CST / Central / UTC-6</option>
-                    <option value='MST'>MST / Mountain / UTC-7</option>
-                    <option value='PST'>PST / Pacific / UTC-8</option>
-                    <option value='HST'>HST / Hawaii / UTC-10</option>
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <button onClick={this.updateAccount.bind(this)}>Update Account</button>
-        </form>
+        <Form>
+          <Grid className='well'>
+            <Row>
+              <Col xs={4} md={2}>Name</Col>
+              <Col xs={6} md={4}><FormControl type='text' name='username' defaultValue={this.state.username}
+                onChange={this.handleInputChange.bind(this)}/>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={4} md={2}>Email</Col>
+              <Col xs={6} md={4}><FormControl type='text' name='email' defaultValue={this.state.email}
+                onChange={this.handleInputChange.bind(this)}/>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={4} md={2}>Phone Number</Col>
+              <Col xs={6} md={4}><FormControl type='text' name='phone' defaultValue={this.state.phone}
+                onChange={this.handleInputChange.bind(this)}/>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={4} md={2}>Time Zone</Col>
+              <Col xs={6} md={4}>
+                <select name='timezone' onChange={this.handleInputChange.bind(this)}>
+                  <option value='EST'>EST / Eastern / UTC-5</option>
+                  <option value='CST'>CST / Central / UTC-6</option>
+                  <option value='MST'>MST / Mountain / UTC-7</option>
+                  <option value='PST'>PST / Pacific / UTC-8</option>
+                  <option value='HST'>HST / Hawaii / UTC-10</option>
+                </select>
+              </Col>
+            </Row>
+            <Row>
+              <Button className='editButton' onClick={this.updateAccount.bind(this)}>Update Account</Button>
+            </Row>
+          </Grid>
+        </Form>
         )}
-        <div>
-          {(this.state.children.length !== 0 &&
-          <div>
-            <h3>Children</h3>
-            {
-            this.state.children.map((child, index) =>
-            <IndividualKidBrief amazonToken={this.state.amazonToken} 
-             child={child} index={index} key={child.id}/>
-            )
-            }
-          </div>
-          )}
-        </div>
+        {(this.state.children.length !== 0 &&
+        <Grid className='childrenBlock'>
+          <Row>
+            <h2 className='childrenHeader'>Children</h2>
+          </Row>
+          <Row className='well'>
+            {this.state.children.map((child, index) =>
+              <IndividualKidBrief amazonToken={this.state.amazonToken} 
+               child={child} index={index} key={child.id}/>
+            )}
+          </Row>
+        </Grid>
+        )}
       </div>
     );
   }
