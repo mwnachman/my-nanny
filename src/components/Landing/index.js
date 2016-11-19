@@ -10,10 +10,6 @@ const amazonLogin = () => {
   return false;
 };
 
-const amazonLogout = () => {
-  amazon.Login.logout();
-};
-
 export const Landing = () => (
   <div className='landing'>
     <a href='#' id='LoginWithAmazon' onClick={amazonLogin.bind(this)} >
