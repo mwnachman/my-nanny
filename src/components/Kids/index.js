@@ -1,5 +1,5 @@
 import React from 'react';
-// import { IndexLink, Link } from 'react-router';
+import { Button, Form, FormControl, Row, Col } from 'react-bootstrap';
 import $ from 'jquery';
 import { Tabs, Tab } from 'react-bootstrap';
 import IndividualKid from '../IndividualKid/index';
@@ -85,19 +85,17 @@ class Kids extends React.Component {
       return (
         <div className='kids'>
           <h2>Add a Child</h2>
-            <form>
-              <input type='text' name='newChildName' placeholder='Name' 
+            <Form>
+              <FormControl type='text' name='newChildName' placeholder='Name' 
                 onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <input type='text' name='newChildPhone' placeholder='Phone Number' 
+              </FormControl>
+              <FormControl type='text' name='newChildPhone' placeholder='Phone Number' 
                onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <button className='btn btn-default' onClick={this.addChild.bind(this)}>
+              </FormControl>
+              <Button className='btn btn-default' onClick={this.addChild.bind(this)}>
                 Add Child
-              </button>
-            </form>
+              </Button>
+            </Form>
         </div>
       );
     } else {
@@ -118,7 +116,7 @@ class Kids extends React.Component {
             }
           </Tabs>
           <br />
-          <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
+          <Button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</Button>
         </div>
       );
     } 

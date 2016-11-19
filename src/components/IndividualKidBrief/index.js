@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import config from '../../config';
-import { Button } from 'react-bootstrap';
+import { Button, Form, FormControl } from 'react-bootstrap';
 
  
 class IndividualKidBrief extends React.Component {
@@ -84,12 +84,12 @@ class IndividualKidBrief extends React.Component {
           <Button onClick={this.deleteChild.bind(this)}>Delete</Button>
           {(this.state.editable === true && 
             <Form>
-              <input type='text' name='name' value={this.state.name}
+              <FormControl type='text' name='name' value={this.state.name}
                 onChange={this.handleInputChange.bind(this)}>
-              </input>
-              <input type='text' name='phone' value={this.state.phone}
+              </FormControl>
+              <FormControl type='text' name='phone' value={this.state.phone}
                 onChange={this.handleInputChange.bind(this)}>
-              </input>
+              </FormControl>
               <Button onClick={this.confirmChanges.bind(this)}>Confirm</Button>
             </Form>
           )}

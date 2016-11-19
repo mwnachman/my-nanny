@@ -57,24 +57,3 @@ class Login extends React.Component {
 
 export default Login;
 
-
-  //       <form>
-  //         <table>
-  //           <tbody>
-  //             <tr>
-  //               <td>Email</td>
-  //               <td><input type='text' name='email'
-  //                 onChange={this.handleInputChange.bind(this)}/>
-  //               </td>
-  //             </tr>
-  //             <tr>
-  //               <td>Password</td>
-  //               <td><input type='password' name='password'
-  //                 onChange={this.handleInputChange.bind(this)}/>
-  //               </td>
-  //             </tr>
-  //           </tbody>
-  //         </table>
-
-  //       </form>
-  // 
