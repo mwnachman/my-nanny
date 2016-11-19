@@ -3,7 +3,7 @@ import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
 import config from '../../config';
-import { Row, Col, Grid } from 'react-bootstrap';
+import { Row, Col, Grid, Button } from 'react-bootstrap';
 
  
 class IndividualKid extends React.Component {
@@ -87,7 +87,7 @@ class IndividualKid extends React.Component {
               <h1>{this.props.child.name}</h1>
             </Col>
             <Col>
-              <button xs={3} md={1} className='editButton' onClick={this.editChild.bind(this)}>Edit</button>
+              <Button xs={3} md={1} className='editButton' onClick={this.editChild.bind(this)}>Edit</Button>
             </Col>
           </Row>
         </Grid>
