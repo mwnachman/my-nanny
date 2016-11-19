@@ -61,26 +61,3 @@ class Navigation extends React.Component {
 }
 
 export default Navigation;
-
-// <div className='container'>
-//   <Navbar fixedTop className='navbar'>
-//     <Grid>
-//       <Navbar.Header>
-//         <Navbar.Brand eventKey={1} onClick={this.handleLink}>myNanny</Navbar.Brand>
-//         <Nav>
-//           <NavItem eventKey={1} onSelect={this.handleLink}>Home</NavItem>
-//           <NavItem eventKey={2} onSelect={this.handleLink}>Account</NavItem>
-//           <NavItem eventKey={3} onSelect={this.handleLink}>Kids</NavItem>
-//           <NavDropdown title='Menu' id='basic-nav-dropdown'>
-//             <MenuItem eventKey={2} onSelect={this.handleLink}>Account</MenuItem>
-//             <MenuItem divider />
-//             <MenuItem eventKey={4} onSelect={this.handleLogout}>Log Out</MenuItem>
-//           </NavDropdown>
-//         </Nav>
-//         <Navbar.Toggle />
-//       </Navbar.Header>
-//     </Grid>
-//   </Navbar>
-// </div>
-
-//       
