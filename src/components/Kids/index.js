@@ -1,6 +1,7 @@
 import React from 'react';
 // import { IndexLink, Link } from 'react-router';
 import $ from 'jquery';
+import { Tabs, Tab } from 'react-bootstrap';
 import IndividualKid from '../IndividualKid/index';
 import config from '../../config';
 import './kids.css';
@@ -104,13 +105,18 @@ class Kids extends React.Component {
         <div>
           <h3>My Children</h3>
 
-          <div> 
-          {
-            this.state.children.map((child, index) =>
-              <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
-            )
-          }
-          </div>
+          <Tabs defaultActiveKey={0} id='uncontrolled-tab-example'>
+            {
+              this.state.children.map((child, index) => {
+                return (
+                  <Tab eventKey={index} title={child.name}>
+                    <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
+                  </Tab>
+                );
+              }
+              )
+            }
+          </Tabs>
           <br />
           <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
         </div>
