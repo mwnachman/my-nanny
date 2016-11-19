@@ -2,6 +2,7 @@ import React from 'react';
 import IndividualKidBrief from '../IndividualKidBrief/index';
 import $ from 'jquery';
 import config from '../../config';
+import './account.css';
 
 
 class Account extends React.Component {
@@ -76,7 +77,7 @@ class Account extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='account'>
         <h1>Account Page!</h1>
         {(this.state.editable === false && 
         <div>

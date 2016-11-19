@@ -3,6 +3,7 @@ import React from 'react';
 import $ from 'jquery';
 import IndividualKid from '../IndividualKid/index';
 import config from '../../config';
+import './kids.css';
 
 class Kids extends React.Component {
 
@@ -81,7 +82,7 @@ class Kids extends React.Component {
   render() {
     if (this.state.children.length === 0 || this.state.adding === true) {
       return (
-        <div style={{ margin: '0 auto' }} >
+        <div className='kids' >
           <h2>Add a Child</h2>
             <form>
               <input type='text' name='newChildName' placeholder='Name' 

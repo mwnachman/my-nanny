@@ -3,6 +3,8 @@ import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import $ from 'jquery';
 import config from '../../config';
+import { Row, Col, Grid } from 'react-bootstrap';
+
  
 class IndividualKid extends React.Component {
 
@@ -79,8 +81,16 @@ class IndividualKid extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.props.child.name}</h1>
-        <button onClick={this.editChild.bind(this)}>Edit</button>
+        <Grid>
+          <Row>
+            <Col xs={4} md={3}>
+              <h1>{this.props.child.name}</h1>
+            </Col>
+            <Col>
+              <button xs={3} md={1} className='editButton' onClick={this.editChild.bind(this)}>Edit</button>
+            </Col>
+          </Row>
+        </Grid>
         {(this.state.editable === true && 
           <form>
             <input type='text' name='name' value={this.state.name}
