@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import { FormControl, Button, Table } from 'react-bootstrap';
 import config from '../../config';
 
 
@@ -109,17 +110,19 @@ class Schedule extends React.Component {
         )}
 
         <div>
-          <table>
+          <Table responsive>
+              <thead>
+                <tr>
+                  <th>Sunday</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                  <th>Saturday</th>
+                </tr>
+              </thead>
             <tbody>
-              <tr>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-              </tr>
             {((this.state.editable === false && this.state.originalSchedule !== null) && 
               <tr>
                 <td>{this.state.sunday}</td>
@@ -130,51 +133,51 @@ class Schedule extends React.Component {
                 <td>{this.state.friday}</td>
                 <td>{this.state.saturday}</td>
                 {(this.props.schedule !== null &&
-                  <td><button onClick={this.editSchedule.bind(this)}>Edit</button></td>
+                  <td><Button onClick={this.editSchedule.bind(this)}>Edit</Button></td>
                 )}
               </tr>
             )}
 
             {((this.state.originalSchedule === null && this.state.editable !== true) &&
               <tr>
-                <td><input name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
-                <td><input name='monday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='monday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.monday} /></td>
-                <td><input name='tuesday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='tuesday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.tuesday} /></td>
-                <td><input name='wednesday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='wednesday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.wednesday} /></td>
-                <td><input name='thursday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='thursday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.thursday} /></td>
-                <td><input name='friday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='friday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.friday} /></td>
-                <td><input name='saturday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='saturday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.saturday} /></td>
-                <td><button onClick={this.createSchedule.bind(this)}>Create</button></td>
+                <td><Button onClick={this.createSchedule.bind(this)}>Create</Button></td>
               </tr>
             )}
             {((this.state.editable === true && this.state.originalSchedule !== null) &&
               <tr>
-                <td><input name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
-                <td><input name='monday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='monday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.monday} /></td>
-                <td><input name='tuesday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='tuesday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.tuesday} /></td>
-                <td><input name='wednesday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='wednesday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.wednesday} /></td>
-                <td><input name='thursday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='thursday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.thursday} /></td>
-                <td><input name='friday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='friday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.friday} /></td>
-                <td><input name='saturday' type='time' onClick={this.handleInputChange.bind(this)}
+                <td><FormControl name='saturday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.saturday} /></td>
-                <td><button onClick={this.updateSchedule.bind(this)}>Confirm</button></td>
+                <td><Button onClick={this.updateSchedule.bind(this)}>Confirm</Button></td>
               </tr>
             )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     );
