@@ -8,16 +8,12 @@ To configure the development environment to use https, take the following steps:
 -http://mac-dev-env.patrickbougie.com/openssl/
 
 ## OBTAIN KEY AND CERTIFICATE ##
--Then, you'll need to get a key and certificate.  Open this blog, search for 'pkc' and run the command in the folder where you want your key.  
-
--Follow the instructions that come up, and make sure to put 'localhost' as the Common Name:
+-Then, you'll need to get a key and certificate.  Open this blog, and follow the steps to create a certificate in Keychain Access.
 
 -https://certsimple.com/blog/localhost-ssl-fix
 
-## EXTRACT KEY AND CERTIFICATE ##
--Open Keychain Access and search for localhost.  There should be a certificate that looks like a paper certificate (ie, not a key icon).  Open it and expand the 'Trust' category. Change 'Secure Sockets Layer' to 'Always Trust'.  
+-Follow the instructions that come up, and make sure to put 'localhost' as the name.
 
--Then, make sure you are in 'My Certificates' (on the left).  Right click on the certificate and export it.  Then save as a .p12 file.  You will need to go into the file in your editor and separate it out into two files, one with the key and another with the certificate, with the extension .pem.  
 
 ## UPDATE CONFIG FILE ##
 
