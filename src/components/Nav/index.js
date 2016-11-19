@@ -25,6 +25,10 @@ class Navigation extends React.Component {
     browserHistory.push(this.state.links[eventKey]);
   }
 
+  handleBrandLink(e) {
+    browserHistory.push('/app/home');
+  }
+
   handleLogout() {
     // eslint-disable-next-line no-undef
     localStorage.removeItem('amazon-token');
@@ -36,7 +40,7 @@ class Navigation extends React.Component {
     return (
       <Navbar fixedTop collapseOnSelect>
         <Navbar.Header>
-          <Navbar.Brand eventKey={1} onClick={this.handleLink}>
+          <Navbar.Brand onClick={this.handleBrandLink.bind(this)}>
             myNanny
           </Navbar.Brand>
           <Navbar.Toggle />
