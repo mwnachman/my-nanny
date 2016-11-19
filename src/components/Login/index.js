@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import config from '../../config';
-
+import { Button } from 'react-bootstrap';
 
 
 class Login extends React.Component {
@@ -48,7 +48,7 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log In</h2>
-        <button onClick={this.loginRedirect.bind(this)}>Login</button>
+        <Button onClick={this.loginRedirect.bind(this)}>Login</Button>
       </div>
     );
   } 
