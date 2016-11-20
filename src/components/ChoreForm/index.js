@@ -38,7 +38,7 @@ class ChoreForm extends React.Component {
                       </Row>
                       {' '}
                       <Button className='btn btn-default' 
-                        onClick={this.props.addChore.bind(this)}>
+                        onClick={this.props.addChore}>
                         Add Chore
                       </Button>
                     </FormGroup>

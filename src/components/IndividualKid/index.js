@@ -4,7 +4,7 @@ import Chores from '../Chores/index';
 import ChoreForm from '../ChoreForm';
 import $ from 'jquery';
 import config from '../../config';
-import { Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
+import { FormGroup, Collapse, Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
 
 
 class IndividualKid extends React.Component {
@@ -22,6 +22,7 @@ class IndividualKid extends React.Component {
       details: '',
       date: '',
       editable: false,
+      open: false,
     };
   }
 
@@ -50,6 +51,7 @@ class IndividualKid extends React.Component {
       data: chore,
       complete: function (data) {
         // console.log('Added chore:' + JSON.stringify(data));
+        window.location.reload();
       }
     });
   }
@@ -75,7 +77,7 @@ class IndividualKid extends React.Component {
       dataType: 'application/json',
       data: child,
       complete: function (data) {
-        console.log('Updated chore:' + JSON.stringify(data));
+        // console.log('Updated chore:' + JSON.stringify(data));
       }
     });
     this.setState({ editable: false });
@@ -148,7 +150,43 @@ class IndividualKid extends React.Component {
             </div>
           )}
           <div>
-            <ChoreForm handleInputChange={this.handleInputChange} addChore={this.addChore} />
+            <Button onClick={()=> this.setState({ open: !this.state.open })}>
+              New Chore
+            </Button>
+            <Collapse in={this.state.open}>
+              <div>
+                <Well>
+                  <Row>
+                    <Col md={6}>
+                      <form>
+                        <FormGroup>
+                          <FormControl type='text' name='chore' placeholder='Chore'
+                            onChange={this.handleInputChange.bind(this)}>
+                          </FormControl>
+                          {' '}
+                          <FormControl type='text' name='details' placeholder='Details'
+                            onChange={this.handleInputChange.bind(this)}>
+                          </FormControl>
+                          {' '}
+                          <Row>
+                            <Col md={6}>
+                              <FormControl type='date' name='date' 
+                                onChange={this.handleInputChange.bind(this)}>
+                              </FormControl>
+                            </Col>
+                          </Row>
+                          {' '}
+                          <Button className='btn btn-default' 
+                            onClick={this.addChore.bind(this)}>
+                            Add Chore
+                          </Button>
+                        </FormGroup>
+                      </form>
+                    </Col>
+                  </Row>
+                </Well>
+              </div>
+            </Collapse>
           </div>
         </div>
       </div>

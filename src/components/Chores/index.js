@@ -54,7 +54,7 @@ class Chores extends React.Component {
 
   updateChore(e) {
     // console.log('in update chore', e);
-    const chore = createChore();
+    const chore = this.createChore();
     // console.log('state in updateChore', this.state);
     // console.log('chore', chore);
     $.ajax({
