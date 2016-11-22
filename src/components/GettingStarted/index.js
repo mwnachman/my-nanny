@@ -94,8 +94,8 @@ class GettingStarted extends React.Component {
           <div className='col-md-12 card'>
             <h2 className='alexaCommandTitle'>Ask Alexa for Chores</h2>
             <p className='alexaCommandDesc'>
-              Description on what Element 1 is all about. This would normaly be one to tree sentences.
-              Description on what Element 1 is all about. This would normaly be one to tree sentences.
+              You don't have to remember all the chores when Alexa tells you the first time.
+              Simply ask Alexa to repeat them with the following command.
             </p>
             <p className='alexaCommand'>Alexa, What are [Name] chores?</p>
           </div>
@@ -111,7 +111,7 @@ class GettingStarted extends React.Component {
               description to the chore. This enables you to have short names for the chores and
               make them easier to maintain. To get the description for a chore, simply ask Alexa.
             </p>
-            <p className='alexaCommand'>Alexa, details on chore [Chore] for [Name] please</p>
+            <p className='alexaCommand'>Alexa, details on chore [Number] for [Name] please</p>
           </div>
         </div>
         <div className='col-md-6' id='choreComplete'>
@@ -121,7 +121,7 @@ class GettingStarted extends React.Component {
               Once a chore is complete, simply tell Alexa that the chore is complete by specify
               the number of the chore.
             </p>
-            <p className='alexaCommand'>Alexa, [Name] is done with chore number [Chore]</p>
+            <p className='alexaCommand'>Alexa, [Name] is done with chore number [Number]</p>
           </div>
         </div>
       </div>
