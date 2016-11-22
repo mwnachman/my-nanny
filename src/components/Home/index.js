@@ -2,6 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import './home.css';
 
+import ChildrenList from '../../containers/children';
+import ChildDetails from '../../containers/childDetails';
 
 class Home extends React.Component {
 
@@ -25,6 +27,16 @@ class Home extends React.Component {
     return (
     <div className='home'>
       <h1>Home Page!</h1>
+      <ul>
+        <li>Luis is home!</li>
+        <li>Meredith is home!</li>
+        <li>Robert is not home!</li>
+      </ul>
+      <ChildrenList />
+      <hr />
+      Chores
+      <br />
+      <ChildDetails />
     </div>
     );
   }
