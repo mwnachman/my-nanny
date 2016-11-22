@@ -51,3 +51,7 @@ a:hover {
   display: flex;
   flex-direction: column;
 }
+
+.setup-title {
+	padding-left: 2em;
+}
