@@ -33,7 +33,11 @@ export const Landing = () => (
             width='156' height='32' />
         </a>
       </div>
-
+    </div>
+    <div>
+      <div>Your family – abstracted<br/></div>
+      New Alexa technology puts you in control of all your children so that you can 
+      see what's going on at a glance and decide how to manage your children's lives.
     </div>
   </div>
 );
