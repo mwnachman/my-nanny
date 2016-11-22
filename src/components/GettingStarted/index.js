@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import './gettingStarted.css';
 
 
@@ -19,7 +18,6 @@ class GettingStarted extends React.Component {
 
         <div className='col-md-12'>
           <h1>Table of Conent</h1>
-
           <div className='col-md-12'>
           <div className='col-md-6'>
             <h2>Setting Up Chores</h2>
