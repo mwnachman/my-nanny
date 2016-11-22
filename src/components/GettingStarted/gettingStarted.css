@@ -53,5 +53,9 @@ a:hover {
 }
 
 .setup-title {
-	padding-left: 2em;
+  padding-left: 2em;
+}
+
+.underline {
+  border-bottom: 2px solid #eee;
 }

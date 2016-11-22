@@ -17,26 +17,26 @@ class GettingStarted extends React.Component {
       <div className='row'>
 
         <div className='col-md-12'>
-          <h1>Table of Conent</h1>
           <div className='col-md-12'>
-          <div className='col-md-6'>
-            <h2>Setting Up Chores</h2>
-            <ul className='table-of-content'>
-              <li><a href='#registerAccount'>Register Account</a></li>
-              <li><a href='#registerChild'>Register a Child</a></li>
-              <li><a href='#registerChore'>Register a Chore to a Child</a></li>
-            </ul>
-          </div>
-          <div className='col-md-6'>
-            <h2>Voice Commands</h2>
-            <ul className='table-of-content'>
-              <li><a href='#greating'>Say Hello</a></li>
-              <li><a href='#getChores'>Ask Alexa for Chores</a></li>
-              <li><a href='#getChoreDetails'>Ask Alexa for Details on Chores</a></li>
-              <li><a href='#choreComplete'>Tell Alexa You've Completed a Chore</a></li>
-              <li><a href='#choreSms'>Send Chores as SMS</a></li>
-            </ul>
-          </div>
+            <div className='col-md-6'>
+              <h2>Setting Up Chores</h2>
+              <ul className='table-of-content'>
+                <li><a href='#registerAccount'>Register Account</a></li>
+                <li><a href='#registerChild'>Register a Child</a></li>
+                <li><a href='#registerChore'>Register a Chore to a Child</a></li>
+              </ul>
+            </div>
+        
+            <div className='col-md-6'>
+              <h2>Voice Commands</h2>
+              <ul className='table-of-content'>
+                <li><a href='#greating'>Say Hello</a></li>
+                <li><a href='#getChores'>Ask Alexa for Chores</a></li>
+                <li><a href='#getChoreDetails'>Ask Alexa for Details on Chores</a></li>
+                <li><a href='#choreComplete'>Tell Alexa You've Completed a Chore</a></li>
+                <li><a href='#choreSms'>Send Chores as SMS</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -47,8 +47,8 @@ class GettingStarted extends React.Component {
         </div>
       </div>
 
-      <h2>Setting Up Chores</h2>
-      <hr />
+      <h2 className='underline'>Setting Up Chores</h2>
+      
       <div className='row'>
         <div className='col-md-12'>
           <h3 className='setup-title' id='registerAccount'>Register Account</h3>
@@ -76,8 +76,8 @@ class GettingStarted extends React.Component {
         </div>
       </div>
       
-      <h2>Voice Commands</h2>
-      <hr />
+      <h2 className='underline'>Voice Commands</h2>
+      
       <div className='row card-row'>
         <div className='col-md-6' id='greating'>
           <div className='col-md-12 card'>
