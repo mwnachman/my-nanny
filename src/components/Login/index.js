@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import config from '../../config';
-
+import { Button } from 'react-bootstrap';
 
 
 class Login extends React.Component {
@@ -48,7 +48,7 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log In</h2>
-        <button onClick={this.loginRedirect.bind(this)}>Login</button>
+        <Button onClick={this.loginRedirect.bind(this)}>Login</Button>
       </div>
     );
   } 
@@ -57,24 +57,3 @@ class Login extends React.Component {
 
 export default Login;
 
-
-  //       <form>
-  //         <table>
-  //           <tbody>
-  //             <tr>
-  //               <td>Email</td>
-  //               <td><input type='text' name='email'
-  //                 onChange={this.handleInputChange.bind(this)}/>
-  //               </td>
-  //             </tr>
-  //             <tr>
-  //               <td>Password</td>
-  //               <td><input type='password' name='password'
-  //                 onChange={this.handleInputChange.bind(this)}/>
-  //               </td>
-  //             </tr>
-  //           </tbody>
-  //         </table>
-
-  //       </form>
-  // 

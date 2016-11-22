@@ -1,6 +1,7 @@
 import React from 'react';
-// import { IndexLink, Link } from 'react-router';
+import { Button, Form, FormControl, Row, Col } from 'react-bootstrap';
 import $ from 'jquery';
+import { Tabs, Tab } from 'react-bootstrap';
 import IndividualKid from '../IndividualKid/index';
 import config from '../../config';
 import './kids.css';
@@ -82,21 +83,19 @@ class Kids extends React.Component {
   render() {
     if (this.state.children.length === 0 || this.state.adding === true) {
       return (
-        <div className='kids' >
+        <div className='kids'>
           <h2>Add a Child</h2>
-            <form>
-              <input type='text' name='newChildName' placeholder='Name' 
+            <Form>
+              <FormControl type='text' name='newChildName' placeholder='Name' 
                 onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <input type='text' name='newChildPhone' placeholder='Phone Number' 
+              </FormControl>
+              <FormControl type='text' name='newChildPhone' placeholder='Phone Number' 
                onChange={this.handleInputChange.bind(this)}>
-              </input>
-              {' '}
-              <button className='btn btn-default' onClick={this.addChild.bind(this)}>
+              </FormControl>
+              <Button className='btn btn-default' onClick={this.addChild.bind(this)}>
                 Add Child
-              </button>
-            </form>
+              </Button>
+            </Form>
         </div>
       );
     } else {
@@ -104,15 +103,20 @@ class Kids extends React.Component {
         <div>
           <h3>My Children</h3>
 
-          <div> 
-          {
-            this.state.children.map((child, index) =>
-              <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
-            )
-          }
-          </div>
+          <Tabs defaultActiveKey={0} id='uncontrolled-tab-example'>
+            {
+              this.state.children.map((child, index) => {
+                return (
+                  <Tab eventKey={index} title={child.name}>
+                    <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
+                  </Tab>
+                );
+              }
+              )
+            }
+          </Tabs>
           <br />
-          <button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</button>
+          <Button name='adding' onClick={this.addChildView.bind(this)}>Add a Child</Button>
         </div>
       );
     } 

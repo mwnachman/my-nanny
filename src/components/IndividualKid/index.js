@@ -1,11 +1,12 @@
 import React from 'react';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
+import ChoreForm from '../ChoreForm';
 import $ from 'jquery';
 import config from '../../config';
-import { Row, Col, Grid } from 'react-bootstrap';
+import { FormGroup, Collapse, Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
 
- 
+
 class IndividualKid extends React.Component {
 
   constructor(props) {
@@ -21,11 +22,12 @@ class IndividualKid extends React.Component {
       details: '',
       date: '',
       editable: false,
+      open: false,
     };
   }
 
   handleInputChange(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
@@ -48,17 +50,20 @@ class IndividualKid extends React.Component {
       dataType: 'application/json',
       data: chore,
       complete: function (data) {
-        console.log('Added chore:' + JSON.stringify(data));
+        // console.log('Added chore:' + JSON.stringify(data));
+        window.location.reload();
       }
     });
   }
 
   editChild(e) {
-    this.setState({ editable: true });
+    const newState = !this.state.editable;
+
+    this.setState({ editable: newState });
   }
 
   confirmChanges(e) {
-    console.log('in confirm changes');
+    // console.log('in confirm changes');
     const child = {
       'child': {
         'id': this.state.id,
@@ -72,87 +77,122 @@ class IndividualKid extends React.Component {
       dataType: 'application/json',
       data: child,
       complete: function (data) {
-        console.log('Updated chore:' + JSON.stringify(data));
+        // console.log('Updated chore:' + JSON.stringify(data));
       }
     });
     this.setState({ editable: false });
   }
+
+  cancelChanges(e) {
+    e.preventDefault();
+    this.setState({ editable: false });
+  }
+
 
   render() {
     return (
       <div>
         <Grid>
           <Row>
-            <Col xs={4} md={3}>
-              <h1>{this.props.child.name}</h1>
-            </Col>
-            <Col>
-              <button xs={3} md={1} className='editButton' onClick={this.editChild.bind(this)}>Edit</button>
+            <Col xs={6} md={6}>
+                <h1>
+                  {this.props.child.name}
+                  <span>
+                    <Button xs={3} md={1} className='editButton' bsSize='xsmall' onClick={this.editChild.bind(this)}>
+                      Edit
+                    </Button>
+                  </span>
+                </h1>
             </Col>
           </Row>
         </Grid>
-        {(this.state.editable === true && 
-          <form>
-            <input type='text' name='name' value={this.state.name}
-              onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <input type='text' name='phone' value={this.state.phone}
-              onChange={this.handleInputChange.bind(this)}>
-            </input>
-            <button className='btn btn-default' 
-              onClick={this.confirmChanges.bind(this)}>
-              Confirm
-            </button>
-          </form>
+        {(this.state.editable === true &&
+          <Row>
+            <Col md={4}>
+              <Well>
+                <form>
+                  <FormControl type='text' name='name' value={this.state.name}
+                    onChange={this.handleInputChange.bind(this)}>
+                  </FormControl>
+                  <FormControl type='text' name='phone' value={this.state.phone}
+                    onChange={this.handleInputChange.bind(this)}>
+                  </FormControl>
+                  <Button className='btn btn-default'
+                    onClick={this.confirmChanges.bind(this)}>
+                      Confirm
+                  </Button>
+                  <Button className='btn btn-default'
+                    onClick={this.cancelChanges.bind(this)}>
+                      Cancel
+                  </Button>
+                </form>
+              </Well>
+            </Col>
+          </Row>
         )}
-        <div> 
+        <div>
           <h2>Schedule</h2>
-          <Schedule child={this.props.child} schedule={this.props.child.schedule} 
+          <Schedule child={this.props.child} schedule={this.props.child.schedule}
             name={this.props.child.name} amazonToken={this.state.amazonToken}/>
         </div>
         <div> 
           <h3>Chores</h3>
           {(this.props.child.chores !== undefined &&  
             this.props.child.chores.map((chore, index) =>
-              <Chores child={this.props.child} chore={chore} index={index} key={chore.id} 
+              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
                 amazonToken={this.props.amazonToken}/>
             ))
           }
           {(this.props.child.chores === undefined &&
             <div>
-              <p>{this.props.name} does not currently have any chores assigned. 
-              Add a chore below.</p>          
+              <p>{this.props.name} does not currently have any chores assigned.
+              Add a chore below.</p>        
             </div>
           )}
-          <div> 
-            <h3>New Chore</h3>
-              <form>
-                <input type='text' name='chore' placeholder='Chore' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <input type='text' name='details' placeholder='Explanation' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <input type='date' name='date' 
-                  onChange={this.handleInputChange.bind(this)}>
-                </input>
-                {' '}
-                <button className='btn btn-default' 
-                  onClick={this.addChore.bind(this)}>
-                  Add Chore
-                </button>
-              </form>
+          <div>
+            <Button onClick={()=> this.setState({ open: !this.state.open })}>
+              New Chore
+            </Button>
+            <Collapse in={this.state.open}>
+              <div>
+                <Well>
+                  <Row>
+                    <Col md={6}>
+                      <form>
+                        <FormGroup>
+                          <FormControl type='text' name='chore' placeholder='Chore'
+                            onChange={this.handleInputChange.bind(this)}>
+                          </FormControl>
+                          {' '}
+                          <FormControl type='text' name='details' placeholder='Details'
+                            onChange={this.handleInputChange.bind(this)}>
+                          </FormControl>
+                          {' '}
+                          <Row>
+                            <Col md={6}>
+                              <FormControl type='date' name='date' 
+                                onChange={this.handleInputChange.bind(this)}>
+                              </FormControl>
+                            </Col>
+                          </Row>
+                          {' '}
+                          <Button className='btn btn-default' 
+                            onClick={this.addChore.bind(this)}>
+                            Add Chore
+                          </Button>
+                        </FormGroup>
+                      </form>
+                    </Col>
+                  </Row>
+                </Well>
+              </div>
+            </Collapse>
           </div>
         </div>
       </div>
     );
-  } 
+  }
 }
 
 
 export default IndividualKid;
-
-
-
