@@ -85,20 +85,20 @@ class Account extends React.Component {
         <div>
           <Grid className='well'>
             <Row>
-              <Col xs={4} md={2}>Name</Col>
-              <Col xs={6} md={4}>{this.state.username}</Col>
+              <Col xs={4} md={3}>Name</Col>
+              <Col xs={6} md={6}>{this.state.username}</Col>
             </Row>
             <Row className='gridRow'>
-              <Col xs={4} md={2}>Email</Col>
-              <Col xs={6} md={4}>{this.state.email}</Col>
+              <Col xs={4} md={3}>Email</Col>
+              <Col xs={6} md={6}>{this.state.email}</Col>
             </Row>
             <Row className='gridRow'>
-              <Col xs={4} md={2}>Phone Number</Col>
-              <Col xs={6} md={4}>{this.state.phone}</Col>
+              <Col xs={4} md={3}>Phone Number</Col>
+              <Col xs={6} md={6}>{this.state.phone}</Col>
             </Row>
             <Row className='gridRow'>
-              <Col xs={4} md={2}>Time Zone</Col>
-              <Col xs={6} md={4}>{this.state.timezone}</Col>
+              <Col xs={4} md={3}>Time Zone</Col>
+              <Col xs={6} md={6}>{this.state.timezone}</Col>
             </Row>
             <Row>
               <Button className='editButton' 
@@ -111,26 +111,26 @@ class Account extends React.Component {
         <Form>
           <Grid className='well'>
             <Row>
-              <Col xs={4} md={2}>Name</Col>
-              <Col xs={6} md={4}><FormControl type='text' name='username' defaultValue={this.state.username}
+              <Col xs={4} md={3}>Name</Col>
+              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.state.username}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
-              <Col xs={4} md={2}>Email</Col>
-              <Col xs={6} md={4}><FormControl type='text' name='email' defaultValue={this.state.email}
+              <Col xs={4} md={3}>Email</Col>
+              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.state.email}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
-              <Col xs={4} md={2}>Phone Number</Col>
-              <Col xs={6} md={4}><FormControl type='text' name='phone' defaultValue={this.state.phone}
+              <Col xs={4} md={3}>Phone Number</Col>
+              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.state.phone}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
-              <Col xs={4} md={2}>Time Zone</Col>
-              <Col xs={6} md={4}>
+              <Col xs={4} md={3}>Time Zone</Col>
+              <Col xs={6} md={6}>
                 <select name='timezone' onChange={this.handleInputChange.bind(this)}>
                   <option value='EST'>EST / Eastern / UTC-5</option>
                   <option value='CST'>CST / Central / UTC-6</option>
