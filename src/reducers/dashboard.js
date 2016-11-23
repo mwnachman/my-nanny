@@ -1,40 +1,7 @@
+import STUBS_DASHBOARD from '../stubs/dashboard';
+
 var dashboard = function() {
-  return {
-    'account': {
-      'username': 'Mary'
-    },
-    'children': [
-      {
-        'id': 1,
-        'name': 'Winston',
-        'photo': 'https://api.adorable.io/avatars/100/winston.png',
-        'checkedIn': null,
-        'curfew': '15:00',
-        // Today's chores only
-        'chores': [
-          {
-            'id': 3,
-            'title': 'Clean your room',
-            'completed': false
-          },
-          {
-            'id': 4,
-            'title': 'Wash the dishes',
-            'completed': true
-          }
-        ],
-      },
-      {
-        'id': 2,
-        'name': 'Wendy',
-        'photo': 'https://api.adorable.io/avatars/100/wendy.png',
-        'checkedIn': '16:43',
-        'curfew': '17:00',
-        'chores': []
-      }
-    ]
-  };
+  return STUBS_DASHBOARD;
 };
 
 module.exports = dashboard;
-

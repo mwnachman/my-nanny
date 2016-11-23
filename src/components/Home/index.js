@@ -2,9 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import './home.css';
 
-import ChildrenList from '../../containers/children';
+import Dashboard from '../../containers/dashboard';
 import ChildDetails from '../../containers/childDetails';
-import DashboardInfo from '../../containers/dashboardInfo';
 
 class Home extends React.Component {
 
@@ -27,18 +26,13 @@ class Home extends React.Component {
   render() {
     return (
     <div className='home'>
-      <h1>Home Page!</h1>
-      <DashboardInfo />
-      <ChildrenList />
-      <hr />
-      Chores
-      <br />
+      <Dashboard />
+      <hr/>
       <ChildDetails />
     </div>
     );
   }
 
 }
-
 
 export default Home;
