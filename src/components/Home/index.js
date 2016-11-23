@@ -4,6 +4,7 @@ import './home.css';
 
 import ChildrenList from '../../containers/children';
 import ChildDetails from '../../containers/childDetails';
+import DashboardInfo from '../../containers/dashboardInfo';
 
 class Home extends React.Component {
 
@@ -27,11 +28,7 @@ class Home extends React.Component {
     return (
     <div className='home'>
       <h1>Home Page!</h1>
-      <ul>
-        <li>Luis is home!</li>
-        <li>Meredith is home!</li>
-        <li>Robert is not home!</li>
-      </ul>
+      <DashboardInfo />
       <ChildrenList />
       <hr />
       Chores
