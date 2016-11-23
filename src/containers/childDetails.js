@@ -1,30 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './styles/childDetails.css';
 
-class ChildDetails extends Component {
+const mapStateToProps = function(state) {
+  return {
+    chores: state.chores.child.chores,
+    child: state.chores.child.name
+  };
+};
+
+class ChildDetails extends Component {  
   
+  createChoresList() {
+    return (
+      this.props.chores.map((chore) => {
+        return (
+          <li key={chore.title}>
+            <span className='choreStatus'>
+              {chore.completed ? '🎉' : '❌'}
+            </span>
+            <span className='choreTitle'>
+              {chore.title}
+            </span>
+          </li>
+        );
+      })
+    );    
+  }
+
   render() {
-    if (!this.props.child) {
+    if (!this.props.chores) {
       return (<div>Select a user...</div>);
     }
     return (
       <div>
       <ul>
-        {this.props.child.chores.map((chore) => {
-          return (
-            <li key={chore.title}>{chore.title}</li>
-          );
-        })}
+        <li>{this.props.child + '\'s chores today'}</li>
+        {this.createChoresList()}
       </ul>
       </div>
     );
   }
 }
 
-var mapStateToProps = function(state) {
-  return {
-    child: state.activeChild
-  };
-};
 
 export default connect(mapStateToProps)(ChildDetails);
