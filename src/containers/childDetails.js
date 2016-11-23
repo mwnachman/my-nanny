@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class ChildDetails extends Component {
+  
   render() {
-    console.log('this.props.child', this.props.child);
     if (!this.props.child) {
       return (<div>Select a user...</div>);
     }
