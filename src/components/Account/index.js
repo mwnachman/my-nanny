@@ -1,9 +1,12 @@
-import React from 'react';
-import IndividualKidBrief from '../IndividualKidBrief/index';
+import React from 'react'; 
 import $ from 'jquery';
-import config from '../../config';
+import './account.css'; 
+// import config from '../../config';
 import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
-import './account.css';
+
+import IndividualKidBrief from '../IndividualKidBrief/index';
+
+import AccountInfo from '../../containers/accountInfo';
 
 
 class Account extends React.Component {
@@ -12,35 +15,34 @@ class Account extends React.Component {
     super(props);
 
     this.state = {
-      amazonToken: '',
-      email: '',
-      phone: '', 
-      username: '',
-      timezone: '',
-      urlPrefix: config.baseUrl,
-      children: [],
-      editable: false,
+      // amazonToken: '',
+      // email: '',
+      // phone: '', 
+      // username: '',
+      // timezone: '',
+      // urlPrefix: config.baseUrl,
+      // children: [],
+      // editable: false,
     };
   }
 
-  componentWillMount() {
-    
-    this.setState({ amazonToken: localStorage.getItem('amazon-token') });
-  }
+  // componentWillMount() {
+  //   this.setState({ amazonToken: localStorage.getItem('amazon-token') });
+  // }
 
-  componentDidMount() {
-    $.ajax({
-      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
-      type: 'GET',
-    }).done(dataRes => {
-      const data = JSON.parse(dataRes);
-      this.setState({ username: data.username }); 
-      this.setState({ phone: data.phone });
-      this.setState({ email: data.email });
-      this.setState({ children: data.children });
-      this.setState({ timezone: data.timeZone });
-    });
-  }
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+  //     type: 'GET',
+  //   }).done(dataRes => {
+  //     const data = JSON.parse(dataRes);
+  //     this.setState({ username: data.username }); 
+  //     this.setState({ phone: data.phone });
+  //     this.setState({ email: data.email });
+  //     this.setState({ children: data.children });
+  //     this.setState({ timezone: data.timeZone });
+  //   });
+  // }
 
   handleInputChange(e) {
     const inputChange = {};
