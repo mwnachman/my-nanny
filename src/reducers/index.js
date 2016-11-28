@@ -1,26 +1,37 @@
 import { combineReducers } from 'redux';
-import ActiveChildReducer from './activeChild';
-import DashboardReducer from './dashboard';
-import AccountReducer from './account';
-import ChoresReducer from './chores';
-import ScheduleReducer from './schedule';
+import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT } from '../actions/actions.js';
+// import ActiveChildReducer from './activeChild';
+// import DashboardReducer from './dashboard';
+// import AccountReducer from './account';
+// import ChoresReducer from './chores';
+// import ScheduleReducer from './schedule';
+
+const dashboardReducer = (state = {}, action) => {
+  switch (action.type) {
+  case REQUEST_ACCOUNT:
+    console.log('REQUEST_ACCOUNT Reducer');
+    return Object.assign({}, state, {
+      isFetching: true
+    });
+  case RECEIVE_ACCOUNT:
+    console.log('RECEIVE_ACCOUNT Reducer');
+    return Object.assign({}, state, {
+      isFetching: false
+    });
+  default:
+    return state;
+  }
+};
+
 
 const allReducers = combineReducers({
-  activeChild: ActiveChildReducer,
-  dashboard: DashboardReducer,
-  account: AccountReducer,
-  chores: ChoresReducer,
-  schedule: ScheduleReducer
+  dashboard: dashboardReducer
 });
 
 export default allReducers;
 
-// // Unified Reducer
-// export default ( state = {}, action) => {
-// 	let newState = JSON.parse(JSON.stringify(state));
-// 	// switch on action.type
-// 		// case 
-// 			newState.chore = action.chore;
-// 		// other case
-// 	return newState;
-// };
+  // activeChild: ActiveChildReducer,
+  // dashboard: DashboardReducer,
+  // account: AccountReducer,
+  // chores: ChoresReducer,
+  // schedule: ScheduleReducer
