@@ -1,7 +1,9 @@
 import React from 'react'; 
 import $ from 'jquery';
 import './account.css'; 
-// import config from '../../config';
+import config from '../../config';
+import fetch from 'isomorphic-fetch';
+
 import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
 
 import IndividualKidBrief from '../IndividualKidBrief/index';
@@ -15,34 +17,36 @@ class Account extends React.Component {
     super(props);
 
     this.state = {
-      // amazonToken: '',
-      // email: '',
-      // phone: '', 
-      // username: '',
-      // timezone: '',
-      // urlPrefix: config.baseUrl,
-      // children: [],
-      // editable: false,
+      amazonToken: '',
+      email: '',
+      phone: '', 
+      username: '',
+      timezone: '',
+      urlPrefix: config.baseUrl,
+      children: [],
+      editable: false,
     };
   }
 
-  // componentWillMount() {
-  //   this.setState({ amazonToken: localStorage.getItem('amazon-token') });
-  // }
 
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
-  //     type: 'GET',
-  //   }).done(dataRes => {
-  //     const data = JSON.parse(dataRes);
-  //     this.setState({ username: data.username }); 
-  //     this.setState({ phone: data.phone });
-  //     this.setState({ email: data.email });
-  //     this.setState({ children: data.children });
-  //     this.setState({ timezone: data.timeZone });
-  //   });
-  // }
+  componentWillMount() {
+    this.setState({ amazonToken: localStorage.getItem('amazon-token') });
+  }
+
+  componentDidMount() {
+    console.log('in component did mount');
+    $.ajax({
+      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+      type: 'GET',
+    }).done(dataRes => {
+      const data = JSON.parse(dataRes);
+      this.setState({ username: data.username }); 
+      this.setState({ phone: data.phone });
+      this.setState({ email: data.email });
+      this.setState({ children: data.children });
+      this.setState({ timezone: data.timeZone });
+    });
+  }
 
   handleInputChange(e) {
     const inputChange = {};
@@ -73,6 +77,26 @@ class Account extends React.Component {
     });
     this.setState({ editable: false });
   }
+
+  // updateAccount(e) {
+
+  // return dispatch => {
+  //   const signupData = {
+  //     'account': {
+  //       'amazonId': this.state.amazonId,
+  //       'username': this.state.username,
+  //       'phone': this.state.phone,
+  //       'email': this.state.email,
+  //       'timeZone': this.state.timezone
+  //     }
+  //   };
+  //   dispatch(requestPosts(subreddit))
+  //   return fetch(`http://www.reddit.com/r/${subreddit}.json`)
+  //     .then(response => response.json())
+  //     .then(json => dispatch(receivePosts(subreddit, json)))
+  //   }
+  // }
+
 
   makeEditable(e) {
     this.setState({ editable: true });
