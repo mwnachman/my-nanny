@@ -2,7 +2,10 @@ import React from 'react';
 import $ from 'jquery';
 import './account.css'; 
 import config from '../../config';
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
+
+import { getAccount } from '../../actions/account.js';
+
 
 import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
 
@@ -99,12 +102,14 @@ class Account extends React.Component {
 
 
   makeEditable(e) {
+    console.log('in make editable', this.props.store);
     this.setState({ editable: true });
   }
 
   render() {
     return (
       <div className='account'>
+        <AccountInfo />
         <h1>Your Account</h1>
         <h2>Account Details</h2>
         {(this.state.editable === false && 
@@ -128,7 +133,7 @@ class Account extends React.Component {
             </Row>
             <Row>
               <Button className='editButton' 
-                onClick={this.makeEditable.bind(this)}>Edit Account</Button>
+                onClick={getAccount(5)}>Edit Account</Button>
             </Row>
           </Grid>
           </div>

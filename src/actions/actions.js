@@ -31,7 +31,7 @@ export const receiveAccount = (account, json) => {
 };
 
 export const getAccount = (account) => {
-  console.log('getAccount fired');
+  // console.log('getAccount fired');
   return function(dispatch) {
     console.log('inside dispatch');
     dispatch(requestAccount(account));
