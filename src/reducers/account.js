@@ -1,26 +1,31 @@
-// import STUBS_ACCOUNT from '../stubs/account';
-
-// var account = function() {
-//   return STUBS_ACCOUNT;
-// };
-
 import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT } from '../actions/account';
 
-const AccountReducer = (state = {}, action) => {
-  switch (action.type) {
-  case REQUEST_ACCOUNT:
-    console.log('REQUEST_ACCOUNT Reducer');
+const AccountReducer = (state = {
+  isFetching: false,
+  username: null,
+  email: null,
+  phone: null, 
+  timezone: null
+}, action) => {
+  // console.log('action', JSON.stringify(action.payload));
+  if ( action.type === REQUEST_ACCOUNT ) {
+    // console.log('REQUEST_ACCOUNT Reducer');
     return Object.assign({}, state, {
       isFetching: true
     });
-  case RECEIVE_ACCOUNT:
-    console.log('RECEIVE_ACCOUNT Reducer');
+  } else if ( action.type === RECEIVE_ACCOUNT ) {
+    // console.log('RECEIVE_ACCOUNT Reducer');
     return Object.assign({}, state, {
-      isFetching: false
+      isFetching: false,
+      username: action.payload.username,
+      email: action.payload.email,
+      phone: action.payload.phone,
+      timezone: action.payload.timezone
     });
-  default:
+  } else {
     return state;
   }
 };
 
-module.exports = AccountReducer;
+
+export default AccountReducer;
