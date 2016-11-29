@@ -5,7 +5,8 @@ const AccountReducer = (state = {
   username: null,
   email: null,
   phone: null, 
-  timezone: null
+  timezone: null,
+  children: null
 }, action) => {
   // console.log('action', JSON.stringify(action.payload));
   if ( action.type === REQUEST_ACCOUNT ) {
@@ -20,7 +21,8 @@ const AccountReducer = (state = {
       username: action.payload.username,
       email: action.payload.email,
       phone: action.payload.phone,
-      timezone: action.payload.timezone
+      timezone: action.payload.timezone,
+      children: action.payload.children
     });
   } else {
     return state;
