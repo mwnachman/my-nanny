@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+// import React, { Component } from 'react';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import { getAccount } from '../actions/account';
 
-class Account extends Component {
+// class AccountInfo extends Component {
   
   // createChildrenList() {
   //   return this.props.children.map((children) => {
@@ -15,24 +16,33 @@ class Account extends Component {
   //   });
   // }
 
-  render () {
-    return (
-      <ul>
-        {this.createChildrenList()}
-      </ul>
-    );
-  }
-}
+//   render () {
+//     return (
+//       <div>
+//         <br />
+//         <br />
+//         <br />
+//         <br />
+//         <ul>
+//           <li>ha</li>
+//         </ul>
+//       </div>
+//     );
+//   }
+// }
 
-var mapStateToProps = function(state) {
-  return {
-    account: state.account
-  };
-};
-
-// var matchDispatchToProps = function(dispatch) {
-//   return bindActionCreators({ selectChild: selectChild }, dispatch);
+// var mapStateToProps = function(state) {
+//   console.log('in map state to props');
+//   return {
+//     account: state.account
+//   };
 // };
 
-export default connect(mapStateToProps)(Account);
-  // , matchDispatchToProps
+// var matchDispatchToProps = function(dispatch) {
+//   console.log('in match dispatch to props');
+//   return bindActionCreators({ getAccount: getAccount }, dispatch);
+// };
+
+// export default connect(mapStateToProps, matchDispatchToProps)(AccountInfo);
+  
+  
