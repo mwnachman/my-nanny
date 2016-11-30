@@ -1,46 +1,44 @@
 import fetch from 'isomorphic-fetch';
 
 
-const token = 'Atza%7CIwEBIJhiR6HIzHfwaEEA9a96hwBhFSzVst\
-0jkl_3XOj88KkjuU-S79k5tM_tTTpHhF3OaZKxFPK69G5zkI3h9VeGrrz\
-yTCmP_wMmfl7ZDDSoZntk5xQHsntQ5YSx8jLx688B30ochmXacgjeIKdXp\
-ekeK6giPnPsb-e4XxFLtd-2z9AmpdOTkyzkwBlB4fJR9GwRH7grcsLmXRdl\
-mY-xOyIjr01R4uc800ku-PuGcNWUcN6jpWHDQlWYbQk0Gw4Jzzjp6aFM93\
-c0tSJjFpscbjnt2MBcytJVLvyCsBXzgtiKjMJoilMYZVOWV4cVi1PvRVO4\
-BxBS8GmqbBD3fwV6JGOI5CzKqgrIv6lK3m9c8mvnJrjsp7q9dDMpKp4kN0\
-pqYEbH1BtyCNllENkKYwHDio3qJrFAyplZiEsfMdd1iLdJ3_Zv7zW59VY4i\
-Go9sgxpCtKSqfijnJsaHzrApk5A33XhnS1WLJORy-nAp8m4yLOig-g-imFSaFicYLzEu_\
-iHAxVzzeGWK8w2DK25mOXrb76QhbSQYfqKts4a3c8Kk2-AIcKC-w';
+const token = 'Atza%7CIwEBIGXFfppgf9xIf0KrY8Wtxhoc7J\
+aI72BnsDDv2PsHNhnm5cJ50BKvD0yg5wYn3xWeCN6hAYqHbmbFE5X\
+edNARtBanVBpUYcAkhe7lOfdT7cuBACryaucIlaZwArtLx78yqXyuc\
+EIu_2IX_w0MqDIz8CSHSTuiX-Gx_4QDputnV7-YuBS2Wc7LnDkxqT4\
+dA7eOK9phxu5H7xyyjroK6ybd-qkEhSF4akhiK5SyiESWOSM4Ldyg48\
+g5XwdcM5OhN2OWjHOmTFT-qQ4sE1j-cyq74z24TfCdWzei-fDsUu4Bc\
+3QTMao2WZCvhj48NRgYPojXpP54rUujYPhEA5IVuDRrfBgKWnTVKwN5P\
+NB0veEhTuyMNNuiHSxe_BqO_soG-7qgOiJ0mRsVVNY6oqcf7mIXpwDDOs\
+gxdqyKNjW8Z1yRXVR3fGNRTI8pFbIBv4ObNxfftDj8JsTQ08ITF1p5_XN\
+jHcufLaf-vELHC8N9OTBhKBurO8hG9d8VYVtyi_eyL_Nw3YIG1yeRIMMJd2oh\
+VzOuD4QEhABJ5fn0-Ma1v2LSLQ_oNFrwX5FlncsUwhgtDM4yiOY';
 const url = 'https://localhost:1337/api/account?access_token=' + token;
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 
-export const requestAccount = (account) => {
-  console.log('requested account');
+export const requestAccount = () => {
+  // console.log('requested account');
   return {
-    type: REQUEST_ACCOUNT,
-    payload: account
+    type: REQUEST_ACCOUNT
   };
 };
 
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
 
-export const receiveAccount = (accountData, json) => {
-  console.log('received account: ', accountData);
-  var obj = {
+export const receiveAccount = (accountData) => {
+  // console.log('received account: ', accountData);
+  // console.log('obj', obj);
+  // console.log('email', accountData.email);
+  return {
     type: RECEIVE_ACCOUNT,
-    payload: accountData,
-    data: json
+    payload: accountData
   };
-  console.log('obj', obj);
-  console.log('email', accountData.email);
-  return obj;
 };
 
-export const getAccount = (account) => {
-  console.log('inside getAccount');
+export const getAccount = () => {
+  // console.log('inside getAccount');
   return function(dispatch) {
-    dispatch(requestAccount(account));
+    dispatch(requestAccount());
     return fetch(url)
     .then((response) => {
       if (response.status >= 400) {
@@ -49,7 +47,7 @@ export const getAccount = (account) => {
       return response.json();
     })
     .then(function(data) {
-      console.log('api data:', data);
+      // console.log('api data:', data);
       dispatch(receiveAccount(data));
     });
   };
