@@ -29,6 +29,13 @@ export const receiveAccount = (account) => {
   };
 };
 
+export const receiveChildren = (childrenData) => {
+  return {
+    type: 'RECEIVE_CHILDREN',
+    payload: childrenData
+  };
+};
+
 export const requestChores = (date) => {
   return {
     type: 'REQUEST_CHORES',
@@ -48,6 +55,38 @@ export const receiveChores = (childList, chores) => {
   };
 };
 
+export const toggleEditable = () => {
+  return {
+    type: 'TOGGLE_EDITABLE'
+  };
+};
+
+export const toggleEditableChild = (id) => {
+  return {
+    type: 'TOGGLE_CHILD_EDIT',
+    payload: id
+  };
+};
+
+export const toggleShowChild = (id) => {
+  return {
+    type: 'TOGGLE_CHILD_SHOW',
+    payload: id
+  };
+};
+
+export const updateAccountInStore = (username, phone, timezone, email) => {
+  const newAccountData = {
+    username: username,
+    phone: phone,
+    timezone: timezone, 
+    email: email
+  };
+  return function(dispatch) {
+    dispatch(receiveAccount(newAccountData));
+  };
+};
+
 export const getAccount = (token, date) => {
   let childIds = [];
   return function(dispatch) {
@@ -61,6 +100,9 @@ export const getAccount = (token, date) => {
     })
     .then(function(account) {
       dispatch(receiveAccount(account));
+      if (account.children) {
+        dispatch(receiveChildren(account));
+      }
       account.children.forEach((child) => {
         childIds.push(child.id);
       });

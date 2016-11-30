@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = function(state) {
   return {
-    account: state.account
+    children: state.children
   };
 };
 
@@ -15,7 +15,7 @@ const mapStateToProps = function(state) {
 class Dashboard extends Component {
   
   createChildrenList() {
-    if (!this.props.account.children) {
+    if (!this.props.children) {
       return (
         <li>
           Not loaded yet!
@@ -23,11 +23,11 @@ class Dashboard extends Component {
       );
     }
     return (
-      Object.keys(this.props.account.children).map((child) => {
+      Object.keys(this.props.children).map((child) => {
         return (
           <li key={child}>
             <span className='status'>
-              {this.props.account.children[child].name} 
+              {this.props.children[child].name} 
             </span>
           </li>
         );
