@@ -162,10 +162,11 @@ Account.contextTypes = {
 
 var mapStateToProps = function(state) {
   var kids = [];
-  var kidsToMap = state.account.children;
+  var kidsToMap = state.children;
   for (var key in kidsToMap) {
     kids.push({ id: key, name: kidsToMap[key]['name'], phone: kidsToMap[key]['phone'] });
   }
+  console.log('kids', kids);
   return {
     account: state.account,
     children: kids

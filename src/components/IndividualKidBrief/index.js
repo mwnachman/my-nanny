@@ -113,7 +113,7 @@ IndividualKidBrief.contextTypes = {
 
 var mapStateToProps = function(state) {
   return {
-    children: state.account.children,
+    children: state.children,
   };
 };
 

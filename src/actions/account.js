@@ -19,6 +19,14 @@ export const receiveAccount = (accountData) => {
   };
 };
 
+export const RECEIVE_CHILDREN = 'RECEIVE_CHILDREN';
+export const receiveChildren = (childrenData) => {
+  return {
+    type: RECEIVE_CHILDREN,
+    payload: childrenData
+  };
+};
+
 export const getAccount = () => {
   return function(dispatch) {
     dispatch(requestAccount());
@@ -31,6 +39,9 @@ export const getAccount = () => {
     })
     .then(function(data) {
       dispatch(receiveAccount(data));
+      if (data.children) {
+        dispatch(receiveChildren(data));
+      }
     });
   };
 };
