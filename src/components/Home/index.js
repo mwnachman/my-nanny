@@ -3,12 +3,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getAccount } from '../../actions/actions';
 import Dashboard from '../../containers/dashboard';
+
 import './home.css';
 
 class Home extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      amazonToken: ''
+    };
   }
 
   componentWillMount() {
@@ -20,6 +25,8 @@ class Home extends React.Component {
 
     const amzToken = localStorage.getItem('amazon-token') ? localStorage.getItem('amazon-token') : 
       ((((window.location.href).split('='))[1]).split('&'))[0];
+    this.setState({ amazonToken: amzToken });
+    localStorage.setItem('amazon-token', amzToken);
 
     this.props.getAccount(amzToken, fullDate);
 
@@ -28,7 +35,7 @@ class Home extends React.Component {
   render() {
     return (
     <div className='home'>
-      <Dashboard />
+
       <hr/>
     </div>
     );

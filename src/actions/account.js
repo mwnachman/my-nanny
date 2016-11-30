@@ -1,46 +1,35 @@
 import fetch from 'isomorphic-fetch';
+ 
 
-
-const token = 'Atza%7CIwEBIJhiR6HIzHfwaEEA9a96hwBhFSzVst\
-0jkl_3XOj88KkjuU-S79k5tM_tTTpHhF3OaZKxFPK69G5zkI3h9VeGrrz\
-yTCmP_wMmfl7ZDDSoZntk5xQHsntQ5YSx8jLx688B30ochmXacgjeIKdXp\
-ekeK6giPnPsb-e4XxFLtd-2z9AmpdOTkyzkwBlB4fJR9GwRH7grcsLmXRdl\
-mY-xOyIjr01R4uc800ku-PuGcNWUcN6jpWHDQlWYbQk0Gw4Jzzjp6aFM93\
-c0tSJjFpscbjnt2MBcytJVLvyCsBXzgtiKjMJoilMYZVOWV4cVi1PvRVO4\
-BxBS8GmqbBD3fwV6JGOI5CzKqgrIv6lK3m9c8mvnJrjsp7q9dDMpKp4kN0\
-pqYEbH1BtyCNllENkKYwHDio3qJrFAyplZiEsfMdd1iLdJ3_Zv7zW59VY4i\
-Go9sgxpCtKSqfijnJsaHzrApk5A33XhnS1WLJORy-nAp8m4yLOig-g-imFSaFicYLzEu_\
-iHAxVzzeGWK8w2DK25mOXrb76QhbSQYfqKts4a3c8Kk2-AIcKC-w';
+const token = localStorage.getItem('amazon-token');
 const url = 'https://localhost:1337/api/account?access_token=' + token;
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
-
-export const requestAccount = (account) => {
-  console.log('requested account');
+export const requestAccount = () => {
   return {
-    type: REQUEST_ACCOUNT,
-    payload: account
+    type: REQUEST_ACCOUNT
   };
 };
 
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
-
-export const receiveAccount = (accountData, json) => {
-  console.log('received account: ', accountData);
-  var obj = {
+export const receiveAccount = (accountData) => {
+  return {
     type: RECEIVE_ACCOUNT,
-    payload: accountData,
-    data: json
+    payload: accountData
   };
-  console.log('obj', obj);
-  console.log('email', accountData.email);
-  return obj;
 };
 
-export const getAccount = (account) => {
-  console.log('inside getAccount');
+export const RECEIVE_CHILDREN = 'RECEIVE_CHILDREN';
+export const receiveChildren = (childrenData) => {
+  return {
+    type: RECEIVE_CHILDREN,
+    payload: childrenData
+  };
+};
+
+export const getAccount = () => {
   return function(dispatch) {
-    dispatch(requestAccount(account));
+    dispatch(requestAccount());
     return fetch(url)
     .then((response) => {
       if (response.status >= 400) {
@@ -49,10 +38,45 @@ export const getAccount = (account) => {
       return response.json();
     })
     .then(function(data) {
-      console.log('api data:', data);
       dispatch(receiveAccount(data));
+      if (data.children) {
+        dispatch(receiveChildren(data));
+      }
     });
   };
 };
 
+export const updateAccountInStore = (username, phone, timezone, email) => {
+  const newAccountData = {
+    username: username,
+    phone: phone,
+    timezone: timezone, 
+    email: email
+  };
+  return function(dispatch) {
+    dispatch(receiveAccount(newAccountData));
+  };
+};
 
+export const TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
+export const toggleEditable = () => {
+  return {
+    type: TOGGLE_EDITABLE
+  };
+};
+
+export const TOGGLE_CHILD_EDIT = 'TOGGLE_CHILD_EDIT';
+export const toggleEditableChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_EDIT,
+    payload: id
+  };
+};
+
+export const TOGGLE_CHILD_SHOW = 'TOGGLE_CHILD_SHOW';
+export const toggleShowChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_SHOW,
+    payload: id
+  };
+};

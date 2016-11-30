@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-// import { activateChild } from '../actions/activeChild';
-// import { ChildDetails } from './childDetails';
 
 const mapStateToProps = function(state) {
   return {
@@ -13,6 +11,7 @@ const mapStateToProps = function(state) {
 // const mapDispatchToProps = function(dispatch) {
 //   return bindActionCreators({ activateChild: activateChild }, dispatch);
 // };
+
 class Dashboard extends Component {
   
   createChildrenList() {

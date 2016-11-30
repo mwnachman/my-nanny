@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAccount } from '../../actions/account';
+import { getAccount, updateAccountInStore, toggleEditable } from '../../actions/account';
 import './account.css'; 
 import config from '../../config';
-
-import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
-
+import $ from 'jquery';
+import { Row, Col, Grid, Form, FormControl, Button, getValue } from 'react-bootstrap';
 import IndividualKidBrief from '../IndividualKidBrief/index';
-
-// import AccountInfo from '../../containers/accountInfo';
 
 
 class Account extends Component {
@@ -18,45 +15,45 @@ class Account extends Component {
     super(props);
 
     this.state = {
-      // email: '',
-      // phone: '', 
-      // username: '',
-      // timezone: '',
-      children: [],
-      editable: false,
+      email: null,
+      phone: null, 
+      username: null,
+      timezone: null,
+      urlPrefix: config.baseUrl
     };
   }
 
-
   componentWillMount() {
     this.context.store.dispatch(getAccount());
-    console.log('store.getState in will mount', this.context.store.getState());
-  }
-
-  componentDidMount() {
-    console.log('store.getState in did mount', this.context.store.getState());
   }
 
   handleInputChange(e) {
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
+    console.log('timezone', this.state);
   }
 
   updateAccount(e) {
-    // console.log('in update Account');
-    // console.log('this.state at start of update account', this.state);
+    const username = this.state.username || this.props.account.username;
+    const phone = this.state.phone || this.props.account.phone;
+    const timezone = this.state.timezone || this.props.account.timezone;
+    const email = this.props.account.email;
+    const amazonToken = localStorage.getItem('amazon-token');
+
+    this.context.store.dispatch(updateAccountInStore(username, phone, timezone, email));
+
     const signupData = {
       'account': {
-        'amazonId': this.state.amazonId,
-        'username': this.state.username,
-        'phone': this.state.phone,
-        'email': this.state.email,
-        'timeZone': this.state.timezone
+        'username': username,
+        'phone': phone,
+        'email': email,
+        'timezone': timezone
       }
     };
+
     $.ajax({
-      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+      url: this.state.urlPrefix + '/api/account?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -64,40 +61,19 @@ class Account extends Component {
         console.log('Updated account:' + JSON.stringify(data));
       }
     });
-    this.setState({ editable: false });
+
+    this.context.store.dispatch(toggleEditable());
   }
 
-  // updateAccount(e) {
-
-  // return dispatch => {
-  //   const signupData = {
-  //     'account': {
-  //       'amazonId': this.state.amazonId,
-  //       'username': this.state.username,
-  //       'phone': this.state.phone,
-  //       'email': this.state.email,
-  //       'timeZone': this.state.timezone
-  //     }
-  //   };
-  //   dispatch(requestPosts(subreddit))
-  //   return fetch(`http://www.reddit.com/r/${subreddit}.json`)
-  //     .then(response => response.json())
-  //     .then(json => dispatch(receivePosts(subreddit, json)))
-  //   }
-  // }
-
-
   makeEditable(e) {
-    console.log('in make editable', this.props.store);
-    this.setState({ editable: true });
+    this.context.store.dispatch(toggleEditable());
   }
 
   render() {
     return (
       <div className='account'>
-        <h1>Your Account</h1>
         <h2>Account Details</h2>
-        {(this.state.editable === false && 
+        {(this.props.account.editable === false && 
         <div>
           <Grid className='well'>
             <Row>
@@ -123,24 +99,24 @@ class Account extends Component {
           </Grid>
           </div>
         )}
-        {(this.state.editable === true && 
+        {(this.props.account.editable === true && 
         <Form>
           <Grid className='well'>
             <Row>
               <Col xs={4} md={3}>Name</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.state.username}
+              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.props.account.username}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
               <Col xs={4} md={3}>Email</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.state.email}
+              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.props.account.email}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
               <Col xs={4} md={3}>Phone Number</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.state.phone}
+              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.props.account.phone}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
@@ -162,15 +138,14 @@ class Account extends Component {
           </Grid>
         </Form>
         )}
-        {(this.state.children.length !== 0 &&
+        {(this.props.account.children &&
         <Grid className='childrenBlock'>
           <Row>
             <h2 className='childrenHeader'>Children</h2>
           </Row>
           <Row className='well'>
-            {this.state.children.map((child, index) =>
-              <IndividualKidBrief amazonToken={this.state.amazonToken} 
-               child={child} index={index} key={child.id}/>
+            {this.props.children.map((child, index) =>
+              <IndividualKidBrief child={child} index={index} key={child.id}/>
             )}
           </Row>
         </Grid>
@@ -186,17 +161,22 @@ Account.contextTypes = {
 };
 
 var mapStateToProps = function(state) {
-  console.log('in map state to props');
+  var kids = [];
+  var kidsToMap = state.children;
+  for (var key in kidsToMap) {
+    kids.push({ id: key, name: kidsToMap[key]['name'], phone: kidsToMap[key]['phone'] });
+  }
+  console.log('kids', kids);
   return {
-    account: state.account
+    account: state.account,
+    children: kids
   };
 };
 
-// this.context.store.getState().account.username
-
 var matchDispatchToProps = function(dispatch) {
-  console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
+  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //THEY STILL FIRE
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(Account);
