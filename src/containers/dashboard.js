@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-// import { activateChild } from '../actions/activeChild';
-// import { ChildDetails } from './childDetails';
 
 const mapStateToProps = function(state) {
   return {
@@ -16,43 +14,43 @@ const mapStateToProps = function(state) {
 
 class Dashboard extends Component {
   
-  // createChildrenList() {
-  //   if (!this.props.account.children) {
-  //     return (
-  //       <li>
-  //         Not loaded yet!
-  //       </li>
-  //     );
-  //   }
-  //   return (
-  //     this.props.account.children.map((child) => {
-  //       return (
-  //         <li key={child.id} >              
-  //           <span className='status'>
-  //             {child.name} 
-  //           </span>
-  //         </li>
-  //       );
-  //     })
-  //   );
-  // }  
+  createChildrenList() {
+    if (!this.props.account.children) {
+      return (
+        <li>
+          Not loaded yet!
+        </li>
+      );
+    }
+    return (
+      Object.keys(this.props.account.children).map((child) => {
+        return (
+          <li key={child}>
+            <span className='status'>
+              {this.props.account.children[child].name} 
+            </span>
+          </li>
+        );
+      })
+    );
+  }  
 
-  // render() {
-  //   return (
-  //     <div>
-  //       <h1>Hello world!</h1>
-  //       <br/>
-  //       <hr/>
-  //       <br/>
-  //       <ul>
-  //         {this.createChildrenList()}
-  //       </ul>
-  //     </div>
-  //   );
-  // }
+  render() {
+    return (
+      <div>
+        <h1>Hello world!</h1>
+        <br/>
+        <hr/>
+        <br/>
+        <ul>
+          {this.createChildrenList()}          
+        </ul>
+      </div>
+    );
+  }
 }
 
-// export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
 
 // onClick={() => { this.props.activateChild(child); }}
 // <img src={child.photo} className='avatar'/>

@@ -50,6 +50,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "bluebird": "^3.4.6",
     "bootstrap": "^3.3.7",
     "es6-promise": "^4.0.5",
     "isomorphic-fetch": "^2.2.1",
@@ -62,7 +63,9 @@
     "redux": "^3.6.0",
     "redux-form": "^6.2.0",
     "redux-logger": "^2.7.4",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
