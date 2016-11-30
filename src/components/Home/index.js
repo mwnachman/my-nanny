@@ -1,9 +1,9 @@
 import React from 'react';
-import $ from 'jquery';
-import './home.css';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getAccount } from '../../actions/actions';
 import Dashboard from '../../containers/dashboard';
-import ChildDetails from '../../containers/childDetails';
+import './home.css';
 
 class Home extends React.Component {
 
@@ -15,12 +15,12 @@ class Home extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const amzToken = localStorage.getItem('amazon-token') ? localStorage.getItem('amazon-token') : 
       ((((window.location.href).split('='))[1]).split('&'))[0];
     this.setState({ amazonToken: amzToken });
     localStorage.setItem('amazon-token', amzToken);
-    // console.log('local storage', localStorage.getItem('amazon-token'));
+    this.props.getAccount(amzToken);
   }
 
   render() {
@@ -28,11 +28,23 @@ class Home extends React.Component {
     <div className='home'>
       <Dashboard />
       <hr/>
-      <ChildDetails />
     </div>
     );
   }
-
 }
 
-export default Home;
+const mapStateToProps = function(state) {
+  return {
+    account: state.account
+  };
+};
+
+const mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({ getAccount: getAccount }, dispatch);
+};
+
+Home.contextTypes = {
+  store: React.PropTypes.object
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

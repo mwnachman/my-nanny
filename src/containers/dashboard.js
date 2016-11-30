@@ -1,46 +1,48 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { activateChild } from '../actions/activeChild';
-import { ChildDetails } from './childDetails';
+// import { bindActionCreators } from 'redux';
+// import { activateChild } from '../actions/activeChild';
+// import { ChildDetails } from './childDetails';
 
 const mapStateToProps = function(state) {
   return {
-    dashboard: state.dashboard
+    account: state.account
   };
 };
 
-const mapDispatchToProps = function(dispatch) {
-  return bindActionCreators({ activateChild: activateChild }, dispatch);
-};
+// const mapDispatchToProps = function(dispatch) {
+//   return bindActionCreators({ activateChild: activateChild }, dispatch);
+// };
 
 class Dashboard extends Component {
   
   createChildrenList() {
+    if (!this.props.account.children) {
+      return (
+        <li>
+          Not loaded yet!
+        </li>
+      );
+    }
     return (
-      this.props.dashboard.children.map((child) => {
+      this.props.account.children.map((child) => {
         return (
-          <li key={child.id} 
-            onClick={() => { this.props.activateChild(child); }}>
-              <img src={child.photo} className='avatar'/>
-              <span className='status'>
-                {child.name} 
-                {child.checkedIn ? 
-                  <span className='isHome'> has checked in.</span> 
-                  : <span className='isNotHome'> has not checked in.</span>
-                }
-              </span>
+          <li key={child.id} >              
+            <span className='status'>
+              {child.name} 
+            </span>
           </li>
         );
       })
     );
-  }
+  }  
 
   render() {
     return (
       <div>
+        <h1>Hello world!</h1>
         <br/>
-        <h1>{this.props.dashboard.account.username + '\'s Dashboard'}</h1>
+        <hr/>
         <br/>
         <ul>
           {this.createChildrenList()}
@@ -50,4 +52,18 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
+
+// onClick={() => { this.props.activateChild(child); }}
+// <img src={child.photo} className='avatar'/>
+                // {child.checkedIn ? 
+                //   <span className='isHome'> has checked in.</span> 
+                //   : <span className='isNotHome'> has not checked in.</span>
+                // }
+
+  //         <br/>
+  //       <h1>{this.props.dashboard.account.username + '\'s Dashboard'}</h1>
+  //       <br/>
+  //       <ul>
+  //         {this.createChildrenList()}
+  //       </ul>

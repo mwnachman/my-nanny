@@ -1,4 +1,5 @@
-import React from 'react';
+// import 'babel-polyfill';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -10,13 +11,14 @@ import createLogger from 'redux-logger';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
+const loggerMiddleware = createLogger();
+
 const store = createStore(allReducers, applyMiddleware(
     thunkMiddleware,
     loggerMiddleware
   )
 );
 
-const loggerMiddleware = createLogger();
 
 ReactDOM.render(
   <Provider store={store}>

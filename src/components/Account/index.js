@@ -1,28 +1,27 @@
-import React from 'react'; 
-import $ from 'jquery';
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getAccount } from '../../actions/account';
 import './account.css'; 
 import config from '../../config';
-import fetch from 'isomorphic-fetch';
 
 import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
 
 import IndividualKidBrief from '../IndividualKidBrief/index';
 
-import AccountInfo from '../../containers/accountInfo';
+// import AccountInfo from '../../containers/accountInfo';
 
 
-class Account extends React.Component {
+class Account extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      amazonToken: '',
-      email: '',
-      phone: '', 
-      username: '',
-      timezone: '',
-      urlPrefix: config.baseUrl,
+      // email: '',
+      // phone: '', 
+      // username: '',
+      // timezone: '',
       children: [],
       editable: false,
     };
@@ -30,22 +29,12 @@ class Account extends React.Component {
 
 
   componentWillMount() {
-    this.setState({ amazonToken: localStorage.getItem('amazon-token') });
+    this.context.store.dispatch(getAccount());
+    console.log('store.getState in will mount', this.context.store.getState());
   }
 
   componentDidMount() {
-    console.log('in component did mount');
-    $.ajax({
-      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
-      type: 'GET',
-    }).done(dataRes => {
-      const data = JSON.parse(dataRes);
-      this.setState({ username: data.username }); 
-      this.setState({ phone: data.phone });
-      this.setState({ email: data.email });
-      this.setState({ children: data.children });
-      this.setState({ timezone: data.timeZone });
-    });
+    console.log('store.getState in did mount', this.context.store.getState());
   }
 
   handleInputChange(e) {
@@ -99,6 +88,7 @@ class Account extends React.Component {
 
 
   makeEditable(e) {
+    console.log('in make editable', this.props.store);
     this.setState({ editable: true });
   }
 
@@ -112,19 +102,19 @@ class Account extends React.Component {
           <Grid className='well'>
             <Row>
               <Col xs={4} md={3}>Name</Col>
-              <Col xs={6} md={6}>{this.state.username}</Col>
+              <Col xs={6} md={6}>{this.props.account.username}</Col>
             </Row>
             <Row className='gridRow'>
               <Col xs={4} md={3}>Email</Col>
-              <Col xs={6} md={6}>{this.state.email}</Col>
+              <Col xs={6} md={6}>{this.props.account.email}</Col>
             </Row>
             <Row className='gridRow'>
               <Col xs={4} md={3}>Phone Number</Col>
-              <Col xs={6} md={6}>{this.state.phone}</Col>
+              <Col xs={6} md={6}>{this.props.account.phone}</Col>
             </Row>
             <Row className='gridRow'>
               <Col xs={4} md={3}>Time Zone</Col>
-              <Col xs={6} md={6}>{this.state.timezone}</Col>
+              <Col xs={6} md={6}>{this.props.account.timezone}</Col>
             </Row>
             <Row>
               <Button className='editButton' 
@@ -191,6 +181,26 @@ class Account extends React.Component {
 
 } 
 
+Account.contextTypes = {
+  store: React.PropTypes.object
+};
 
-export default Account;
+var mapStateToProps = function(state) {
+  console.log('in map state to props');
+  return {
+    account: state.account
+  };
+};
+
+// this.context.store.getState().account.username
+
+var matchDispatchToProps = function(dispatch) {
+  console.log('in match dispatch to props');
+  return bindActionCreators({ getAccount: getAccount }, dispatch);
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(Account);
+
+
+
 
