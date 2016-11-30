@@ -1,4 +1,5 @@
-import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT, TOGGLE_EDITABLE } from '../actions/account';
+import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT, TOGGLE_EDITABLE, 
+  TOGGLE_CHILD_EDIT, TOGGLE_CHILD_SHOW } from '../actions/account';
 
 const AccountReducer = (state = {
   isFetching: false,
@@ -11,13 +12,13 @@ const AccountReducer = (state = {
   children: null
 }, action) => {
   if ( action.type === REQUEST_ACCOUNT ) {
-    console.log('REQUEST_ACCOUNT Reducer');
+    // console.log('REQUEST_ACCOUNT Reducer');
     return Object.assign({}, state, {
       isFetching: true,
       token: action.payload
     });
   } else if ( action.type === RECEIVE_ACCOUNT ) {
-    console.log('RECEIVE_ACCOUNT Reducer');
+    // console.log('RECEIVE_ACCOUNT Reducer');
     let childObj = {};
     action.payload.children.forEach((child) => {
       childObj[child.id] = {
@@ -39,6 +40,21 @@ const AccountReducer = (state = {
     console.log('TOGGLE_EDITABLE Reducer');
     return Object.assign({}, state, {
       editable: !state.editable
+    });
+  } else if ( action.type === TOGGLE_CHILD_EDIT ) {
+    console.log('TOGGLE CHILD EDIT Reducer');
+    var childId = action.payload;
+    var child = {};
+    child[childId] = { editable: true };
+    return Object.assign({}, state, { 
+      children: {
+        child
+      }
+    });
+  } else if ( action.type === TOGGLE_CHILD_SHOW ) {
+    console.log('TOGGLE CHILD SHOW Reducer');
+    return Object.assign({}, state, {
+
     });
   } else {
     return state;

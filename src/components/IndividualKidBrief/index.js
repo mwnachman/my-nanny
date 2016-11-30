@@ -3,6 +3,8 @@ import $ from 'jquery';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import config from '../../config';
+import { toggleEditableChild, toggleShowChild } from '../../actions/account';
+
 import { Button, Form, FormControl } from 'react-bootstrap';
 
   
@@ -16,7 +18,7 @@ class IndividualKidBrief extends React.Component {
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
-      editable: false,
+      // editable: false,
       urlPrefix: config.baseUrl,
     };
   }
@@ -52,7 +54,8 @@ class IndividualKidBrief extends React.Component {
         console.log('Updated child:' + JSON.stringify(data));
       }
     });
-    this.setState({ editable: false });
+    this.context.store.dispatch(toggleEditableChild(this.state.id));
+    // this.setState({ editable: false });
   }
 
   deleteChild(e) {
@@ -74,7 +77,8 @@ class IndividualKidBrief extends React.Component {
         console.log('Deleted Child:' + JSON.stringify(data));
       }
     });
-    this.setState({ show: false });
+    this.context.store.dispatch(toggleShowChild(this.state.id));
+    // this.setState({ show: false });
   }
 
   render() {

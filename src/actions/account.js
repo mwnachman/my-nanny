@@ -53,3 +53,19 @@ export const toggleEditable = () => {
     type: TOGGLE_EDITABLE
   };
 };
+
+export const TOGGLE_CHILD_EDIT = 'TOGGLE_CHILD_EDIT';
+export const toggleEditableChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_EDIT,
+    payload: id
+  };
+};
+
+export const TOGGLE_CHILD_SHOW = 'TOGGLE_CHILD_SHOW';
+export const toggleShowChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_SHOW,
+    payload: id
+  };
+};
