@@ -17,10 +17,10 @@ class Account extends Component {
     super(props);
 
     this.state = {
-      email: this.props.account.email,
-      phone: this.props.account.phone, 
-      username: this.props.account.username,
-      timezone: this.props.account.timezone,
+      email: null,
+      phone: null, 
+      username: null,
+      timezone: null,
       children: [],
       editable: false,
     };
@@ -36,10 +36,10 @@ class Account extends Component {
   // }
 
   handleInputChange(e) {
-    // console.log('name', this.state.username);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
+    console.log('timezone', this.state);
   }
 
   updateAccount(e) {
@@ -56,10 +56,10 @@ class Account extends Component {
         'username': username,
         'phone': phone,
         'email': email,
-        'timeZone': timezone
+        'timezone': timezone
       }
     };
-
+    console.log('signupdatat', signupData);
     $.ajax({
       url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
       type: 'PUT',
@@ -101,7 +101,6 @@ class Account extends Component {
   render() {
     return (
       <div className='account'>
-        <h1>Your Account</h1>
         <h2>Account Details</h2>
         {(this.state.editable === false && 
         <div>

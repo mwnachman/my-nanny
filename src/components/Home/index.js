@@ -12,16 +12,16 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   amazonToken: ''
-    // };
+    this.state = {
+      amazonToken: ''
+    };
   }
 
   componentWillMount() {
     const amzToken = localStorage.getItem('amazon-token') ? localStorage.getItem('amazon-token') : 
       ((((window.location.href).split('='))[1]).split('&'))[0];
-    // this.setState({ amazonToken: amzToken });
-    // localStorage.setItem('amazon-token', amzToken);
+    this.setState({ amazonToken: amzToken });
+    localStorage.setItem('amazon-token', amzToken);
     this.props.getAccount(amzToken);
   }
 
