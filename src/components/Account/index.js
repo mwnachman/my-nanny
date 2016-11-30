@@ -21,19 +21,13 @@ class Account extends Component {
       phone: null, 
       username: null,
       timezone: null,
-      children: [],
       editable: false,
     };
   }
 
   componentWillMount() {
     this.context.store.dispatch(getAccount());
-    // console.log('store.getState in will mount', this.context.store.getState());
   }
-
-  // componentDidMount() {
-  //   console.log('store.getState in did mount', this.context.store.getState());
-  // }
 
   handleInputChange(e) {
     const inputChange = {};
@@ -72,26 +66,6 @@ class Account extends Component {
 
     this.setState({ editable: false });
   }
-
-  // updateAccount(e) {
-
-  // return dispatch => {
-  //   const signupData = {
-  //     'account': {
-  //       'amazonId': this.state.amazonId,
-  //       'username': this.state.username,
-  //       'phone': this.state.phone,
-  //       'email': this.state.email,
-  //       'timeZone': this.state.timezone
-  //     }
-  //   };
-  //   dispatch(requestPosts(subreddit))
-  //   return fetch(`http://www.reddit.com/r/${subreddit}.json`)
-  //     .then(response => response.json())
-  //     .then(json => dispatch(receivePosts(subreddit, json)))
-  //   }
-  // }
-
 
   makeEditable(e) {
     console.log('in make editable', this.props.store);
@@ -167,15 +141,14 @@ class Account extends Component {
           </Grid>
         </Form>
         )}
-        {(this.state.children.length !== 0 &&
+        {(this.props.account.children.length !== 0 &&
         <Grid className='childrenBlock'>
           <Row>
             <h2 className='childrenHeader'>Children</h2>
           </Row>
           <Row className='well'>
-            {this.state.children.map((child, index) =>
-              <IndividualKidBrief amazonToken={this.state.amazonToken} 
-               child={child} index={index} key={child.id}/>
+            {this.props.account.children.map((child, index) =>
+              <IndividualKidBrief child={child} index={index} key={child.id}/>
             )}
           </Row>
         </Grid>
@@ -197,16 +170,10 @@ var mapStateToProps = function(state) {
   };
 };
 
-// this.context.store.getState().account.username
-
 var matchDispatchToProps = function(dispatch) {
   console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
 };
-
-// Account = reduxForm({
-//   form: 'account'
-// })(Account);
 
 export default connect(mapStateToProps, matchDispatchToProps)(Account);
 
