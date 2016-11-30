@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getAccount } from '../../actions/actions';
 import Dashboard from '../../containers/dashboard';
+
 import './home.css';
+
 
 class Home extends React.Component {
 

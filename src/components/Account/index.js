@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAccount } from '../../actions/account';
+import { getAccount, updateAccountInStore } from '../../actions/account';
 import './account.css'; 
 import config from '../../config';
-
-import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
+import $ from 'jquery';
+import { Row, Col, Grid, Form, FormControl, Button, getValue } from 'react-bootstrap';
+// import { Field, reduxForm } from 'redux-form';
 
 import IndividualKidBrief from '../IndividualKidBrief/index';
-
-// import AccountInfo from '../../containers/accountInfo';
 
 
 class Account extends Component {
@@ -18,45 +17,51 @@ class Account extends Component {
     super(props);
 
     this.state = {
-      // email: '',
-      // phone: '', 
-      // username: '',
-      // timezone: '',
+      email: this.props.account.email,
+      phone: this.props.account.phone, 
+      username: this.props.account.username,
+      timezone: this.props.account.timezone,
       children: [],
       editable: false,
     };
   }
 
-
   componentWillMount() {
     this.context.store.dispatch(getAccount());
-    console.log('store.getState in will mount', this.context.store.getState());
+    // console.log('store.getState in will mount', this.context.store.getState());
   }
 
-  componentDidMount() {
-    console.log('store.getState in did mount', this.context.store.getState());
-  }
+  // componentDidMount() {
+  //   console.log('store.getState in did mount', this.context.store.getState());
+  // }
 
   handleInputChange(e) {
+    // console.log('name', this.state.username);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
   }
 
   updateAccount(e) {
-    // console.log('in update Account');
-    // console.log('this.state at start of update account', this.state);
+    var username = this.state.username || this.props.account.username;
+    var phone = this.state.phone || this.props.account.phone;
+    var timezone = this.state.timezone || this.props.account.timezone;
+    var email = this.props.account.email;
+    var amazonToken = localStorage.getItem('amazon-token');
+
+    this.context.store.dispatch(updateAccountInStore(username, phone, timezone, email));
+
     const signupData = {
       'account': {
-        'amazonId': this.state.amazonId,
-        'username': this.state.username,
-        'phone': this.state.phone,
-        'email': this.state.email,
-        'timeZone': this.state.timezone
+        'username': username,
+        'phone': phone,
+        'email': email,
+        'timeZone': timezone
       }
     };
+
     $.ajax({
-      url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
+      url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -64,6 +69,7 @@ class Account extends Component {
         console.log('Updated account:' + JSON.stringify(data));
       }
     });
+
     this.setState({ editable: false });
   }
 
@@ -128,19 +134,19 @@ class Account extends Component {
           <Grid className='well'>
             <Row>
               <Col xs={4} md={3}>Name</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.state.username}
+              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.props.account.username}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
               <Col xs={4} md={3}>Email</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.state.email}
+              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.props.account.email}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
             <Row>
               <Col xs={4} md={3}>Phone Number</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.state.phone}
+              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.props.account.phone}
                 onChange={this.handleInputChange.bind(this)}/>
               </Col>
             </Row>
@@ -198,6 +204,10 @@ var matchDispatchToProps = function(dispatch) {
   console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
 };
+
+// Account = reduxForm({
+//   form: 'account'
+// })(Account);
 
 export default connect(mapStateToProps, matchDispatchToProps)(Account);
 
