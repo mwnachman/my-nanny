@@ -1,7 +1,8 @@
-import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT } from '../actions/account';
+import { REQUEST_ACCOUNT, RECEIVE_ACCOUNT } from '../actions/actions';
 
 const AccountReducer = (state = {
   isFetching: false,
+  token: null,
   username: null,
   email: null,
   phone: null, 
@@ -12,7 +13,8 @@ const AccountReducer = (state = {
   if ( action.type === REQUEST_ACCOUNT ) {
     // console.log('REQUEST_ACCOUNT Reducer');
     return Object.assign({}, state, {
-      isFetching: true
+      isFetching: true,
+      token: action.payload.token
     });
   } else if ( action.type === RECEIVE_ACCOUNT ) {
     // console.log('RECEIVE_ACCOUNT Reducer');

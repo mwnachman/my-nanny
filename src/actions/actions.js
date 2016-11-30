@@ -4,11 +4,11 @@ const url = 'https://localhost:1337/api/account?access_token=';
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 
-export const requestAccount = (account) => {
+export const requestAccount = (token) => {
   // console.log('requested account');
   return {
     type: REQUEST_ACCOUNT,
-    payload: account
+    payload: token
   };
 };
 
@@ -24,7 +24,7 @@ export const receiveAccount = (account) => {
 
 export const getAccount = (token) => {
   return function(dispatch) {
-    dispatch(requestAccount());
+    dispatch(requestAccount(token));
     return fetch(url + token)
     .then((response) => {
       if (response.status >= 400) {
