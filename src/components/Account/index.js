@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAccount, updateAccountInStore, toggleEditable } from '../../actions/account';
+import { getAccount, updateAccountInStore, toggleEditable } from '../../actions/actions';
 import './account.css'; 
 import config from '../../config';
 import $ from 'jquery';

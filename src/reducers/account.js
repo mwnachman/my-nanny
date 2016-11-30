@@ -1,5 +1,3 @@
-import ChildrenReducer from './children';
-
 const AccountReducer = (state = {
   isFetching: false,
   editable: false,
@@ -15,20 +13,12 @@ const AccountReducer = (state = {
       token: action.payload
     });
   } else if ( action.type === 'RECEIVE_ACCOUNT' ) {
-    let childObj = {};
-    action.payload.children.forEach((child) => {
-      childObj[child.id] = {
-        name: child.name, 
-        phone: child.phone
-      };
-    });
     return Object.assign({}, state, {
       isFetching: false,
       username: action.payload.username,
       email: action.payload.email,
       phone: action.payload.phone,
-      timezone: action.payload.timezone,
-      children: childObj
+      timezone: action.payload.timezone
     });
   } else if ( action.type === 'TOGGLE_EDITABLE' ) {
     console.log('TOGGLE_EDITABLE Reducer');
@@ -37,10 +27,9 @@ const AccountReducer = (state = {
     });
   } else if ( action.type === 'TOGGLE_CHILD_EDIT' ) {
     console.log('TOGGLE CHILD EDIT Reducer');
-    // var childId = action.payload;
-    // var child = {};
-    // child[childId] = { editable: true };
-    return Object.assign({}, state, { children: ChildrenReducer(state.account.children, action) });
+    return Object.assign({}, state, {
+    // TODO: Finish Reducer
+    });
   } else if ( action.type === 'TOGGLE_CHILD_SHOW' ) {
     console.log('TOGGLE CHILD SHOW Reducer');
     return Object.assign({}, state, {
