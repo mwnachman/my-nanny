@@ -10,14 +10,17 @@ import createLogger from 'redux-logger';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
+// TODO: Remove when done with project!
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 const loggerMiddleware = createLogger();
 
-const store = createStore(allReducers, applyMiddleware(
+const store = createStore(allReducers, composeWithDevTools(
+	applyMiddleware(
     thunkMiddleware,
     loggerMiddleware
   )
-);
-
+));
 
 ReactDOM.render(
   <Provider store={store}>
