@@ -5,7 +5,6 @@ const token = localStorage.getItem('amazon-token');
 const url = 'https://localhost:1337/api/account?access_token=' + token;
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
-
 export const requestAccount = () => {
   return {
     type: REQUEST_ACCOUNT
@@ -13,7 +12,6 @@ export const requestAccount = () => {
 };
 
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
-
 export const receiveAccount = (accountData) => {
   return {
     type: RECEIVE_ACCOUNT,
@@ -50,7 +48,6 @@ export const updateAccountInStore = (username, phone, timezone, email) => {
 };
 
 export const TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
-
 export const toggleEditable = () => {
   return {
     type: TOGGLE_EDITABLE
