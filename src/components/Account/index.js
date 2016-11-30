@@ -18,7 +18,8 @@ class Account extends Component {
       email: null,
       phone: null, 
       username: null,
-      timezone: null
+      timezone: null,
+      urlPrefix: config.baseUrl
     };
   }
 
@@ -34,11 +35,11 @@ class Account extends Component {
   }
 
   updateAccount(e) {
-    var username = this.state.username || this.props.account.username;
-    var phone = this.state.phone || this.props.account.phone;
-    var timezone = this.state.timezone || this.props.account.timezone;
-    var email = this.props.account.email;
-    var amazonToken = localStorage.getItem('amazon-token');
+    const username = this.state.username || this.props.account.username;
+    const phone = this.state.phone || this.props.account.phone;
+    const timezone = this.state.timezone || this.props.account.timezone;
+    const email = this.props.account.email;
+    const amazonToken = localStorage.getItem('amazon-token');
 
     this.context.store.dispatch(updateAccountInStore(username, phone, timezone, email));
 
@@ -50,9 +51,9 @@ class Account extends Component {
         'timezone': timezone
       }
     };
-    console.log('signupdatat', signupData);
+
     $.ajax({
-      url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
+      url: this.state.urlPrefix + '/api/account?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -160,17 +161,20 @@ Account.contextTypes = {
 };
 
 var mapStateToProps = function(state) {
-  // console.log('in map state to props');
+  var kids = [];
+  var kidsToMap = state.account.children;
+  for (var key in kidsToMap) {
+    kids.push({ id: key, name: kidsToMap[key]['name'], phone: kidsToMap[key]['phone'] });
+  }
   return {
     account: state.account,
-    children: state.account.children
+    children: kids
   };
 };
 
 var matchDispatchToProps = function(dispatch) {
-  // console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
-  //WHY DON'T WE SEEM TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
   //THEY STILL FIRE
 };
 

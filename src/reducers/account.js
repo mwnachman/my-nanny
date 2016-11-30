@@ -18,13 +18,22 @@ const AccountReducer = (state = {
     });
   } else if ( action.type === RECEIVE_ACCOUNT ) {
     console.log('RECEIVE_ACCOUNT Reducer');
+    let childObj = {};
+    action.payload.children.forEach((child) => {
+      childObj[child.id] = {
+        name: child.name, 
+        phone: child.phone,
+        show: true,
+        editable: false
+      };
+    });
     return Object.assign({}, state, {
       isFetching: false,
       username: action.payload.username,
       email: action.payload.email,
       phone: action.payload.phone,
       timezone: action.payload.timezone,
-      children: action.payload.children
+      children: childObj
     });
   } else if ( action.type === TOGGLE_EDITABLE ) {
     console.log('TOGGLE_EDITABLE Reducer');

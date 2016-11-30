@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-
+ 
 
 const token = localStorage.getItem('amazon-token');
 const url = 'https://localhost:1337/api/account?access_token=' + token;
