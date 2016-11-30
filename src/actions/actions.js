@@ -2,13 +2,18 @@ import fetch from 'isomorphic-fetch';
 import Promise from 'bluebird';
 
 const url = (endpoint, id, startDate, endDate, page) => {
+  startDate = startDate || '';
+  endDate = endDate || '';
+  page = page || 1;
+
   if (endpoint === 'getAccount') {
     return 'https://localhost:1337/api/account?access_token=';
   } else if (endpoint === 'getChores') {
-    return 'https://localhost:1337/api/children/' + id + '/chores?\
-    start_date=' + startDate + '&end_date=' + endDate + '&page=' + page + '&access_token=';
+    return 'https://localhost:1337/api/children/' + id + '/chores?' + 
+    'start_date=' + startDate + '&end_date=' + endDate + '&page=' + 
+    page + '&access_token=';
   }
-} ;
+};
 
 export const requestAccount = (token) => {
   return {
@@ -24,51 +29,60 @@ export const receiveAccount = (account) => {
   };
 };
 
-export const requestChores = (token, date) => {
+export const requestChores = (date) => {
   return {
     type: 'REQUEST_CHORES',
     payload: {
-      token: token,
       date: date
     }
   };
 };
 
-export const receiveChores = (chores) => {
+export const receiveChores = (childList, chores) => {
   return {
     type: 'RECEIVE_CHORES',
-    payload: chores
+    payload: {
+      childList: childList,
+      chores: chores
+    }
   };
 };
 
 export const getAccount = (token, date) => {
+  let childIds = [];
   return function(dispatch) {
     dispatch(requestAccount(token));
     return fetch(url('getAccount') + token)
-    .then((response) => {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server.');
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad res from server.');
       }
-      return response.json();
+      return res.json();
     })
     .then(function(account) {
       dispatch(receiveAccount(account));
-      let childIds = [];
       account.children.forEach((child) => {
         childIds.push(child.id);
       });
-      return childIds;
-    })
-    .then(function(childIds) {
-      dispatch(requestChores(token, date));
-      let chores = [];
+      dispatch(requestChores(date));
+      var store = [];
+      var activeId = 0;
       childIds.forEach((id) => {
-        chores.push(fetch(url('getChores', id, date, date, 1) + token));
+        store.push(
+          fetch(url('getChores', id, date) + token)
+          .then(function(res) { 
+            res = res.json();
+            return res;
+          })
+        );
       });
-      return chores;
+      return Promise.all(store);
     })
     .then(function(chores) {
-      console.log('here are chores?', chores);
+      dispatch(receiveChores(childIds, chores));
+    })
+    .catch(function(err) {
+      console.log('caught error:', err);
     });
   };
 };
