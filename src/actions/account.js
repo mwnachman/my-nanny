@@ -7,7 +7,6 @@ const url = 'https://localhost:1337/api/account?access_token=' + token;
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 
 export const requestAccount = () => {
-  // console.log('requested account');
   return {
     type: REQUEST_ACCOUNT
   };
@@ -16,9 +15,6 @@ export const requestAccount = () => {
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
 
 export const receiveAccount = (accountData) => {
-  // console.log('received account: ', accountData);
-  // console.log('obj', obj);
-  // console.log('email', accountData.email);
   return {
     type: RECEIVE_ACCOUNT,
     payload: accountData
@@ -26,7 +22,6 @@ export const receiveAccount = (accountData) => {
 };
 
 export const getAccount = () => {
-  // console.log('inside getAccount');
   return function(dispatch) {
     dispatch(requestAccount());
     return fetch(url)
@@ -37,7 +32,6 @@ export const getAccount = () => {
       return response.json();
     })
     .then(function(data) {
-      // console.log('api data:', data);
       dispatch(receiveAccount(data));
     });
   };
@@ -55,3 +49,10 @@ export const updateAccountInStore = (username, phone, timezone, email) => {
   };
 };
 
+export const TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
+
+export const toggleEditable = () => {
+  return {
+    type: TOGGLE_EDITABLE
+  };
+};
