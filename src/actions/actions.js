@@ -1,39 +1,79 @@
 import fetch from 'isomorphic-fetch';
 
-const url = 'https://localhost:1337/api/account?access_token=';
+const url = (endpoint, id, startDate, endDate, page) => {
+  if (endpoint === 'getAccount') {
+    return 'https://localhost:1337/api/account?access_token=';
+  } else if (endpoint === 'getChores') {
+    return 'https://localhost:1337/api/children/' + id + '/chores?\
+    start_date=' + startDate + '&end_date=' + endDate + '&page=' + page + '&access_token=';
+  }
+} ;
+
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
+export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
+export const REQUEST_CHORES = 'REQUEST_CHORES';
+export const RECEIVE_CHORES = 'RECEIVE_CHORES';
 
 export const requestAccount = (token) => {
-  // console.log('requested account');
   return {
     type: REQUEST_ACCOUNT,
     payload: token
   };
 };
 
-export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
-
 export const receiveAccount = (account) => {
-  // console.log('received account: ', account);
   return {
     type: RECEIVE_ACCOUNT,
     payload: account
   };
 };
 
-export const getAccount = (token) => {
+export const requestChores = (token, date) => {
+  return {
+    type: REQUEST_CHORES,
+    payload: {
+      token: token,
+      date: date
+    }
+  };
+};
+
+export const receiveChores = (chores) => {
+  return {
+    type: RECEIVE_CHORES,
+    payload: chores
+  };
+};
+
+export const getAccount = (token, date) => {
   return function(dispatch) {
     dispatch(requestAccount(token));
-    return fetch(url + token)
+    return fetch(url('getAccount') + token)
     .then((response) => {
       if (response.status >= 400) {
         throw new Error('Bad response from server.');
       }
       return response.json();
     })
-    .then(function(data) {
-      dispatch(receiveAccount(data));
+    .then(function(account) {
+      dispatch(receiveAccount(account));
+      let childIds = [];
+      account.children.forEach((child) => {
+        childIds.push(child.id);
+      });
+      return childIds;
+    })
+    .then(function(childIds) {
+      dispatch(requestChores(token, date));
+      let chores = [];
+      childIds.forEach((id) => {
+        chores.push(fetch(url('getChores', id, date, date, 1) + token));
+      });
+      return chores;
+    })
+    .then(function(chores) {
+      console.log('here are chores?', chores);
     });
   };
 };
