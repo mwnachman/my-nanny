@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAccount, updateAccountInStore } from '../../actions/account';
+import { getAccount, updateAccountInStore, toggleEditable } from '../../actions/account';
 import './account.css'; 
 import config from '../../config';
 import $ from 'jquery';
 import { Row, Col, Grid, Form, FormControl, Button, getValue } from 'react-bootstrap';
-// import { Field, reduxForm } from 'redux-form';
-
 import IndividualKidBrief from '../IndividualKidBrief/index';
 
 
@@ -21,7 +19,7 @@ class Account extends Component {
       phone: null, 
       username: null,
       timezone: null,
-      editable: false,
+      urlPrefix: config.baseUrl
     };
   }
 
@@ -37,11 +35,11 @@ class Account extends Component {
   }
 
   updateAccount(e) {
-    var username = this.state.username || this.props.account.username;
-    var phone = this.state.phone || this.props.account.phone;
-    var timezone = this.state.timezone || this.props.account.timezone;
-    var email = this.props.account.email;
-    var amazonToken = localStorage.getItem('amazon-token');
+    const username = this.state.username || this.props.account.username;
+    const phone = this.state.phone || this.props.account.phone;
+    const timezone = this.state.timezone || this.props.account.timezone;
+    const email = this.props.account.email;
+    const amazonToken = localStorage.getItem('amazon-token');
 
     this.context.store.dispatch(updateAccountInStore(username, phone, timezone, email));
 
@@ -53,9 +51,9 @@ class Account extends Component {
         'timezone': timezone
       }
     };
-    console.log('signupdatat', signupData);
+
     $.ajax({
-      url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
+      url: this.state.urlPrefix + '/api/account?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -64,19 +62,18 @@ class Account extends Component {
       }
     });
 
-    this.setState({ editable: false });
+    this.context.store.dispatch(toggleEditable());
   }
 
   makeEditable(e) {
-    console.log('in make editable', this.props.store);
-    this.setState({ editable: true });
+    this.context.store.dispatch(toggleEditable());
   }
 
   render() {
     return (
       <div className='account'>
         <h2>Account Details</h2>
-        {(this.state.editable === false && 
+        {(this.props.account.editable === false && 
         <div>
           <Grid className='well'>
             <Row>
@@ -102,7 +99,7 @@ class Account extends Component {
           </Grid>
           </div>
         )}
-        {(this.state.editable === true && 
+        {(this.props.account.editable === true && 
         <Form>
           <Grid className='well'>
             <Row>
@@ -141,13 +138,13 @@ class Account extends Component {
           </Grid>
         </Form>
         )}
-        {(this.props.account.children.length !== 0 &&
+        {(this.props.account.children &&
         <Grid className='childrenBlock'>
           <Row>
             <h2 className='childrenHeader'>Children</h2>
           </Row>
           <Row className='well'>
-            {this.props.account.children.map((child, index) =>
+            {this.props.children.map((child, index) =>
               <IndividualKidBrief child={child} index={index} key={child.id}/>
             )}
           </Row>
@@ -164,15 +161,22 @@ Account.contextTypes = {
 };
 
 var mapStateToProps = function(state) {
-  console.log('in map state to props');
+  var kids = [];
+  var kidsToMap = state.children;
+  for (var key in kidsToMap) {
+    kids.push({ id: key, name: kidsToMap[key]['name'], phone: kidsToMap[key]['phone'] });
+  }
+  console.log('kids', kids);
   return {
-    account: state.account
+    account: state.account,
+    children: kids
   };
 };
 
 var matchDispatchToProps = function(dispatch) {
-  console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
+  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //THEY STILL FIRE
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(Account);

@@ -1,32 +1,33 @@
 import fetch from 'isomorphic-fetch';
-
+ 
 
 const token = localStorage.getItem('amazon-token');
 const url = 'https://localhost:1337/api/account?access_token=' + token;
 
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
-
 export const requestAccount = () => {
-  // console.log('requested account');
   return {
     type: REQUEST_ACCOUNT
   };
 };
 
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
-
 export const receiveAccount = (accountData) => {
-  // console.log('received account: ', accountData);
-  // console.log('obj', obj);
-  // console.log('email', accountData.email);
   return {
     type: RECEIVE_ACCOUNT,
     payload: accountData
   };
 };
 
+export const RECEIVE_CHILDREN = 'RECEIVE_CHILDREN';
+export const receiveChildren = (childrenData) => {
+  return {
+    type: RECEIVE_CHILDREN,
+    payload: childrenData
+  };
+};
+
 export const getAccount = () => {
-  // console.log('inside getAccount');
   return function(dispatch) {
     dispatch(requestAccount());
     return fetch(url)
@@ -37,8 +38,10 @@ export const getAccount = () => {
       return response.json();
     })
     .then(function(data) {
-      // console.log('api data:', data);
       dispatch(receiveAccount(data));
+      if (data.children) {
+        dispatch(receiveChildren(data));
+      }
     });
   };
 };
@@ -55,3 +58,25 @@ export const updateAccountInStore = (username, phone, timezone, email) => {
   };
 };
 
+export const TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
+export const toggleEditable = () => {
+  return {
+    type: TOGGLE_EDITABLE
+  };
+};
+
+export const TOGGLE_CHILD_EDIT = 'TOGGLE_CHILD_EDIT';
+export const toggleEditableChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_EDIT,
+    payload: id
+  };
+};
+
+export const TOGGLE_CHILD_SHOW = 'TOGGLE_CHILD_SHOW';
+export const toggleShowChild = (id) => {
+  return {
+    type: TOGGLE_CHILD_SHOW,
+    payload: id
+  };
+};

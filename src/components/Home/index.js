@@ -28,7 +28,7 @@ class Home extends React.Component {
   render() {
     return (
     <div className='home'>
-      <Dashboard />
+
       <hr/>
     </div>
     );

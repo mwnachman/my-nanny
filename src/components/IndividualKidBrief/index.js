@@ -1,22 +1,25 @@
 import React from 'react';
 import $ from 'jquery';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import config from '../../config';
+import { toggleEditableChild, toggleShowChild } from '../../actions/account';
+
 import { Button, Form, FormControl } from 'react-bootstrap';
 
- 
+  
 class IndividualKidBrief extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      show: true,
+      // show: true,
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
-      amazonToken: this.props.amazonToken,
+      // editable: false,
       urlPrefix: config.baseUrl,
-      editable: false,
     };
   }
 
@@ -28,10 +31,12 @@ class IndividualKidBrief extends React.Component {
   }
 
   editChild(e) {
-    this.setState({ editable: true });
+    this.context.store.dispatch(toggleEditableChild(this.state.id));
+    // this.setState({ editable: true });
   }
 
   confirmChanges(e) {
+    const amazonToken = localStorage.getItem('amazon-token');
     console.log('in confirm changes');
     const child = {
       'child': {
@@ -41,7 +46,7 @@ class IndividualKidBrief extends React.Component {
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
+      url: this.state.urlPrefix + '/api/children?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: child,
@@ -49,7 +54,8 @@ class IndividualKidBrief extends React.Component {
         console.log('Updated child:' + JSON.stringify(data));
       }
     });
-    this.setState({ editable: false });
+    this.context.store.dispatch(toggleEditableChild(this.state.id));
+    // this.setState({ editable: false });
   }
 
   deleteChild(e) {
@@ -71,18 +77,19 @@ class IndividualKidBrief extends React.Component {
         console.log('Deleted Child:' + JSON.stringify(data));
       }
     });
-    this.setState({ show: false });
+    this.context.store.dispatch(toggleShowChild(this.state.id));
+    // this.setState({ show: false });
   }
 
   render() {
     return (
       <div>
-        {(this.state.show === true && 
+        {(this.props.children[this.state.id].show === true && 
           <div>
           <h3 className='childName'>{this.props.child.name}</h3>
           <Button onClick={this.editChild.bind(this)}>Edit</Button>
           <Button onClick={this.deleteChild.bind(this)}>Delete</Button>
-          {(this.state.editable === true && 
+          {(this.props.children[this.state.id].editable === true && 
             <Form>
               <FormControl type='text' name='name' value={this.state.name}
                 onChange={this.handleInputChange.bind(this)}>
@@ -100,8 +107,24 @@ class IndividualKidBrief extends React.Component {
   } 
 }
 
+IndividualKidBrief.contextTypes = {
+  store: React.PropTypes.object
+};
 
-export default IndividualKidBrief;
+var mapStateToProps = function(state) {
+  return {
+    children: state.children,
+  };
+};
+
+var matchDispatchToProps = function(dispatch) {
+  return bindActionCreators({ }, dispatch);
+  //WHY DON'T WE SEEM TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //THEY STILL FIRE
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(IndividualKidBrief);
+
 
 
 
