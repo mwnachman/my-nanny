@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAccount } from '../../actions/account';
+import { getAccount, updateAccountInStore } from '../../actions/account';
 import './account.css'; 
 import config from '../../config';
 import $ from 'jquery';
-import { Row, Col, Grid, Form, FormControl, Button } from 'react-bootstrap';
+import { Row, Col, Grid, Form, FormControl, Button, getValue } from 'react-bootstrap';
 // import { Field, reduxForm } from 'redux-form';
 
 import IndividualKidBrief from '../IndividualKidBrief/index';
@@ -17,17 +17,6 @@ class Account extends Component {
     super(props);
 
     this.state = {
-      amazonToken: 'Atza%7CIwEBIGXFfppgf9xIf0KrY8Wtxhoc7J' +
-        'aI72BnsDDv2PsHNhnm5cJ50BKvD0yg5wYn3xWeCN6hAYqHbmbFE5X' +
-        'edNARtBanVBpUYcAkhe7lOfdT7cuBACryaucIlaZwArtLx78yqXyuc' +
-        'EIu_2IX_w0MqDIz8CSHSTuiX-Gx_4QDputnV7-YuBS2Wc7LnDkxqT4' +
-        'dA7eOK9phxu5H7xyyjroK6ybd-qkEhSF4akhiK5SyiESWOSM4Ldyg48' +
-        'g5XwdcM5OhN2OWjHOmTFT-qQ4sE1j-cyq74z24TfCdWzei-fDsUu4Bc' +
-        '3QTMao2WZCvhj48NRgYPojXpP54rUujYPhEA5IVuDRrfBgKWnTVKwN5P' +
-        'NB0veEhTuyMNNuiHSxe_BqO_soG-7qgOiJ0mRsVVNY6oqcf7mIXpwDDOs' +
-        'gxdqyKNjW8Z1yRXVR3fGNRTI8pFbIBv4ObNxfftDj8JsTQ08ITF1p5_XN' +
-        'jHcufLaf-vELHC8N9OTBhKBurO8hG9d8VYVtyi_eyL_Nw3YIG1yeRIMMJd2oh' +
-        'VzOuD4QEhABJ5fn0-Ma1v2LSLQ_oNFrwX5FlncsUwhgtDM4yiOY',
       email: this.props.account.email,
       phone: this.props.account.phone, 
       username: this.props.account.username,
@@ -47,22 +36,32 @@ class Account extends Component {
   // }
 
   handleInputChange(e) {
-    console.log('name', this.state.username);
+    // console.log('name', this.state.username);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
   }
 
   updateAccount(e) {
-    // console.log('in update Account');
-    // console.log('this.state at start of update account', this.state);
+    var username = this.state.username || this.props.account.username;
+    var phone = this.state.phone || this.props.account.phone;
+    var timezone = this.state.timezone || this.props.account.timezone;
+    var email = this.props.account.email;
+    var amazonToken = localStorage.getItem('amazon-token');
+
+    this.context.store.dispatch(updateAccountInStore(username, phone, timezone, email));
+
     const signupData = {
       'account': {
-        'phone': '6462709704'
+        'username': username,
+        'phone': phone,
+        'email': email,
+        'timeZone': timezone
       }
     };
+
     $.ajax({
-      url: 'https://localhost:1337/api/account?access_token=' + this.state.amazonToken,
+      url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
       type: 'PUT',
       dataType: 'application/json',
       data: signupData,
@@ -70,6 +69,7 @@ class Account extends Component {
         console.log('Updated account:' + JSON.stringify(data));
       }
     });
+
     this.setState({ editable: false });
   }
 
