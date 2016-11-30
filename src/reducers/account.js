@@ -14,7 +14,7 @@ const AccountReducer = (state = {
     // console.log('REQUEST_ACCOUNT Reducer');
     return Object.assign({}, state, {
       isFetching: true,
-      token: action.payload.token
+      token: action.payload
     });
   } else if ( action.type === RECEIVE_ACCOUNT ) {
     // console.log('RECEIVE_ACCOUNT Reducer');

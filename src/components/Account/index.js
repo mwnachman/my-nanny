@@ -17,29 +17,23 @@ class Account extends Component {
     super(props);
 
     this.state = {
-      email: this.props.account.email,
-      phone: this.props.account.phone, 
-      username: this.props.account.username,
-      timezone: this.props.account.timezone,
-      children: [],
+      email: null,
+      phone: null, 
+      username: null,
+      timezone: null,
       editable: false,
     };
   }
 
   componentWillMount() {
     this.context.store.dispatch(getAccount());
-    // console.log('store.getState in will mount', this.context.store.getState());
   }
 
-  // componentDidMount() {
-  //   console.log('store.getState in did mount', this.context.store.getState());
-  // }
-
   handleInputChange(e) {
-    // console.log('name', this.state.username);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
+    console.log('timezone', this.state);
   }
 
   updateAccount(e) {
@@ -56,10 +50,10 @@ class Account extends Component {
         'username': username,
         'phone': phone,
         'email': email,
-        'timeZone': timezone
+        'timezone': timezone
       }
     };
-
+    console.log('signupdatat', signupData);
     $.ajax({
       url: 'https://localhost:1337/api/account?access_token=' + amazonToken,
       type: 'PUT',
@@ -73,26 +67,6 @@ class Account extends Component {
     this.setState({ editable: false });
   }
 
-  // updateAccount(e) {
-
-  // return dispatch => {
-  //   const signupData = {
-  //     'account': {
-  //       'amazonId': this.state.amazonId,
-  //       'username': this.state.username,
-  //       'phone': this.state.phone,
-  //       'email': this.state.email,
-  //       'timeZone': this.state.timezone
-  //     }
-  //   };
-  //   dispatch(requestPosts(subreddit))
-  //   return fetch(`http://www.reddit.com/r/${subreddit}.json`)
-  //     .then(response => response.json())
-  //     .then(json => dispatch(receivePosts(subreddit, json)))
-  //   }
-  // }
-
-
   makeEditable(e) {
     console.log('in make editable', this.props.store);
     this.setState({ editable: true });
@@ -101,7 +75,6 @@ class Account extends Component {
   render() {
     return (
       <div className='account'>
-        <h1>Your Account</h1>
         <h2>Account Details</h2>
         {(this.state.editable === false && 
         <div>
@@ -168,15 +141,14 @@ class Account extends Component {
           </Grid>
         </Form>
         )}
-        {(this.state.children.length !== 0 &&
+        {(this.props.account.children.length !== 0 &&
         <Grid className='childrenBlock'>
           <Row>
             <h2 className='childrenHeader'>Children</h2>
           </Row>
           <Row className='well'>
-            {this.state.children.map((child, index) =>
-              <IndividualKidBrief amazonToken={this.state.amazonToken} 
-               child={child} index={index} key={child.id}/>
+            {this.props.account.children.map((child, index) =>
+              <IndividualKidBrief child={child} index={index} key={child.id}/>
             )}
           </Row>
         </Grid>
@@ -198,16 +170,10 @@ var mapStateToProps = function(state) {
   };
 };
 
-// this.context.store.getState().account.username
-
 var matchDispatchToProps = function(dispatch) {
   console.log('in match dispatch to props');
   return bindActionCreators({ getAccount: getAccount }, dispatch);
 };
-
-// Account = reduxForm({
-//   form: 'account'
-// })(Account);
 
 export default connect(mapStateToProps, matchDispatchToProps)(Account);
 
