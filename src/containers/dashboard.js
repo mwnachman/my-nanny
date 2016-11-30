@@ -13,7 +13,6 @@ const mapStateToProps = function(state) {
 // const mapDispatchToProps = function(dispatch) {
 //   return bindActionCreators({ activateChild: activateChild }, dispatch);
 // };
-
 class Dashboard extends Component {
   
   createChildrenList() {
@@ -25,11 +24,11 @@ class Dashboard extends Component {
       );
     }
     return (
-      this.props.account.children.map((child) => {
+      Object.keys(this.props.account.children).map((child) => {
         return (
-          <li key={child.id} >              
+          <li key={child}>
             <span className='status'>
-              {child.name} 
+              {this.props.account.children[child].name} 
             </span>
           </li>
         );
@@ -45,7 +44,7 @@ class Dashboard extends Component {
         <hr/>
         <br/>
         <ul>
-          {this.createChildrenList()}
+          {this.createChildrenList()}          
         </ul>
       </div>
     );

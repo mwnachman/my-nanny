@@ -1,16 +1,14 @@
-import { REQUEST_CHORES, RECEIVE_CHORES } from '../actions/actions';
-
 const ChoresReducer = (state = {
   isFetching: false,
   date: null,
   list: []
 }, action) => {
-  if ( action.type === REQUEST_CHORES ) {
+  if ( action.type === 'REQUEST_CHORES' ) {
     return Object.assign({}, state, {
       isFetching: true,
       date: action.payload.date
     });
-  } else if ( action.type === RECEIVE_CHORES ) {
+  } else if ( action.type === 'RECEIVE_CHORES' ) {
     return Object.assign({}, state, {
       isFetching: false
     });

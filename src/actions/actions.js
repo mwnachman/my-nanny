@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import Promise from 'bluebird';
 
 const url = (endpoint, id, startDate, endDate, page) => {
   if (endpoint === 'getAccount') {
@@ -9,29 +10,23 @@ const url = (endpoint, id, startDate, endDate, page) => {
   }
 } ;
 
-
-export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
-export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
-export const REQUEST_CHORES = 'REQUEST_CHORES';
-export const RECEIVE_CHORES = 'RECEIVE_CHORES';
-
 export const requestAccount = (token) => {
   return {
-    type: REQUEST_ACCOUNT,
+    type: 'REQUEST_ACCOUNT',
     payload: token
   };
 };
 
 export const receiveAccount = (account) => {
   return {
-    type: RECEIVE_ACCOUNT,
+    type: 'RECEIVE_ACCOUNT',
     payload: account
   };
 };
 
 export const requestChores = (token, date) => {
   return {
-    type: REQUEST_CHORES,
+    type: 'REQUEST_CHORES',
     payload: {
       token: token,
       date: date
@@ -41,7 +36,7 @@ export const requestChores = (token, date) => {
 
 export const receiveChores = (chores) => {
   return {
-    type: RECEIVE_CHORES,
+    type: 'RECEIVE_CHORES',
     payload: chores
   };
 };
