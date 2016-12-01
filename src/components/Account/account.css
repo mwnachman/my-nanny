@@ -1,21 +1,27 @@
-.editButton {
-  margin-top: 1.5em;
-  margin-left: 2em;
+.account {
+  margin-top: 20px;
 }
 
-.gridRow {
-  margin-top: 1em;
+.edit {
+  color: green;
+  margin-top: 20px;
+  width: 100%;
+  height: 50px;
+  font-size: 48px;
+  position: relative;
+  right: 0px;
 }
 
-.childrenHeader {
-  margin-top: 1em;
+.edit:hover {
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.well {
-  width: 35em !important;
-  float: left !important;
+.account-heading-name {
+	margin-bottom: 0px;
 }
 
-.childrenBlock {
-  float: left !important;
+.account-heading-detail {
+  color: #666;
+  font-style: italic;
 }

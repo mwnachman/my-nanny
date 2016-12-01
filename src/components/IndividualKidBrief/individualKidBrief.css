@@ -1,3 +1,54 @@
 .childName {
   padding-top: -1em;
 }
+
+.child-row-heading {
+  font-size: 24px;
+  font-weight: bold;
+  border-bottom: 1px solid #aaa;
+}
+
+.child-row {
+  font-size: 20px;
+  border-bottom: 1px solid #ccc;
+  margin: 1px;
+  padding: 4px;
+}
+
+.child-row-wrapper:nth-of-type(even) div{
+  background-color: #eee;
+}
+
+.child-row-name {
+  margin-bottom: 0px;
+}
+
+.child-row-phone {
+  margin-bottom: 0px;
+}
+
+.child-row-settings {
+  margin-bottom: 0px;
+}
+
+.child-row-edit {
+  width: 20px;
+  color: green;
+  padding: 0px;
+}
+
+.child-row-edit:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.child-row-remove {
+  width: 20px;
+  color: red;
+}
+
+.child-row-remove:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+

@@ -72,33 +72,23 @@ class Account extends Component {
 
   render() {
     return (
-      <div className='account'>
-        <h2>Account Details</h2>
+      <div className='col-md-12 account'>
         {(this.props.account.editable === false && 
         <div>
-          <Grid className='well'>
-            <Row>
-              <Col xs={4} md={3}>Name</Col>
-              <Col xs={6} md={6}>{this.props.account.username}</Col>
-            </Row>
-            <Row className='gridRow'>
-              <Col xs={4} md={3}>Email</Col>
-              <Col xs={6} md={6}>{this.props.account.email}</Col>
-            </Row>
-            <Row className='gridRow'>
-              <Col xs={4} md={3}>Phone Number</Col>
-              <Col xs={6} md={6}>{this.props.account.phone}</Col>
-            </Row>
-            <Row className='gridRow'>
-              <Col xs={4} md={3}>Time Zone</Col>
-              <Col xs={6} md={6}>{this.props.account.timezone}</Col>
-            </Row>
-            <Row>
-              <Button className='editButton' 
-                onClick={this.makeEditable.bind(this)}>Edit Account</Button>
-            </Row>
-          </Grid>
+          <div className='row'>
+            <div className='col-md-1 edit glyphicon glyphicon-edit'
+                 onClick={this.makeEditable.bind(this)}>
+            </div>
+            <div className='col-md-11'>
+              <h1 className='account-heading-name'>{this.props.account.username}</h1>
+              <p className='account-heading-details'>
+                <span className='account-heading-detail'>{this.props.account.email} | </span>
+                <span className='account-heading-detail'>{this.props.account.phone} | </span>
+                <span className='account-heading-detail'>{this.props.account.timezone}</span>
+              </p>
+            </div>
           </div>
+        </div>
         )}
         {(this.props.account.editable === true && 
         <Form>
@@ -140,16 +130,17 @@ class Account extends Component {
         </Form>
         )}
         {(this.props.children &&
-        <Grid className='childrenBlock'>
-          <Row>
-            <h2 className='childrenHeader'>Children</h2>
-          </Row>
-          <Row className='well'>
-            {this.props.children.map((child, index) =>
-              <IndividualKidBrief child={child} index={index} key={child.id}/>
-            )}
-          </Row>
-        </Grid>
+        <div>
+          <div className='row child-row-heading'>
+            <p className='col-md-5 child-row-name'>Name</p>
+            <p className='col-md-5 child-row-phone'>Phone</p>
+            <p className='col-md-2 child-row-settings'></p>
+          </div>
+          {this.props.children.map((child, index) =>
+            <IndividualKidBrief child={child} index={index} key={child.id}/>
+          )}
+        
+        </div>
         )}
       </div>
     );
