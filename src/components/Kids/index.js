@@ -118,7 +118,7 @@ class Kids extends React.Component {
             {
               this.state.children.map((child, index) => {
                 return (
-                  <Tab eventKey={index} title={child.name}>
+                  <Tab eventKey={index} title={child.name} key={child.id}>
                     <IndividualKid child={child} index={index} key={child.id} amazonToken={this.state.amazonToken}/>
                   </Tab>
                 );

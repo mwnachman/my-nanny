@@ -77,7 +77,7 @@ class IndividualKid extends React.Component {
     return (
       this.props.chores.list[this.props.child.id].map((chore, index) => {
         return (
-          <div>
+          <div key={chore.id}>
             <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
               amazonToken={this.props.amazonToken}/>
           </div>
