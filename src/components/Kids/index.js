@@ -7,8 +7,6 @@ import $ from 'jquery';
 import { Tabs, Tab } from 'react-bootstrap';
 import IndividualKid from '../IndividualKid/index';
 import config from '../../config';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import './kids.css';
 
 class Kids extends React.Component {
@@ -149,16 +147,8 @@ Kids.contextTypes = {
   store: React.PropTypes.object
 };
 
-var mapStateToProps = function(state) {
-  return {
-    children: state.children
-  };
-};
-
-var matchDispatchToProps = function(dispatch) {
-  return bindActionCreators({ }, dispatch);
-  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
-  //THEY STILL FIRE
+var mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({ getAccount: getAccount }, dispatch);
 };
 
 

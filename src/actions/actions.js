@@ -14,6 +14,9 @@ const url = (endpoint, id, startDate, endDate, page) => {
     page + '&access_token=';
   } else if (endpoint === 'getChildren') {
     return 'https://localhost:1337/api/children?access_token=';
+  } else if (endpoint === 'getSchedule') {
+    return 'https://localhost:1337/api/children/' + id +
+      '/schedule?access_token=';
   }
 };
 
@@ -60,6 +63,22 @@ export const receiveChores = (childList, chores) => {
     payload: {
       childList: childList,
       chores: chores
+    }
+  };
+};
+
+export const requestSchedule = () => {
+  return {
+    type: 'REQUEST_SCHEDULE'
+  };
+};
+
+export const receiveSchedule = (childList, schedule) => {
+  return {
+    type: 'RECEIVE_SCHEDULE',
+    payload: {
+      childList: childList,
+      schedule: schedule
     }
   };
 };
@@ -132,7 +151,6 @@ export const getAccount = (token, date) => {
       });
       dispatch(requestChores(date));
       var store = [];
-      var activeId = 0;
       childIds.forEach((id) => {
         store.push(
           fetch(url('getChores', id, date) + token)
@@ -146,6 +164,24 @@ export const getAccount = (token, date) => {
     })
     .then(function(chores) {
       dispatch(receiveChores(childIds, chores));
+      dispatch(requestSchedule());
+      var store = [];
+      childIds.forEach((id) => {
+        store.push(
+          fetch(url('getSchedule', id) + token)
+          .then(function(res) {
+            if (res.status === 500) {
+              return { schedule: {} };
+            }
+            return res.json();
+          })
+        );
+      });
+      return Promise.all(store);
+    })
+    .then(function(schedules) {
+      console.log('schedules from promises', schedules);
+      dispatch(receiveSchedule(childIds, schedules));
     })
     .catch(function(err) {
       console.log('Error fetching account:', err);

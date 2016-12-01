@@ -6,16 +6,8 @@ import Chores from '../Chores/index';
 import ChoreForm from '../ChoreForm';
 import $ from 'jquery';
 import config from '../../config';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { FormGroup, Collapse, Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
 
-
-// <div>
-//           <h2>Schedule</h2>
-//           <Schedule child={this.props.child} schedule={this.props.child.schedule}
-//             name={this.props.child.name} amazonToken={this.state.amazonToken}/>
-//         </div>
 
 class IndividualKid extends React.Component {
 
@@ -37,7 +29,6 @@ class IndividualKid extends React.Component {
   }
 
   handleInputChange(e) {
-    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
@@ -94,6 +85,24 @@ class IndividualKid extends React.Component {
       })
     );
   }
+
+  createSchedule() {
+    if (Object.keys(this.props.schedule.list).length === 0) {
+      return (
+        <div>
+          Loading...
+        </div>
+      );
+    }
+    return (
+      <div>
+        Here goes the schedule
+        <Schedule child={this.props.child} schedule={this.props.child.schedule}
+          name={this.props.child.name} amazonToken={this.state.amazonToken}/>
+      </div>
+    );
+  }
+
 
   editChild(e) {
     const newState = !this.state.editable;
@@ -169,6 +178,8 @@ class IndividualKid extends React.Component {
             </Col>
           </Row>
         )}
+        <h3>Schedule</h3>
+        {this.createSchedule()}
 
         <h3>Chore List</h3>
         {this.createChoresList()}
@@ -228,7 +239,8 @@ const mapStateToProps = function(state) {
   return {
     account: state.account,
     children: state.children,
-    chores: state.chores
+    chores: state.chores,
+    schedule: state.schedule
   };
 };
 
