@@ -15,7 +15,6 @@ const ChildrenReducer = (state = {},
       isFetching: true
     });
   } else if ( action.type === 'RECEIVE_CHILDREN' ) {
-    console.log('i got some kids', action.payload);
     let list = {};
     let kids = action.payload.children;
     for (var i = 0; i < kids.length; i++) {

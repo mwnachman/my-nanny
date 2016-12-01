@@ -1,4 +1,7 @@
 import React from 'react';
+import { getAccount } from '../../actions/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Form, FormControl, Row, Col } from 'react-bootstrap';
 import $ from 'jquery';
 import { Tabs, Tab } from 'react-bootstrap';
@@ -29,8 +32,15 @@ class Kids extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('amazonToken', this.state.amazonToken);
-    console.log('incomponent did mount');
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    var fullDate = year + '-' + month + '-' + day;
+    
+    this.props.getAccount(this.state.amazonToken, fullDate);
+
+    // TODO: Get this out of here
     $.ajax({
       url: this.state.urlPrefix + '/api/account?access_token=' + this.state.amazonToken,
       type: 'GET',
@@ -41,6 +51,7 @@ class Kids extends React.Component {
       this.setState({ email: data.email });
       this.setState({ children: data.children });
     });
+
   }
 
   addChild(e) {
@@ -123,9 +134,18 @@ class Kids extends React.Component {
   } 
 }
 
+const mapStateToProps = function(state) {
+  return {
+    account: state.account,
+    children: state.children,
+    chores: state.chores
+  };
+};
 
-export default Kids;
+const mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({ getAccount: getAccount }, dispatch);
+};
 
-
+export default connect(mapStateToProps, mapDispatchToProps)(Kids);
 
 

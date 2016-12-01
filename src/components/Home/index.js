@@ -54,8 +54,4 @@ const mapDispatchToProps = function(dispatch) {
   return bindActionCreators({ getAccount: getAccount }, dispatch);
 };
 
-Home.contextTypes = {
-  store: React.PropTypes.object
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

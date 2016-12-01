@@ -146,10 +146,9 @@ export const getAccount = (token, date) => {
     })
     .then(function(chores) {
       dispatch(receiveChores(childIds, chores));
-      console.log('made it!');
     })
     .catch(function(err) {
-      console.log('caught error:', err);
+      console.log('Error fetching account:', err);
     });
   };
 };
