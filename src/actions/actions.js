@@ -61,10 +61,17 @@ export const toggleEditable = () => {
   };
 };
 
-export const toggleEditableChild = (id) => {
+export const toggleEditChild = (id, name, phone, show, editable) => {
+  const obj = {
+    id: id,
+    name: name,
+    phone: phone,
+    show: show,
+    editable: editable
+  };
   return {
     type: 'TOGGLE_CHILD_EDIT',
-    payload: id
+    payload: obj
   };
 };
 

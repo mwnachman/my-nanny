@@ -15,7 +15,8 @@ export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
 export const receiveAccount = (accountData) => {
   return {
     type: RECEIVE_ACCOUNT,
-    payload: accountData
+    payload: accountData,
+    token: token
   };
 };
 
@@ -58,17 +59,16 @@ export const updateAccountInStore = (username, phone, timezone, email) => {
   };
 };
 
-export const TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
 export const toggleEditable = () => {
   return {
-    type: TOGGLE_EDITABLE
+    type: 'TOGGLE_EDITABLE'
   };
 };
 
-export const TOGGLE_CHILD_EDIT = 'TOGGLE_CHILD_EDIT';
-export const toggleEditableChild = (id) => {
+// export const TOGGLE_CHILD_EDIT = 'TOGGLE_CHILD_EDIT';
+export const toggleEditChild = (id) => {
   return {
-    type: TOGGLE_CHILD_EDIT,
+    type: 'TOGGLE_CHILD_EDIT',
     payload: id
   };
 };
