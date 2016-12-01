@@ -1,7 +1,6 @@
 const ChildrenReducer = (state = {}, 
   action) => {
   if ( action.type === 'TOGGLE_CHILD_EDIT' ) {
-    // console.log('TOGGLE CHILD EDIT Reducer');
     var obj = {};
     var key = action.payload.id;
     obj[key] = { name: action.payload.name,
@@ -33,26 +32,5 @@ const ChildrenReducer = (state = {},
   }
 };
 
-const ChildReducer = (state = {}, 
-  action) => {
-  if ( action.type === 'TOGGLE_CHILD_EDIT' ) {
-
-  }
-};
 
 export default ChildrenReducer;
-
-
-// console.log('TOGGLE CHILD EDIT Reducer');
-//     // var childId = action.payload;
-//     // var child = children[childId];
-//     // console.log('child', child);
-//     // child[childId] = { editable: true };
-//     console.log('state', state);
-//     var obj = {};
-//     var key = action.payload.id;
-//     obj[key] = { name: action.payload.name,
-//                  phone: action.payload.phone,
-//                  show: action.payload.show,
-//                  editable: !state.editable };
-//     return Object.assign({}, state, obj);

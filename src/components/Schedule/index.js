@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { FormControl, Button, Table } from 'react-bootstrap';
 import config from '../../config';
+import { getSchedule } from '../../actions/children';
 
 
 
@@ -28,25 +29,28 @@ class Schedule extends React.Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.schedule !== null) {
-      this.setState({ sunday: this.props.schedule.sunday });
-      this.setState({ monday: this.props.schedule.monday });
-      this.setState({ tuesday: this.props.schedule.tuesday });
-      this.setState({ wednesday: this.props.schedule.wednesday });
-      this.setState({ thursday: this.props.schedule.thursday });
-      this.setState({ friday: this.props.schedule.friday });
-      this.setState({ saturday: this.props.schedule.saturday });
-      this.setState({ originalSchedule: this.props.schedule });
-    }
+  componentWillMount() {
+    const amazonToken = localStorage.getItem('amazon-token');
+    this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
+
+    // if (this.props.schedule !== null) {
+    //   this.setState({ sunday: this.props.schedule.sunday });
+    //   this.setState({ monday: this.props.schedule.monday });
+    //   this.setState({ tuesday: this.props.schedule.tuesday });
+    //   this.setState({ wednesday: this.props.schedule.wednesday });
+    //   this.setState({ thursday: this.props.schedule.thursday });
+    //   this.setState({ friday: this.props.schedule.friday });
+    //   this.setState({ saturday: this.props.schedule.saturday });
+    //   this.setState({ originalSchedule: this.props.schedule });
+    // }
   }
 
   handleInputChange(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
-    console.log('state', JSON.stringify(this.state));
+    // console.log('state', JSON.stringify(this.state));
   }
 
   editSchedule(e) {
