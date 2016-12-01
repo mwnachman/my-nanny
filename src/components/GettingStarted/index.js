@@ -13,7 +13,7 @@ class GettingStarted extends React.Component {
 
   render() {
     return (
-    <div>
+    <div className='gettingStarted'>
       <div className='row'>
 
         <div className='col-md-12'>
