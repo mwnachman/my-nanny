@@ -31,18 +31,19 @@ class Schedule extends React.Component {
 
   componentDidMount() {
     const amazonToken = localStorage.getItem('amazon-token');
+    console.log(this.props.child.id);
     // this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
 
-    // if (this.props.schedule !== null) {
-    //   this.setState({ sunday: this.props.schedule.sunday });
-    //   this.setState({ monday: this.props.schedule.monday });
-    //   this.setState({ tuesday: this.props.schedule.tuesday });
-    //   this.setState({ wednesday: this.props.schedule.wednesday });
-    //   this.setState({ thursday: this.props.schedule.thursday });
-    //   this.setState({ friday: this.props.schedule.friday });
-    //   this.setState({ saturday: this.props.schedule.saturday });
-    //   this.setState({ originalSchedule: this.props.schedule });
-    // }
+    if (this.props.schedule !== null) {
+      this.setState({ sunday: this.props.schedule[this.props.child.id].sunday });
+      this.setState({ monday: this.props.schedule[this.props.child.id].monday });
+      this.setState({ tuesday: this.props.schedule[this.props.child.id].tuesday });
+      this.setState({ wednesday: this.props.schedule[this.props.child.id].wednesday });
+      this.setState({ thursday: this.props.schedule[this.props.child.id].thursday });
+      this.setState({ friday: this.props.schedule[this.props.child.id].friday });
+      this.setState({ saturday: this.props.schedule[this.props.child.id].saturday });
+      this.setState({ originalSchedule: this.props[this.props.child.id].schedule });
+    }
   }
 
   handleInputChange(e) {
@@ -194,7 +195,7 @@ Schedule.contextTypes = {
 
 var mapStateToProps = function(state) {
   return {
-    schedule: state.schedule
+    schedule: state.schedule.list
   };
 };
 
