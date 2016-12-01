@@ -4,13 +4,12 @@ import { FormControl, Button, Table } from 'react-bootstrap';
 import config from '../../config';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getSchedule } from '../../actions/children';
 
 class Schedule extends React.Component {
 
   constructor(props) {
-    super(props);
-   
+    super(props); 
+
     this.state = {
       name: this.props.name, 
       username: '',
@@ -31,10 +30,8 @@ class Schedule extends React.Component {
 
   componentDidMount() {
     const amazonToken = localStorage.getItem('amazon-token');
-    console.log(this.props.child.id);
-    // this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
 
-    if (this.props.schedule !== null) {
+    if (Object.keys(this.props.schedule).length !== 0) {
       this.setState({ sunday: this.props.schedule[this.props.child.id].sunday });
       this.setState({ monday: this.props.schedule[this.props.child.id].monday });
       this.setState({ tuesday: this.props.schedule[this.props.child.id].tuesday });
@@ -42,7 +39,7 @@ class Schedule extends React.Component {
       this.setState({ thursday: this.props.schedule[this.props.child.id].thursday });
       this.setState({ friday: this.props.schedule[this.props.child.id].friday });
       this.setState({ saturday: this.props.schedule[this.props.child.id].saturday });
-      this.setState({ originalSchedule: this.props[this.props.child.id].schedule });
+      this.setState({ originalSchedule: this.props.schedule[this.props.child.id] });
     }
   }
 
@@ -107,7 +104,7 @@ class Schedule extends React.Component {
     return (
       <div>
 
-        {((this.state.originalSchedule === null) && 
+        {((Object.keys(this.state.originalSchedule).length === 0) && 
           <div>
             <p>{this.state.name} does not currently have a Schedule. 
             Enter the times {this.state.name} is expected to arrive home in the afternoons, 
@@ -131,13 +128,13 @@ class Schedule extends React.Component {
             <tbody>
             {((this.state.editable === false && this.state.originalSchedule !== null) && 
               <tr>
-                <td>{this.state.sunday}</td>
-                <td>{this.state.monday}</td>
-                <td>{this.state.tuesday}</td>
-                <td>{this.state.wednesday}</td>
-                <td>{this.state.thursday}</td>
-                <td>{this.state.friday}</td>
-                <td>{this.state.saturday}</td>
+                <td>{this.state.sunday !== 'null' ? this.state.sunday : 'none'}</td>
+                <td>{this.state.monday !== 'null' ? this.state.monday : 'none'}</td>
+                <td>{this.state.tuesday !== 'null' ? this.state.tuesday : 'none'}</td>
+                <td>{this.state.wednesday !== 'null' ? this.state.wednesday : 'none'}</td>
+                <td>{this.state.thursday !== 'null' ? this.state.thursday : 'none'}</td>
+                <td>{this.state.friday !== 'null' ? this.state.friday : 'none'}</td>
+                <td>{this.state.saturday !== 'null' ? this.state.saturday : 'none'}</td>
                 {(this.props.schedule !== null &&
                   <td><Button onClick={this.editSchedule.bind(this)}>Edit</Button></td>
                 )}
