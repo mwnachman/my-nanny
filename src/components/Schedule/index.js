@@ -2,6 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import { FormControl, Button, Table } from 'react-bootstrap';
 import config from '../../config';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { getSchedule } from '../../actions/children';
 
 
@@ -29,7 +31,7 @@ class Schedule extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const amazonToken = localStorage.getItem('amazon-token');
     this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
 
@@ -188,4 +190,21 @@ class Schedule extends React.Component {
   }
 }
 
-export default Schedule;
+Schedule.contextTypes = {
+  store: React.PropTypes.object
+};
+
+var mapStateToProps = function(state) {
+  return {
+    schedule: state.schedule
+  };
+};
+
+var matchDispatchToProps = function(dispatch) {
+  return bindActionCreators({ }, dispatch);
+  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //THEY STILL FIRE
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(Schedule);
+
