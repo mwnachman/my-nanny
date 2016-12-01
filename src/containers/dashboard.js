@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = function(state) {
   return {
+    account: state.account,
     children: state.children,
     chores: state.chores
   };
@@ -19,7 +20,7 @@ class Dashboard extends Component {
     if (Object.keys(this.props.chores.list).length === 0) {
       return (
         <li>
-          Not loaded yet!
+          Loading...
         </li>
       );
     }
@@ -29,6 +30,7 @@ class Dashboard extends Component {
         return (
           <li key={child}>
             <span className='status'>
+              <img src={this.props.children[child].photo} className='avatar'/>
               {this.props.children[child].name}
               {this.props.chores.list[child].map((chore) => {
                 return (
@@ -51,7 +53,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <h1>Hello world!</h1>
+        <h1>{this.props.account.username + '\'s Dashboard'}</h1>
         <br/>
         <hr/>
         <br/>
@@ -64,17 +66,3 @@ class Dashboard extends Component {
 }
 
 export default connect(mapStateToProps)(Dashboard);
-
-// onClick={() => { this.props.activateChild(child); }}
-// <img src={child.photo} className='avatar'/>
-                // {child.checkedIn ? 
-                //   <span className='isHome'> has checked in.</span> 
-                //   : <span className='isNotHome'> has not checked in.</span>
-                // }
-
-  //         <br/>
-  //       <h1>{this.props.dashboard.account.username + '\'s Dashboard'}</h1>
-  //       <br/>
-  //       <ul>
-  //         {this.createChildrenList()}
-  //       </ul>
