@@ -45,9 +45,10 @@ export const Landing = () => (
             <Col xs={2} />
             <Col xs={8}>
               <div>
-                <div>Your family – abstracted<br/></div>
-                New Alexa technology puts you in control of all your children so that you can 
-                see what's going on at a glance and decide how to manage your children's lives.
+                <h2>Safety first.<br/></h2>
+                myNanny welcomes kids home after school, and sends you a text confirming 
+                their safe arrival.  If they don’t check in by the time you set in 
+                their schedule, you’ll receive a text notification.  
               </div>
             </Col>
             <Col xs={2} />
@@ -59,10 +60,11 @@ export const Landing = () => (
             <Col xs={2} />
             <Col xs={8}>
               <div>
-                <div>Your family – abstracted<br/></div>
-                New Alexa technology puts you in control of all your children so that you can 
-                see what's going on at a glance and decide how to manage your children's lives.
-              </div>
+                <h2>Chores are fun.<br/></h2>
+                Let myNanny do the nagging for you.  Alexa technology makes chore reminders 
+                easy.  Kids receive a list of their responsibilities when they get home, 
+                and they confirm with Alexa when they have finished.  
+              </div>           
             </Col>
             <Col xs={2} />
           </Row>
@@ -73,9 +75,10 @@ export const Landing = () => (
             <Col xs={2} />
             <Col xs={8}>
               <div>
-                <div>Your family – abstracted<br/></div>
-                New Alexa technology puts you in control of all your children so that you can 
-                see what's going on at a glance and decide how to manage your children's lives.
+                <h2>Organization.<br/></h2>
+                myNanny’s simple online interface gives you a daily summary of your kids’ 
+                schedule and activities so that you can see your household at a glance.  
+                And it’s a breeze to add chores and change schedules a breeze.  
               </div>
             </Col>
             <Col xs={2} />
