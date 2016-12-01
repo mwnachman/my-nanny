@@ -1,3 +1,7 @@
 .childRow {
   margin-top: 3em;
 }
+
+body {
+  background-image: url('./assets/geometry.png');
+}
