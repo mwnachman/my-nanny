@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getSchedule } from '../../actions/children';
 
-
-
 class Schedule extends React.Component {
 
   constructor(props) {
@@ -33,7 +31,7 @@ class Schedule extends React.Component {
 
   componentDidMount() {
     const amazonToken = localStorage.getItem('amazon-token');
-    this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
+    // this.context.store.dispatch(getSchedule(amazonToken, this.props.child.id));
 
     // if (this.props.schedule !== null) {
     //   this.setState({ sunday: this.props.schedule.sunday });
