@@ -15,7 +15,7 @@ class GettingStarted extends React.Component {
     return (
     <div className='gettingStarted'>
       
-      <div className='row'>
+      <div className='row' id='gettingStartedRow'>
         <div className='col-md-12'>
           <img src='https://goo.gl/i00v4C' />
         </div>
@@ -24,7 +24,7 @@ class GettingStarted extends React.Component {
       <h2 className='underline'>Quick Account Set-Up</h2>
 
       <div className='row card-row'>
-        <div className='col-md-6' id='getChoreDetails'>
+        <div className='col-md-6'>
           <div className='col-md-12 card'>
             <h3 className='alexaCommandTitle'>Create an Account</h3>
             <p className='alexaCommandDesc'>

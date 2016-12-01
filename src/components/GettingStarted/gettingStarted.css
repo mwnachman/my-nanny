@@ -50,8 +50,8 @@ a:hover {
   display: -ms-flexbox;
   display:         flex;
   flex-wrap: wrap;
-  max-width: 850px;
 }
+
 .row > [class*='col-'] {
   display: flex;
   flex-direction: column;
