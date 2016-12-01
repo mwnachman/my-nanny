@@ -6,6 +6,8 @@ import Chores from '../Chores/index';
 import ChoreForm from '../ChoreForm';
 import $ from 'jquery';
 import config from '../../config';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FormGroup, Collapse, Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
 
 
@@ -216,6 +218,12 @@ class IndividualKid extends React.Component {
   }
 }
 
+
+IndividualKid.contextTypes = {
+  store: React.PropTypes.object
+};
+
+
 const mapStateToProps = function(state) {
   return {
     account: state.account,
@@ -224,4 +232,12 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(IndividualKid);
+var matchDispatchToProps = function(dispatch) {
+  return bindActionCreators({ }, dispatch);
+  //WE SEEM NOT TO NEED THIS?  DON'T HAVE IT FOR ALL FUNCS BUT
+  //THEY STILL FIRE
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(IndividualKid);
+
+
