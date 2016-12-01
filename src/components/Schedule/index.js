@@ -87,6 +87,7 @@ class Schedule extends React.Component {
         console.log('Updated schedule:' + JSON.stringify(data));
       }
     });
+    this.setState({ editable: false });
   }
 
   createSchedule(e) {
