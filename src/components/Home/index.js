@@ -35,8 +35,7 @@ class Home extends React.Component {
   render() {
     return (
     <div className='home'>
-      <h1>Home</h1>
-      <hr/>
+      <br/>
       <Dashboard />
     </div>
     );
@@ -46,16 +45,13 @@ class Home extends React.Component {
 const mapStateToProps = function(state) {
   return {
     account: state.account,
+    children: state.children,
     chores: state.chores
   };
 };
 
 const mapDispatchToProps = function(dispatch) {
   return bindActionCreators({ getAccount: getAccount }, dispatch);
-};
-
-Home.contextTypes = {
-  store: React.PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

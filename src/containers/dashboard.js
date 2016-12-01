@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = function(state) {
   return {
-    children: state.children
+    account: state.account,
+    children: state.children,
+    chores: state.chores
   };
 };
 
@@ -13,37 +15,50 @@ const mapStateToProps = function(state) {
 // };
 
 class Dashboard extends Component {
-  
+
   createChildrenList() {
-    if (!this.props.children) {
+    if (Object.keys(this.props.chores.list).length === 0) {
       return (
         <li>
-          Not loaded yet!
+          Loading...
         </li>
       );
     }
+    
     return (
       Object.keys(this.props.children).map((child) => {
         return (
           <li key={child}>
             <span className='status'>
-              {this.props.children[child].name} 
+              <img src={this.props.children[child].photo} className='avatar'/>
+              {this.props.children[child].name}
+              {this.props.chores.list[child].map((chore) => {
+                return (
+                  <li key={'chore' + chore.id}>
+                    <span className='status'>
+                      {chore.title}
+                      <br/>              
+                    </span>
+                  </li>
+                );
+              })}
+              <br/>              
             </span>
           </li>
         );
       })
     );
-  }  
+  }
 
   render() {
     return (
       <div>
-        <h1>Hello world!</h1>
+        <h1>{this.props.account.username + '\'s Dashboard'}</h1>
         <br/>
         <hr/>
         <br/>
         <ul>
-          {this.createChildrenList()}          
+          {this.createChildrenList()}
         </ul>
       </div>
     );
@@ -51,17 +66,3 @@ class Dashboard extends Component {
 }
 
 export default connect(mapStateToProps)(Dashboard);
-
-// onClick={() => { this.props.activateChild(child); }}
-// <img src={child.photo} className='avatar'/>
-                // {child.checkedIn ? 
-                //   <span className='isHome'> has checked in.</span> 
-                //   : <span className='isNotHome'> has not checked in.</span>
-                // }
-
-  //         <br/>
-  //       <h1>{this.props.dashboard.account.username + '\'s Dashboard'}</h1>
-  //       <br/>
-  //       <ul>
-  //         {this.createChildrenList()}
-  //       </ul>

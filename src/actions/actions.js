@@ -12,6 +12,8 @@ const url = (endpoint, id, startDate, endDate, page) => {
     return 'https://localhost:1337/api/children/' + id + '/chores?' + 
     'start_date=' + startDate + '&end_date=' + endDate + '&page=' + 
     page + '&access_token=';
+  } else if (endpoint === 'getChildren') {
+    return 'https://localhost:1337/api/children?access_token=';
   }
 };
 
@@ -29,10 +31,17 @@ export const receiveAccount = (account) => {
   };
 };
 
-export const receiveChildren = (childrenData) => {
+export const requestChildren = (token) => {
+  return {
+    type: 'REQUEST_CHILDREN',
+    payload: token
+  };
+};
+
+export const receiveChildren = (children) => {
   return {
     type: 'RECEIVE_CHILDREN',
-    payload: childrenData
+    payload: children
   };
 };
 
@@ -105,12 +114,20 @@ export const getAccount = (token, date) => {
       }
       return res.json();
     })
-    .then(function(account) {
+    .then((account) => {
       dispatch(receiveAccount(account));
-      if (account.children) {
-        dispatch(receiveChildren(account));
+      dispatch(requestChildren(token));
+      return fetch(url('getChildren') + token);
+    })
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad res from server.');
       }
-      account.children.forEach((child) => {
+      return res.json();
+    })
+    .then(function(list) {
+      dispatch(receiveChildren(list));
+      list.children.forEach((child) => {
         childIds.push(child.id);
       });
       dispatch(requestChores(date));
@@ -131,7 +148,7 @@ export const getAccount = (token, date) => {
       dispatch(receiveChores(childIds, chores));
     })
     .catch(function(err) {
-      console.log('caught error:', err);
+      console.log('Error fetching account:', err);
     });
   };
 };
