@@ -18,22 +18,13 @@ const AccountReducer = (state = {
       username: action.payload.username,
       email: action.payload.email,
       phone: action.payload.phone,
-      timezone: action.payload.timezone
+      timezone: action.payload.timezone,
+      token: action.token
     });
   } else if ( action.type === 'TOGGLE_EDITABLE' ) {
     console.log('TOGGLE_EDITABLE Reducer');
     return Object.assign({}, state, {
       editable: !state.editable
-    });
-  } else if ( action.type === 'TOGGLE_CHILD_EDIT' ) {
-    console.log('TOGGLE CHILD EDIT Reducer');
-    return Object.assign({}, state, {
-    // TODO: Finish Reducer
-    });
-  } else if ( action.type === 'TOGGLE_CHILD_SHOW' ) {
-    console.log('TOGGLE CHILD SHOW Reducer');
-    return Object.assign({}, state, {
-    // TODO: Finish Reducer
     });
   } else {
     return state;

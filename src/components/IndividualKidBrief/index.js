@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import config from '../../config';
-import { toggleEditableChild, toggleShowChild } from '../../actions/account';
+import { toggleEditChild, toggleShowChild } from '../../actions/actions';
 
 import { Button, Form, FormControl } from 'react-bootstrap';
 
@@ -14,30 +14,26 @@ class IndividualKidBrief extends React.Component {
     super(props);
 
     this.state = {
-      // show: true,
       name: this.props.child.name,
       phone: this.props.child.phone,
       id: this.props.child.id,
-      // editable: false,
       urlPrefix: config.baseUrl,
     };
   }
 
   handleInputChange(e) {
-    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
   }
 
   editChild(e) {
-    this.context.store.dispatch(toggleEditableChild(this.state.id));
-    // this.setState({ editable: true });
+    this.context.store.dispatch(toggleEditChild(this.state.id, this.props.child.name,
+      this.props.child.phone, true, false));
   }
 
   confirmChanges(e) {
     const amazonToken = localStorage.getItem('amazon-token');
-    console.log('in confirm changes');
     const child = {
       'child': {
         'id': this.state.id,
@@ -54,22 +50,19 @@ class IndividualKidBrief extends React.Component {
         console.log('Updated child:' + JSON.stringify(data));
       }
     });
-    this.context.store.dispatch(toggleEditableChild(this.state.id));
-    // this.setState({ editable: false });
+    this.context.store.dispatch(toggleEditChild(this.state.id, this.props.child.name,
+      this.props.child.phone, true, true));
   }
 
   deleteChild(e) {
-    console.log('in delete child');
+    const amazonToken = localStorage.getItem('amazon-token');
     const child = {
-      'account': {
-        'amazonId': this.state.amazonId
-      },
       'child': {
         'id': this.state.id
       }
     };
     $.ajax({
-      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
+      url: this.state.urlPrefix + '/api/children?access_token=' + amazonToken,
       type: 'DELETE',
       dataType: 'application/json',
       data: child,
@@ -78,7 +71,6 @@ class IndividualKidBrief extends React.Component {
       }
     });
     this.context.store.dispatch(toggleShowChild(this.state.id));
-    // this.setState({ show: false });
   }
 
   render() {
@@ -87,8 +79,12 @@ class IndividualKidBrief extends React.Component {
         {(this.props.children[this.state.id].show === true && 
           <div>
           <h3 className='childName'>{this.props.child.name}</h3>
-          <Button onClick={this.editChild.bind(this)}>Edit</Button>
-          <Button onClick={this.deleteChild.bind(this)}>Delete</Button>
+          {(this.props.children[this.state.id].editable === false && 
+          <div>
+            <Button onClick={this.editChild.bind(this)}>Edit</Button>
+            <Button onClick={this.deleteChild.bind(this)}>Delete</Button>
+          </div>
+          )}
           {(this.props.children[this.state.id].editable === true && 
             <Form>
               <FormControl type='text' name='name' value={this.state.name}

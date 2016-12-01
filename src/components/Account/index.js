@@ -24,7 +24,8 @@ class Account extends Component {
   }
 
   componentWillMount() {
-    this.context.store.dispatch(getAccount());
+    const amazonToken = localStorage.getItem('amazon-token');
+    this.context.store.dispatch(getAccount(amazonToken));
   }
 
   handleInputChange(e) {
@@ -138,7 +139,7 @@ class Account extends Component {
           </Grid>
         </Form>
         )}
-        {(this.props.account.children &&
+        {(this.props.children &&
         <Grid className='childrenBlock'>
           <Row>
             <h2 className='childrenHeader'>Children</h2>
