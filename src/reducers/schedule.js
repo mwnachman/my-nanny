@@ -1,6 +1,6 @@
 const ScheduleReducer = (state = {
   isFetching: false,
-  list: []
+  list: {}
 }, action) => {
   if ( action.type === 'REQUEST_SCHEDULE' ) {
     return Object.assign({}, state, {
@@ -8,19 +8,12 @@ const ScheduleReducer = (state = {
     });
   } else if ( action.type === 'RECEIVE_SCHEDULE' ) {
     let newSchedule = {};
-    newSchedule.childId = action.payload.childId;
-    for (var key in action.payload.schedule) {
-      newSchedule[key] = action.payload.schedule[key];
+    for (let i = 0; i < action.payload.childList.length; i++) {
+      newSchedule[action.payload.childList[i]] = action.payload.schedule[i].schedule;
     }
-    console.log('newSchedule', newSchedule);
-    console.log('list1', list);
-    let list = state.list;
-    console.log('list2', list);
-    list = list.push(newSchedule);
-    console.log('newSchedule', newSchedule);
     return Object.assign({}, state, {
       isFetching: false,
-      list: list
+      list: newSchedule
     });
   } else {
     return state;
