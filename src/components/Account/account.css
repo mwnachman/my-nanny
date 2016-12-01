@@ -1,5 +1,5 @@
 .account {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .edit {
@@ -21,7 +21,19 @@
 	margin-bottom: 0px;
 }
 
+.account-heading-name-edit {
+  margin-top: 20px;
+}
+
 .account-heading-detail {
   color: #666;
   font-style: italic;
 }
+
+.account-heading-detail-edit {
+  margin-right: 4px;
+  margin-top: 4px;
+  width: 32%;
+  padding: 2px;
+}
+

@@ -90,44 +90,44 @@ class Account extends Component {
           </div>
         </div>
         )}
-        {(this.props.account.editable === true && 
-        <Form>
-          <Grid className='well'>
-            <Row>
-              <Col xs={4} md={3}>Name</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='username' defaultValue={this.props.account.username}
-                onChange={this.handleInputChange.bind(this)}/>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={4} md={3}>Email</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='email' defaultValue={this.props.account.email}
-                onChange={this.handleInputChange.bind(this)}/>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={4} md={3}>Phone Number</Col>
-              <Col xs={6} md={6}><FormControl type='text' name='phone' defaultValue={this.props.account.phone}
-                onChange={this.handleInputChange.bind(this)}/>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={4} md={3}>Time Zone</Col>
-              <Col xs={6} md={6}>
-                <select name='timezone' onChange={this.handleInputChange.bind(this)}>
+        {(this.props.account.editable === true &&
+        <div>
+          <div className='row'>
+            <div className='col-md-1 edit glyphicon glyphicon-ok'
+                 onClick={this.updateAccount.bind(this)}>
+            </div>
+            <div className='col-md-11'>
+              <input className='account-heading-name-edit'
+                     type='text'
+                     name='username'
+                     defaultValue={this.props.account.username}
+                     onChange={this.handleInputChange.bind(this)} />
+              <p className='account-heading-details-edit'>
+                <input className='account-heading-detail-edit'
+                       type='text'
+                       name='email'
+                       placeholder='Email...'
+                       defaultValue={this.props.account.email}
+                       onChange={this.handleInputChange.bind(this)} />
+                <input className='account-heading-detail-edit'
+                       type='text'
+                       name='phone'
+                       placeholder='Phone...'
+                       defaultValue={this.props.account.phone}
+                       onChange={this.handleInputChange.bind(this)} />
+                <select className='account-heading-detail-edit'
+                        name='timezone'
+                        onChange={this.handleInputChange.bind(this)}>
                   <option value='EST'>EST / Eastern / UTC-5</option>
                   <option value='CST'>CST / Central / UTC-6</option>
                   <option value='MST'>MST / Mountain / UTC-7</option>
                   <option value='PST'>PST / Pacific / UTC-8</option>
                   <option value='HST'>HST / Hawaii / UTC-10</option>
                 </select>
-              </Col>
-            </Row>
-            <Row>
-              <Button className='editButton' onClick={this.updateAccount.bind(this)}>Update Account</Button>
-            </Row>
-          </Grid>
-        </Form>
+              </p>
+            </div>
+          </div>
+        </div> 
         )}
         {(this.props.children &&
         <div>
