@@ -1,4 +1,6 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Schedule from '../Schedule/index';
 import Chores from '../Chores/index';
 import ChoreForm from '../ChoreForm';
@@ -6,6 +8,12 @@ import $ from 'jquery';
 import config from '../../config';
 import { FormGroup, Collapse, Row, Col, Grid, Button, FormControl, Well } from 'react-bootstrap';
 
+
+// <div>
+//           <h2>Schedule</h2>
+//           <Schedule child={this.props.child} schedule={this.props.child.schedule}
+//             name={this.props.child.name} amazonToken={this.state.amazonToken}/>
+//         </div>
 
 class IndividualKid extends React.Component {
 
@@ -54,6 +62,35 @@ class IndividualKid extends React.Component {
         window.location.reload();
       }
     });
+  }
+
+  createChoresList() {
+    if (Object.keys(this.props.chores.list).length === 0) {
+      return (
+        <div>
+          Loading...
+        </div>
+      );
+    } 
+    if (this.props.chores.list[this.props.child.id].length === 0) {
+      return (
+        <div>
+          <p>
+            {this.props.child.name} does not currently have any chores assigned. Add a chore below.
+          </p>
+        </div>
+      );
+    } 
+    return (
+      this.props.chores.list[this.props.child.id].map((chore, index) => {
+        return (
+          <div>
+            <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
+              amazonToken={this.props.amazonToken}/>
+          </div>
+        );
+      })
+    );
   }
 
   editChild(e) {
@@ -130,26 +167,11 @@ class IndividualKid extends React.Component {
             </Col>
           </Row>
         )}
+
+        <h3>Chore List</h3>
+        {this.createChoresList()}
         <div>
-          <h2>Schedule</h2>
-          <Schedule child={this.props.child} schedule={this.props.child.schedule}
-            name={this.props.child.name} amazonToken={this.state.amazonToken}/>
-        </div>
-        <div> 
-          <h3>Chores</h3>
-          {(this.props.child.chores !== undefined &&  
-            this.props.child.chores.map((chore, index) =>
-              <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
-                amazonToken={this.props.amazonToken}/>
-            ))
-          }
-          {(this.props.child.chores === undefined &&
-            <div>
-              <p>{this.props.name} does not currently have any chores assigned.
-              Add a chore below.</p>        
-            </div>
-          )}
-          <div>
+          <div> 
             <Button onClick={()=> this.setState({ open: !this.state.open })}>
               New Chore
             </Button>
@@ -194,5 +216,12 @@ class IndividualKid extends React.Component {
   }
 }
 
+const mapStateToProps = function(state) {
+  return {
+    account: state.account,
+    children: state.children,
+    chores: state.chores
+  };
+};
 
-export default IndividualKid;
+export default connect(mapStateToProps)(IndividualKid);
