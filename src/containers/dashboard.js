@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = function(state) {
   return {
-    children: state.children
+    children: state.children,
+    chores: state.chores
   };
 };
 
@@ -13,27 +14,39 @@ const mapStateToProps = function(state) {
 // };
 
 class Dashboard extends Component {
-  
+
   createChildrenList() {
-    if (!this.props.children) {
+    if (Object.keys(this.props.chores.list).length === 0) {
       return (
         <li>
           Not loaded yet!
         </li>
       );
     }
+    
     return (
       Object.keys(this.props.children).map((child) => {
         return (
           <li key={child}>
             <span className='status'>
-              {this.props.children[child].name} 
+              {this.props.children[child].name}
+              {this.props.chores.list[child].map((chore) => {
+                return (
+                  <li key={'chore' + chore.id}>
+                    <span className='status'>
+                      {chore.title}
+                      <br/>              
+                    </span>
+                  </li>
+                );
+              })}
+              <br/>              
             </span>
           </li>
         );
       })
     );
-  }  
+  }
 
   render() {
     return (
@@ -43,7 +56,7 @@ class Dashboard extends Component {
         <hr/>
         <br/>
         <ul>
-          {this.createChildrenList()}          
+          {this.createChildrenList()}
         </ul>
       </div>
     );

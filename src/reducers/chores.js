@@ -11,8 +11,15 @@ const ChoresReducer = (state = {
   } else if ( action.type === 'RECEIVE_CHORES' ) {
     let choreObj = {};
     for (let i = 0; i < action.payload.childList.length; i++) {
-      choreObj[action.payload.childList[i]] = action.payload.chores[i].chores;
+      // console.log('stat', action.payload.childList[i], action.payload.chores[i].chores);
+      if (action.payload.chores[i].chores === undefined) {
+        choreObj[action.payload.childList[i]] = [];
+        console.log('empty array!');
+      } else {
+        choreObj[action.payload.childList[i]] = action.payload.chores[i].chores;
+      }
     }
+    // console.log(choreObj);
     return Object.assign({}, state, {
       isFetching: false,
       list: choreObj
