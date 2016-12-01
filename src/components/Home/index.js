@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 import { getAccount } from '../../actions/actions';
 import Dashboard from '../../containers/dashboard';
 
@@ -36,7 +37,11 @@ class Home extends React.Component {
     return (
     <div className='home'>
       <br/>
-      <Dashboard />
+      <Row>
+        <Col>
+          <Dashboard />
+        </Col>
+      </Row>
     </div>
     );
   }
