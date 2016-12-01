@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { Grid, Navbar, Nav, NavItem, NavDropdown, MenuItem, Jumbotron, Button } from 'react-bootstrap';
+import './styles.css';
 
 
 class Navigation extends React.Component {
@@ -27,7 +28,7 @@ class Navigation extends React.Component {
   }
 
   handleBrandLink(e) {
-    browserHistory.push('/app/home');
+    browserHistory.push('/');
   }
 
   handleLogout() {
@@ -48,7 +49,7 @@ class Navigation extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} onSelect={this.handleLink}>Home</NavItem>
+            <NavItem eventKey={1} onSelect={this.handleLink}>Dashboard</NavItem>
             <NavItem eventKey={2} onSelect={this.handleLink}>Getting Started</NavItem>
             <NavItem eventKey={4} onSelect={this.handleLink}>Kids</NavItem>
           </Nav>

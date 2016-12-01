@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import config from '../../config';
 import { toggleEditChild, toggleShowChild } from '../../actions/actions';
+import './individualKidBrief.css';
 
 import { Button, Form, FormControl } from 'react-bootstrap';
 
@@ -75,27 +76,40 @@ class IndividualKidBrief extends React.Component {
 
   render() {
     return (
-      <div>
-        {(this.props.children[this.state.id].show === true && 
-          <div>
-          <h3 className='childName'>{this.props.child.name}</h3>
-          {(this.props.children[this.state.id].editable === false && 
-          <div>
-            <Button onClick={this.editChild.bind(this)}>Edit</Button>
-            <Button onClick={this.deleteChild.bind(this)}>Delete</Button>
+      <div className='child-row-wrapper'>
+        {(this.props.children[this.state.id].show === true &&
+          this.props.children[this.state.id].editable === false && 
+          <div className='row child-row'>
+              <p className='col-md-5 child-row-name'>{this.props.child.name}</p>
+              <p className='col-md-5 child-row-phone'>{this.props.child.phone}</p>
+              <div className='col-md-2 child-row-settings'>
+                <div className='row'>
+                  <span className='col-md-1 child-row-edit glyphicon glyphicon-edit'
+                      onClick={this.editChild.bind(this)}></span>
+                  <span className='col-md-1 child-row-remove glyphicon glyphicon-remove'
+                        onClick={this.deleteChild.bind(this)}></span>
+                </div>
+              </div>
           </div>
-          )}
-          {(this.props.children[this.state.id].editable === true && 
-            <Form>
-              <FormControl type='text' name='name' value={this.state.name}
-                onChange={this.handleInputChange.bind(this)}>
-              </FormControl>
-              <FormControl type='text' name='phone' value={this.state.phone}
-                onChange={this.handleInputChange.bind(this)}>
-              </FormControl>
-              <Button onClick={this.confirmChanges.bind(this)}>Confirm</Button>
-            </Form>
-          )}
+        )}
+        {(this.props.children[this.state.id].editable === true &&
+          <div className='row child-row'>
+              <input className='col-md-5 child-row-name'
+                     type='text'
+                     name='name'
+                     value={this.state.name}
+                     onChange={this.handleInputChange.bind(this)} />
+              <input className='col-md-5 child-row-phone'
+                     type='text'
+                     name='phone'
+                     value={this.state.phone}
+                     onChange={this.handleInputChange.bind(this)} />
+              <div className='col-md-2 child-row-settings'>
+                <div className='row'>
+                  <span className='col-md-1 child-row-edit glyphicon glyphicon-ok'
+                        onClick={this.confirmChanges.bind(this)}></span>
+                </div>
+              </div>
           </div>
         )}
       </div>
