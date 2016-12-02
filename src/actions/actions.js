@@ -13,18 +13,18 @@ const url = (endpoint, id, startDate, endDate, page) => {
   page = page || 1;
 
   if (endpoint === 'getAccount') {
-    return 'https://localhost:1337/api/account?access_token=';
+    return 'https://api.my-nanny.org/api/account?access_token=';
   } else if (endpoint === 'getChores') {
-    return 'https://localhost:1337/api/children/' + id + '/chores?' + 
+    return 'https://api.my-nanny.org/api/children/' + id + '/chores?' + 
     'start_date=' + startDate + '&end_date=' + endDate + '&page=' + 
     page + '&access_token=';
   } else if (endpoint === 'getChildren') {
-    return 'https://localhost:1337/api/children?access_token=';
+    return 'https://api.my-nanny.org/api/children?access_token=';
   } else if (endpoint === 'getSchedule') {
-    return 'https://localhost:1337/api/children/' + id +
+    return 'https://api.my-nanny.org/api/children/' + id +
       '/schedule?access_token=';
   } else if (endpoint === 'addChild') {
-    return 'https://localhost:1337/api/children?access_token=';
+    return 'https://api.my-nanny.org/api/children?access_token=';
   }
 };
 
