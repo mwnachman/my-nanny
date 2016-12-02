@@ -1,8 +1,8 @@
 # Introduction
 
-My-Nanny contains the parental control interface (React Webpack) for managing kids' chores and schedule, which the children can then interact with through Alexa.
+My-Nanny contains the parental control interface for managing kids' chores and schedule, which the children can then interact with through Alexa.  It is intended to be used in conjunction with the My-Nanny-API and the myNanny Alexa skill.
 
-[Screen shot of a nice page]
+![ScreenShot](screenshot.png)
 
 See more at https://my-nanny.org
 

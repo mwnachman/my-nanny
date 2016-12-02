@@ -44,9 +44,11 @@ class Schedule extends React.Component {
   }
 
   handleInputChange(e) {
+    // console.log(e.target);
     const inputChange = {};
     inputChange[e.target.name] = e.target.value;
     this.setState(inputChange);
+    // console.log('state', JSON.stringify(this.state));
   }
 
   editSchedule(e) {
