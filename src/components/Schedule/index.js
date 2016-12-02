@@ -53,7 +53,7 @@ class Schedule extends React.Component {
 
   editSchedule(e) {
     this.setState({ editable: true });
-    this.setState({ originalSchedule: [] });
+    // this.setState({ originalSchedule: [] });
   }
 
   makeSchedule() {
@@ -84,7 +84,6 @@ class Schedule extends React.Component {
         console.log('Updated schedule:' + JSON.stringify(data));
       }
     });
-    this.setState({ editable: false });
   }
 
   createSchedule(e) {
@@ -126,7 +125,7 @@ class Schedule extends React.Component {
                 </tr>
               </thead>
             <tbody>
-            {((this.state.editable === false && this.state.originalSchedule !== null) && 
+            {((this.state.editable === false && Object.keys(this.state.originalSchedule).length !== 0) && 
               <tr>
                 <td>{this.state.sunday !== 'null' ? this.state.sunday : 'none'}</td>
                 <td>{this.state.monday !== 'null' ? this.state.monday : 'none'}</td>
@@ -141,7 +140,7 @@ class Schedule extends React.Component {
               </tr>
             )}
 
-            {((this.state.originalSchedule === null && this.state.editable !== true) &&
+            {((Object.keys(this.state.originalSchedule).length === 0 && this.state.editable !== true) &&
               <tr>
                 <td><FormControl name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>
@@ -160,7 +159,7 @@ class Schedule extends React.Component {
                 <td><Button onClick={this.createSchedule.bind(this)}>Create</Button></td>
               </tr>
             )}
-            {((this.state.editable === true && this.state.originalSchedule !== null) &&
+            {((this.state.editable === true && Object.keys(this.state.originalSchedule).length !== 0) &&
               <tr>
                 <td><FormControl name='sunday' type='time' onClick={this.handleInputChange.bind(this)}
                   onChange={this.handleInputChange.bind(this)} value={this.state.sunday} /></td>

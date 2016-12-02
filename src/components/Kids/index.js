@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAccount } from '../../actions/actions';
+import { getAccount, addChild } from '../../actions/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Form, FormControl, Row, Col } from 'react-bootstrap';
@@ -8,6 +8,12 @@ import { Tabs, Tab } from 'react-bootstrap';
 import IndividualKid from '../IndividualKid/index';
 import config from '../../config';
 import './kids.css';
+
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth();
+var year = date.getFullYear();
+var fullDate = year + '-' + month + '-' + day;
 
 class Kids extends React.Component {
 
@@ -32,12 +38,6 @@ class Kids extends React.Component {
   }
 
   componentDidMount() {
-    var date = new Date();
-    var day = date.getDate();
-    var month = date.getMonth();
-    var year = date.getFullYear();
-    var fullDate = year + '-' + month + '-' + day;
-    
     this.props.getAccount(this.state.amazonToken, fullDate);
 
     // TODO: Get this out of here
@@ -55,21 +55,15 @@ class Kids extends React.Component {
   }
 
   addChild(e) {
-    const child = {
+    var child = {
       'child': {
         'name': this.state.newChildName,
         'phone': this.state.newChildPhone
       }
     };
-    $.ajax({
-      url: this.state.urlPrefix + '/api/children?access_token=' + this.state.amazonToken,
-      type: 'POST',
-      dataType: 'application/json',
-      data: child,
-      complete: function (data) {
-        console.log('Added child:' + JSON.stringify(data));
-      }
-    });
+    this.props.addChild(this.state.amazonToken, child);
+    this.setState({ adding: false });
+    location.reload();
   }
 
   handleInputChange(e) {
@@ -148,10 +142,8 @@ Kids.contextTypes = {
 };
 
 var mapDispatchToProps = function(dispatch) {
-  return bindActionCreators({ getAccount: getAccount }, dispatch);
+  return bindActionCreators({ getAccount: getAccount, addChild: addChild }, dispatch);
 };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Kids);
-
-

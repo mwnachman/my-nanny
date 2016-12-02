@@ -18,7 +18,7 @@ export const receiveSchedule = (schedule, childId) => {
 };
 
 export const getSchedule = (token, childId) => {
-  const url = 'https://localhost:1337/api/children/' + childId +
+  const url = 'https://api.my-nanny.org/api/children/' + childId +
    '/schedule?access_token=' + token;
   return function(dispatch) {
     dispatch(requestSchedule());
