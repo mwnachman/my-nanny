@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button, Image } from 'react-bootstrap';
 import './styles.css';
 
 const amazonButtonImage = 'https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png';
@@ -19,7 +19,7 @@ const navbarInstance = (
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav pullRight className='navRight'>
-        <img
+        <Image
         id='amazonButton'
         alt='Login with Amazon'
         src={amazonButtonImage}

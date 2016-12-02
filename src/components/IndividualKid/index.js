@@ -77,10 +77,8 @@ class IndividualKid extends React.Component {
     return (
       this.props.chores.list[this.props.child.id].map((chore, index) => {
         return (
-          <div key={chore.id}>
-            <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
-              amazonToken={this.props.amazonToken}/>
-          </div>
+          <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
+            amazonToken={this.props.amazonToken}/>  
         );
       })
     );
@@ -95,7 +93,7 @@ class IndividualKid extends React.Component {
       );
     }
     return (
-      <div>
+      <div class='row'>
         <Schedule child={this.props.child} schedule={this.props.child.schedule}
           name={this.props.child.name} amazonToken={this.state.amazonToken}/>
       </div>
@@ -138,50 +136,57 @@ class IndividualKid extends React.Component {
 
   render() {
     return (
-      <div>
-        <Grid>
-          <Row>
-            <Col xs={6} md={6}>
-                <h1>
-                  {this.props.child.name}
-                  <span>
-                    <Button xs={3} md={1} className='editButton' bsSize='xsmall' onClick={this.editChild.bind(this)}>
-                      Edit
-                    </Button>
-                  </span>
-                </h1>
-            </Col>
-          </Row>
-        </Grid>
+      <div className='col-md-12'>
+        {(this.state.editable === false &&
+        <div className='row'>
+          <div className='col-md-1 edit glyphicon glyphicon-edit'
+               onClick={this.editChild.bind(this)}>
+          </div>
+          <div className='col-md-11'>
+            <h1 className='account-heading-name'>{this.props.child.name}</h1>
+            <p className='account-heading-details'>
+              <span className='account-heading-detail'>{this.state.phone}</span>
+            </p>
+          </div>
+        </div>
+        )}
         {(this.state.editable === true &&
-          <Row>
-            <Col md={4}>
-              <Well>
-                <form>
-                  <FormControl type='text' name='name' value={this.state.name}
-                    onChange={this.handleInputChange.bind(this)}>
-                  </FormControl>
-                  <FormControl type='text' name='phone' value={this.state.phone}
-                    onChange={this.handleInputChange.bind(this)}>
-                  </FormControl>
-                  <Button className='btn btn-default'
-                    onClick={this.confirmChanges.bind(this)}>
-                      Confirm
-                  </Button>
-                  <Button className='btn btn-default'
-                    onClick={this.cancelChanges.bind(this)}>
-                      Cancel
-                  </Button>
-                </form>
-              </Well>
-            </Col>
-          </Row>
+          <div>
+          <div className='row'>
+            <div className='col-md-1 edit glyphicon glyphicon-ok'
+                 onClick={this.confirmChanges.bind(this)}>
+            </div>
+            <div className='col-md-11'>
+              <input className='account-heading-name-edit'
+                     type='text'
+                     name='name'
+                     defaultValue={this.state.name}
+                     onChange={this.handleInputChange.bind(this)} />
+              <p className='account-heading-details-edit'>
+                <input className='account-heading-detail-edit'
+                       type='text'
+                       name='phone'
+                       placeholder='Phone...'
+                       defaultValue={this.state.phone}
+                       onChange={this.handleInputChange.bind(this)} />
+              </p>
+            </div>
+          </div>
+        </div> 
         )}
         <h3>Schedule</h3>
         {this.createSchedule()}
 
         <h3>Chore List</h3>
+        <div className='row child-row-heading'>
+          <p className='col-md-2 child-row-cell'>Date</p>
+          <p className='col-md-3 child-row-cell'>Title</p>
+          <p className='col-md-4 child-row-cell'>Details</p>
+          <p className='col-md-3 child-row-cell'></p>
+        </div>
         {this.createChoresList()}
+
+
         <div>
           <div> 
             <Button onClick={()=> this.setState({ open: !this.state.open })}>

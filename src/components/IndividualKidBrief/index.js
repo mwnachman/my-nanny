@@ -80,9 +80,9 @@ class IndividualKidBrief extends React.Component {
         {(this.props.children[this.state.id].show === true &&
           this.props.children[this.state.id].editable === false && 
           <div className='row child-row'>
-              <p className='col-md-5 child-row-name'>{this.props.child.name}</p>
-              <p className='col-md-5 child-row-phone'>{this.props.child.phone}</p>
-              <div className='col-md-2 child-row-settings'>
+              <p className='col-md-5 child-row-cell'>{this.props.child.name}</p>
+              <p className='col-md-5 child-row-cell'>{this.props.child.phone}</p>
+              <div className='col-md-2 child-row-cell'>
                 <div className='row'>
                   <span className='col-md-1 child-row-edit glyphicon glyphicon-edit'
                       onClick={this.editChild.bind(this)}></span>
@@ -94,17 +94,17 @@ class IndividualKidBrief extends React.Component {
         )}
         {(this.props.children[this.state.id].editable === true &&
           <div className='row child-row'>
-              <input className='col-md-5 child-row-name'
+              <input className='col-md-5 child-row-cell'
                      type='text'
                      name='name'
                      value={this.state.name}
                      onChange={this.handleInputChange.bind(this)} />
-              <input className='col-md-5 child-row-phone'
+              <input className='col-md-5 child-row-cell'
                      type='text'
                      name='phone'
                      value={this.state.phone}
                      onChange={this.handleInputChange.bind(this)} />
-              <div className='col-md-2 child-row-settings'>
+              <div className='col-md-2 child-row-cell'>
                 <div className='row'>
                   <span className='col-md-1 child-row-edit glyphicon glyphicon-ok'
                         onClick={this.confirmChanges.bind(this)}></span>

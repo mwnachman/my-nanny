@@ -88,7 +88,7 @@ class Kids extends React.Component {
   render() {
     if (this.state.children.length === 0 || this.state.adding === true) {
       return (
-        <div className='kids'>
+        <div className='kids col-md-12'>
           <h2>Add a Child</h2>
             <Form>
               <FormControl type='text' name='newChildName' placeholder='Name' 
@@ -105,7 +105,7 @@ class Kids extends React.Component {
       );
     } else {
       return (
-        <div>
+        <div className='col-md-12'>
           <h3>My Children</h3>
 
           <Tabs defaultActiveKey={0} id='uncontrolled-tab-example'>
