@@ -11,6 +11,10 @@
   margin: 0 50%;
 }
 
+#amazonButton {
+  padding-top: 0; 
+}
+
 #amazonButton:hover {
   cursor: pointer;
 }

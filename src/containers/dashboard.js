@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { Panel, Image, Row, Col } from 'react-bootstrap';
+import './dashboardStyles.css';
 
 const mapStateToProps = function(state) {
   return {
@@ -10,11 +11,21 @@ const mapStateToProps = function(state) {
   };
 };
 
-// const mapDispatchToProps = function(dispatch) {
-//   return bindActionCreators({ activateChild: activateChild }, dispatch);
-// };
-
 class Dashboard extends Component {
+  createChoreList(chore) {
+    const completedIcon = {
+      true: 'glyphicon glyphicon-ok',
+      false: 'glyphicon glyphicon-remove'
+    };
+    return (
+      <Panel>
+        <div className='date'>{chore.date}</div>
+        <span className={completedIcon[chore.completed]}></span>
+        <span className='choreTitle'> {chore.title} - </span>
+        <span className='choreDetails'>{chore.details}</span>
+      </Panel>
+    );
+  }
 
   createChildrenList() {
     if (Object.keys(this.props.chores.list).length === 0) {
@@ -24,27 +35,24 @@ class Dashboard extends Component {
         </li>
       );
     }
-    
+
+    const avatarUrl = 'http://resourcecenter4u.com/wp-content/uploads/2015/01/avatar.png';
+
     return (
       Object.keys(this.props.children).map((child) => {
         return (
-          <li key={child}>
-            <span className='status'>
-              <img src={this.props.children[child].photo} className='avatar'/>
-              {this.props.children[child].name}
-              {this.props.chores.list[child].map((chore) => {
-                return (
-                  <li key={'chore' + chore.id}>
-                    <span className='status'>
-                      {chore.title}
-                      <br/>              
-                    </span>
-                  </li>
-                );
-              })}
-              <br/>              
-            </span>
-          </li>
+          <Col md={6}>
+            <Panel header={this.props.children[child].name} bsStyle='info'>
+              <Row>
+                <Col xs={2}>
+                  <Image src={this.props.children[child].photo || avatarUrl} className='avatar' rounded/>
+                </Col>
+                <Col xs={10}>
+                  {this.props.chores.list[child].map((chore) => this.createChoreList(chore))}
+                </Col>
+              </Row>
+            </Panel>
+          </Col>
         );
       })
     );
@@ -57,9 +65,15 @@ class Dashboard extends Component {
         <br/>
         <hr/>
         <br/>
-        <ul>
-          {this.createChildrenList()}
-        </ul>
+        <Row>
+          <Col xs={1} />
+          <Col xs={10}>
+            <Row>
+              {this.createChildrenList()}
+              </Row>
+          </Col>
+          <Col xs={1} />
+        </Row>
       </div>
     );
   }
