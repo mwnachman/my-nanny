@@ -1,3 +1,7 @@
 .childRow {
   margin-top: 3em;
 }
+
+ul, li {
+	padding-bottom: 0px !important;
+}

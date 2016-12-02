@@ -77,10 +77,8 @@ class IndividualKid extends React.Component {
     return (
       this.props.chores.list[this.props.child.id].map((chore, index) => {
         return (
-          <div key={chore.id}>
-            <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
-              amazonToken={this.props.amazonToken}/>
-          </div>
+          <Chores child={this.props.child} chore={chore} index={index} key={chore.id}
+            amazonToken={this.props.amazonToken}/>  
         );
       })
     );
@@ -180,7 +178,15 @@ class IndividualKid extends React.Component {
         {this.createSchedule()}
 
         <h3>Chore List</h3>
+        <div className='row child-row-heading'>
+          <p className='col-md-2 child-row-cell'>Date</p>
+          <p className='col-md-3 child-row-cell'>Title</p>
+          <p className='col-md-4 child-row-cell'>Details</p>
+          <p className='col-md-3 child-row-cell'></p>
+        </div>
         {this.createChoresList()}
+
+
         <div>
           <div> 
             <Button onClick={()=> this.setState({ open: !this.state.open })}>
