@@ -96,7 +96,6 @@ class IndividualKid extends React.Component {
     }
     return (
       <div>
-        Here goes the schedule
         <Schedule child={this.props.child} schedule={this.props.child.schedule}
           name={this.props.child.name} amazonToken={this.state.amazonToken}/>
       </div>

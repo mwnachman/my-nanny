@@ -1,6 +1,12 @@
 import fetch from 'isomorphic-fetch';
 import Promise from 'bluebird';
 
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth();
+var year = date.getFullYear();
+var fullDate = year + '-' + month + '-' + day;
+
 const url = (endpoint, id, startDate, endDate, page) => {
   startDate = startDate || '';
   endDate = endDate || '';
@@ -17,6 +23,8 @@ const url = (endpoint, id, startDate, endDate, page) => {
   } else if (endpoint === 'getSchedule') {
     return 'https://localhost:1337/api/children/' + id +
       '/schedule?access_token=';
+  } else if (endpoint === 'addChild') {
+    return 'https://localhost:1337/api/children?access_token=';
   }
 };
 
@@ -154,6 +162,88 @@ export const getAccount = (token, date) => {
       childIds.forEach((id) => {
         store.push(
           fetch(url('getChores', id, date) + token)
+          .then(function(res) { 
+            res = res.json();
+            return res;
+          })
+        );
+      });
+      return Promise.all(store);
+    })
+    .then(function(chores) {
+      dispatch(receiveChores(childIds, chores));
+      dispatch(requestSchedule());
+      var store = [];
+      childIds.forEach((id) => {
+        store.push(
+          fetch(url('getSchedule', id) + token)
+          .then(function(res) {
+            if (res.status === 500) {
+              return { schedule: {} };
+            }
+            return res.json();
+          })
+        );
+      });
+      return Promise.all(store);
+    })
+    .then(function(schedules) {
+      console.log('schedules from promises', schedules);
+      dispatch(receiveSchedule(childIds, schedules));
+    })
+    .catch(function(err) {
+      console.log('Error fetching account:', err);
+    });
+  };
+};
+
+export const addChild = (token, child) => {
+  let childIds = [];
+  return function(dispatch) {
+    return fetch(url('addChild') + token, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(child)
+    })
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad res from server.');
+      }
+      return res;
+    })
+    .then(() => {
+      dispatch(requestAccount(token));
+      return fetch(url('getAccount') + token);
+    })
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad res from server.');
+      }
+      return res.json();
+    })
+    .then((account) => {
+      dispatch(receiveAccount(account));
+      dispatch(requestChildren(token));
+      return fetch(url('getChildren') + token);
+    })
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad res from server.');
+      }
+      return res.json();
+    })
+    .then(function(list) {
+      dispatch(receiveChildren(list));
+      list.children.forEach((child) => {
+        childIds.push(child.id);
+      });
+      dispatch(requestChores(fullDate));
+      var store = [];
+      childIds.forEach((id) => {
+        store.push(
+          fetch(url('getChores', id, fullDate) + token)
           .then(function(res) { 
             res = res.json();
             return res;
