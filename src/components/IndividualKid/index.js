@@ -51,7 +51,6 @@ class IndividualKid extends React.Component {
       dataType: 'application/json',
       data: chore,
       complete: function (data) {
-        // console.log('Added chore:' + JSON.stringify(data));
         window.location.reload();
       }
     });
@@ -93,7 +92,7 @@ class IndividualKid extends React.Component {
       );
     }
     return (
-      <div class='row'>
+      <div className='row'>
         <Schedule child={this.props.child} schedule={this.props.child.schedule}
           name={this.props.child.name} amazonToken={this.state.amazonToken}/>
       </div>
@@ -108,7 +107,6 @@ class IndividualKid extends React.Component {
   }
 
   confirmChanges(e) {
-    // console.log('in confirm changes');
     const child = {
       'child': {
         'id': this.state.id,
@@ -122,7 +120,6 @@ class IndividualKid extends React.Component {
       dataType: 'application/json',
       data: child,
       complete: function (data) {
-        // console.log('Updated chore:' + JSON.stringify(data));
       }
     });
     this.setState({ editable: false });
